@@ -1,0 +1,28 @@
+{
+  "id": "horloge",
+  "tier": "curated",
+  "name": "HORLOGE",
+  "tagline": "Swiss luxury watch rental subscription",
+  "style": "monochrome",
+  "purpose": "marketing",
+  "pageType": "pricing",
+  "density": "default",
+  "drama": "confident",
+  "motion": "default",
+  "promptMode": "one-shot",
+  "sections": ["hero", "features", "pricing", "testimonials", "faq", "footer"],
+  "stack": "html",
+  "outputMode": "single-file",
+  "industryTags": ["luxury", "subscription", "watches", "B2C", "horology"],
+  "brief": {
+    "name": "HORLOGE",
+    "industry": "Swiss luxury watch rental subscription service",
+    "audience": "Watch collectors aged 35-65, household income $300k+, who own multiple watches but want exposure to rotating high-end pieces (Patek, AP, Lange) without 6-figure purchase commitments. Value heritage and provenance over status display.",
+    "tone": "heritage, considered, quiet, scholarly, confident, unhurried, austere",
+    "references": "Audemars Piguet's printed catalog typography, Hodinkee's editorial voice, the Wallpaper* magazine masthead, Phaidon's art monographs, A. Lange & Söhne's brand voice",
+    "context": "Hero must include the word \"HORLOGE\" set in massive type, spanning multiple lines if needed. Three subscription tiers: Standard ($299/mo, 1 watch rotation monthly), Premium ($899/mo, 2 watches + early access to new acquisitions), Atelier ($2,400/mo, 3 watches + dedicated concierge + full insurance). FAQ must address authenticity verification, insurance coverage, return logistics, damage policy, and waitlist procedure for grail pieces.",
+    "avoid": "Anything that feels like a typical SaaS pricing page. Stock photos of men in suits. Words like \"elevate\" or \"unlock\" or \"experience\". Discount badges or \"limited time offer\" framing. Anything implying speculation or investment ROI."
+  },
+  "featured": true,
+  "createdAt": "2026-05-26"
+}

@@ -7,6 +7,10 @@ import "./styles/tokens.css";
 import "./styles/main.css";
 
 import { store } from "./lib/store.js";
+import { ALL_PROMPTS, promptStats } from "./data/prompts/index.js";
+import { STYLE_IDS } from "./data/styles/index.js";
+import { pageTypeCount } from "./data/taxonomy.js";
+import { assembleFromCard, promptStats as charStats } from "./lib/assemblePrompt.js";
 
 const VERSION = "0.4.0-p0";
 const ROUTES = ["gallery", "studio", "express"];
@@ -86,10 +90,29 @@ function placeholder(routeName, blurb) {
 }
 
 function renderGallery() {
-  return placeholder(
+  const stats = promptStats();
+  // Smoke-test the assembler against the first curated prompt so wiring is exercised.
+  const first = ALL_PROMPTS[0];
+  let sampleChars = 0;
+  try {
+    const prompt = assembleFromCard(first);
+    sampleChars = charStats(prompt).chars;
+  } catch (e) {
+    console.error("[dps] assemble smoke test failed:", e);
+  }
+
+  const wrap = placeholder(
     "Prompt Gallery",
     "100+ ready-made prompts you can copy and paste into any LLM. One default-loaded with a huge Copy button; click any tile to swap. Built in P2.",
   );
+
+  const datacard = el(
+    "p",
+    { class: "placeholder__hint" },
+    `Data layer ready · ${stats.curated} curated + ${stats.standard} standard = ${stats.total} prompts · ${STYLE_IDS.length} styles · ${pageTypeCount()} page types · sample assemble: ${sampleChars.toLocaleString()} chars`,
+  );
+  wrap.querySelector(".placeholder__inner").appendChild(datacard);
+  return wrap;
 }
 
 function renderStudio() {

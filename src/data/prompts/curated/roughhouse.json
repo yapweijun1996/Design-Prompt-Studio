@@ -1,0 +1,28 @@
+{
+  "id": "roughhouse",
+  "tier": "curated",
+  "name": "ROUGH HOUSE",
+  "tagline": "Brooklyn bookstore + indie publishing imprint",
+  "style": "brutalist",
+  "purpose": "marketing",
+  "pageType": "landing",
+  "density": "balanced",
+  "drama": "loud",
+  "motion": "playful",
+  "promptMode": "one-shot",
+  "sections": ["hero", "features", "process", "blog", "footer"],
+  "stack": "html",
+  "outputMode": "single-file",
+  "industryTags": ["bookstore", "publishing", "indie", "brooklyn", "literary"],
+  "brief": {
+    "name": "ROUGH HOUSE",
+    "industry": "Independent Brooklyn bookstore + tiny publishing imprint (4 titles per year)",
+    "audience": "Readers in their 20s-30s tired of Amazon and BookTok algorithmic recommendation. They want to encounter writing they didn't already know to look for. Skeptical of corporate cultural curation. Buy 8-15 books per year, mostly fiction and essays.",
+    "tone": "confrontational, witty, opinionated, deliberately uncool, anti-curation, hand-made, alive",
+    "references": "Cards Against Humanity's homepage voice, McSweeney's, Are.na's UI, college punk-zine layouts, n+1 magazine, the original Strand Bookstore signage",
+    "context": "Hero should announce \"WE SELL BOOKS WE LIKE.\" in massive type. Sections: Hero, The Shelves (5 curated categories with hand-written-feeling descriptions — NOT generic genres like \"Fiction\" or \"Non-fiction\"), Events (in-person readings and arguments, with dates), Press (the imprint side, 4 books per year with covers), Footer (address, phone, hours, \"no parking available\").",
+    "avoid": "Bestseller lists, \"recommended for you\" algorithmic copy, anything that sounds like Amazon or Goodreads, Instagram aesthetic, neutral typography, \"literary\" pretension, anything that uses the word \"curated\" sincerely."
+  },
+  "featured": true,
+  "createdAt": "2026-05-26"
+}

@@ -1,0 +1,28 @@
+{
+  "id": "nova",
+  "tier": "curated",
+  "name": "NOVA — RESET",
+  "tagline": "K-pop group third comeback album promotional site",
+  "style": "y2k",
+  "purpose": "marketing",
+  "pageType": "landing",
+  "density": "dense",
+  "drama": "loud",
+  "motion": "playful",
+  "promptMode": "one-shot",
+  "sections": ["hero", "features", "process", "pricing", "footer"],
+  "stack": "html",
+  "outputMode": "single-file",
+  "industryTags": ["kpop", "music", "album-promo", "comeback", "entertainment"],
+  "brief": {
+    "name": "NOVA",
+    "industry": "5-member K-pop group's third comeback album promotional site",
+    "audience": "Fans aged 14-28 globally — Twitter/X, TikTok, Instagram. International (English, Korean, Spanish, Japanese major markets). Engaged daily, follow comeback teaser schedules religiously. Spend $50-500 per comeback on albums, merch, photocards.",
+    "tone": "hyperpop, optimistic, kitsch, electric, irreverent, joyful, knowingly-nostalgic, alive",
+    "references": "BLACKPINK's official site era, NewJeans' \"Get Up\" promo materials, early-2000s Vogue Korea covers, Charli XCX's \"365 / Brat\" promo era, Frutiger Aero desktop wallpapers, MSN Messenger UI nostalgia",
+    "context": "Hero must include the comeback title \"RESET ✦ 2026\" set in massive chunky display type with iridescent gradient fill. Include a countdown timer to album release date. Sections: Hero (with countdown), Tracklist (8 tracks with hover-reveal 30-second previews), Concept Photos (5 member teaser images, hover reveals B-side photo), Pre-order (3 versions — Standard $24, Deluxe $42 with photobook, Limited Pop-Up $68 with member-specific photocard), Schedule (comeback teaser timeline with dates), Footer (label info, social handles, multi-language switcher EN/KR/ES/JP).",
+    "avoid": "Anything corporate-feeling. Tasteful muted palettes. Single-accent restraint. Serif body text. \"Premium\" framing. Stock fonts like Inter or Helvetica. Anything that looks like Spotify's website."
+  },
+  "featured": true,
+  "createdAt": "2026-05-26"
+}

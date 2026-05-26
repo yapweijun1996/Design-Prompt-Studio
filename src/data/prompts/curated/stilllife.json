@@ -1,0 +1,28 @@
+{
+  "id": "stilllife",
+  "tier": "curated",
+  "name": "STILL LIFE",
+  "tagline": "Quarterly magazine on the considered domestic interior",
+  "style": "editorial",
+  "purpose": "marketing",
+  "pageType": "landing",
+  "density": "sparse",
+  "drama": "default",
+  "motion": "default",
+  "promptMode": "one-shot",
+  "sections": ["hero", "features", "testimonials", "pricing", "blog", "footer"],
+  "stack": "html",
+  "outputMode": "single-file",
+  "industryTags": ["magazine", "publishing", "lifestyle", "slow-living", "design"],
+  "brief": {
+    "name": "STILL LIFE",
+    "industry": "Quarterly print + digital magazine about the considered domestic interior",
+    "audience": "Readers aged 28-50 who own or rent thoughtfully, interested in slow design, craft objects, food, and how spaces shape lives. Income $80k-300k. Subscribe to MUBI, NYT Cooking, certain Substack writers.",
+    "tone": "considered, literate, slow, warm, intelligent, sensorial, lived-in, unhurried",
+    "references": "Kinfolk magazine in its early years, The Gentlewoman, Cereal Magazine, MUBI Notebook, the food essays of Bee Wilson, Apartamento's interiors photography",
+    "context": "Hero must feature the tagline \"On the considered domestic\" set in oversized italic display serif. Sections: Hero, Current Issue (Vol. XII feature spread teaser with one large photograph), The Archive (grid of 11 previous issue covers), Departments (4 standing sections: Rooms, Tables, Objects, Letters), Subscribe (3 tiers — digital $48/yr, print $96/yr, both $128/yr). Footer reads as magazine masthead with editor names, contributing writers, ISSN-style metadata.",
+    "avoid": "Anything that feels like a content marketing blog. Pastel colors. Sans-serif body text. \"Click to read more\" CTAs. Pop-up newsletter modals. Influencer-style photography."
+  },
+  "featured": true,
+  "createdAt": "2026-05-26"
+}

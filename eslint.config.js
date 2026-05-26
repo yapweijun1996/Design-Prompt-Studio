@@ -6,8 +6,11 @@ export default [
   {
     files: ["src/**/*.js"],
     languageOptions: {
-      ecmaVersion: 2022,
+      ecmaVersion: "latest",
       sourceType: "module",
+      parserOptions: {
+        ecmaFeatures: { impliedStrict: true },
+      },
       globals: {
         ...globals.browser,
         ...globals.serviceworker,

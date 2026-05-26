@@ -1,0 +1,28 @@
+{
+  "id": "hush",
+  "tier": "curated",
+  "name": "HUSH",
+  "tagline": "AI ambient-sound + meditation iOS app",
+  "style": "glass",
+  "purpose": "marketing",
+  "pageType": "product",
+  "density": "sparse",
+  "drama": "subtle",
+  "motion": "default",
+  "promptMode": "one-shot",
+  "sections": ["hero", "features", "process", "pricing", "cta", "footer"],
+  "stack": "html",
+  "outputMode": "single-file",
+  "industryTags": ["wellness", "meditation", "ios-app", "ambient-sound", "subscription"],
+  "brief": {
+    "name": "HUSH",
+    "industry": "AI-powered ambient sound and meditation iOS app, $9.99/mo subscription",
+    "audience": "Adults aged 25-45 in high-stress urban jobs — tech workers, lawyers, designers, founders. Sleep poorly, have tried Calm and Headspace but found them too gamified. Value calm over completion.",
+    "tone": "calm, weightless, considered, gentle, reverent, optimistic-soft, premium-quiet",
+    "references": "visionOS interface design, macOS Sonoma control center, Linear's marketing site, the Loftie alarm clock UI, Apple Music's design language, Korean app design (Toss, Kakao)",
+    "context": "Hero must include the tagline \"Sound for nervous systems\" alongside a floating, breathing animated orb. Sections: Hero, Features (4 cards — Adaptive Ambient Mix / Sleep Stories Without Voices / Breath Companion / Listen Offline), How It Works (3 stops: Listen → Notice → Drift), Pricing (single tier $9.99/mo, $79/yr, 14-day trial), App Store CTAs (Download for iPhone, also Apple Watch and Mac), Footer.",
+    "avoid": "Anything stress-inducing. Streaks, badges, gamification. \"Unlock your potential\" copy. Wellness-industry vagueness. Saturated colors. Hard shadows. Sharp corners. Anything that looks like Headspace."
+  },
+  "featured": true,
+  "createdAt": "2026-05-26"
+}
