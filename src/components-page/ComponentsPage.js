@@ -11,6 +11,17 @@ import {
   COMPONENTS_BY_CATEGORY,
   componentCount,
 } from "../data/components.js";
+import { store } from "../lib/store.js";
+
+// Hand off pinned components to Studio. Studio reads this key on next mount
+// and merges the ids into state.forcedComponents (additive).
+function pinAndOpenStudio(componentId) {
+  const existing = store.get("studio-forced-components", []) || [];
+  const set = new Set(existing);
+  set.add(componentId);
+  store.setImmediate("studio-forced-components", Array.from(set));
+  location.hash = "studio";
+}
 
 const CATEGORY_LABELS = {
   input: "Input",
@@ -53,6 +64,26 @@ export function renderComponentsPage() {
         `${componentCount()} component primitives the prompt generator can include in `,
         el("code", null, "<components>"),
         ` so the LLM has a shared widget vocabulary. Filter to see what's auto-included for any style + page-type combo.`,
+      ),
+      el(
+        "div",
+        { class: "components-page__hero-actions" },
+        el(
+          "a",
+          {
+            class: "components-page__cta components-page__cta--primary",
+            href: "#studio",
+          },
+          "Open Studio →",
+        ),
+        el(
+          "a",
+          {
+            class: "components-page__cta",
+            href: "#gallery",
+          },
+          "Browse Gallery",
+        ),
       ),
     ),
   );
@@ -301,6 +332,27 @@ function renderCard(c, isExpanded, onToggle) {
         ),
       );
     }
+
+    // Action row — pin this component into the next Studio prompt
+    body.appendChild(
+      el(
+        "div",
+        { class: "comp-card__actions" },
+        el(
+          "button",
+          {
+            type: "button",
+            class: "comp-card__action",
+            onClick: (e) => {
+              e.stopPropagation();
+              pinAndOpenStudio(c.id);
+            },
+            title: `Pin ${c.name} into the next Studio prompt`,
+          },
+          "📌 Use in Studio →",
+        ),
+      ),
+    );
 
     card.appendChild(body);
   }

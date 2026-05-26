@@ -45,6 +45,73 @@
   font-size: 0.92em;
 }
 
+/* Hero CTAs */
+.components-page__hero-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.components-page__cta {
+  display: inline-flex;
+  align-items: center;
+  padding: 9px 18px;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--fg, #0F0F0F);
+  background: var(--bg, #FFFFFF);
+  border: 1px solid var(--rule, #E5E5E5);
+  cursor: pointer;
+  transition: border-color 120ms ease, background 120ms ease;
+}
+
+.components-page__cta:hover {
+  border-color: var(--fg, #0F0F0F);
+}
+
+.components-page__cta--primary {
+  background: var(--fg, #0F0F0F);
+  color: var(--bg, #FFFFFF);
+  border-color: var(--fg, #0F0F0F);
+}
+
+.components-page__cta--primary:hover {
+  background: var(--fg-soft, #1A1A1A);
+}
+
+/* Card action row (pin into Studio) */
+.comp-card__actions {
+  margin-top: 6px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.comp-card__action {
+  background: var(--bg, #FFFFFF);
+  border: 1px solid var(--rule, #E5E5E5);
+  color: var(--fg, #0F0F0F);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: border-color 120ms ease, background 120ms ease;
+}
+
+.comp-card__action:hover {
+  border-color: var(--fg, #0F0F0F);
+  background: var(--bg-soft, #F5F2EC);
+}
+
+.comp-card__action:focus-visible {
+  outline: 2px solid var(--focus, #0F0F0F);
+  outline-offset: 2px;
+}
+
 /* Filters */
 .components-page__filters {
   display: flex;

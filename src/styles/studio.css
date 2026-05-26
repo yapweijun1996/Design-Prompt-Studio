@@ -393,6 +393,61 @@
   gap: 4px;
 }
 
+/* Pinned-components row in Step 4 — shows component ids handed off from
+   the Components page; click any chip to unpin. */
+.step__components-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.step__pinned-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+  padding: 8px 10px;
+  background: #FFF8E0;
+  border: 1px dashed #C9A24B;
+  border-radius: 6px;
+}
+
+.step__pinned-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8B6F2F;
+  font-weight: 700;
+  margin-right: 4px;
+}
+
+.step__pinned-chip {
+  display: inline-flex;
+  align-items: center;
+  background: #FFFFFF;
+  border: 1px solid #C9A24B;
+  color: #5A4520;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.step__pinned-chip:hover {
+  background: #C9A24B;
+  color: #FFFFFF;
+}
+
+.step__pinned-x {
+  margin-left: 4px;
+  opacity: 0.7;
+  font-size: 10px;
+}
+
 /* Category row — primary chips, slightly emphasised over base/mood. */
 .step__variant-chips--category {
   padding-bottom: 6px;

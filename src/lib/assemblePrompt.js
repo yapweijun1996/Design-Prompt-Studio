@@ -214,6 +214,17 @@ function buildComponentsBlock(state, sectionNames, pageType) {
   for (const c of getComponentsForContext(contextKeywords)) {
     scored.set(c.id, (scored.get(c.id) || 0) + 3);
   }
+
+  // Forced components — explicitly pinned by the user (e.g. via the
+  // "Use in Studio" button on the Components page). Always included,
+  // win every tie via a very high score that sorts them to the top.
+  const forced = state.forcedComponents instanceof Set
+    ? Array.from(state.forcedComponents)
+    : (Array.isArray(state.forcedComponents) ? state.forcedComponents : []);
+  for (const id of forced) {
+    if (getComponent(id)) scored.set(id, (scored.get(id) || 0) + 100);
+  }
+
   if (scored.size === 0) return null;
 
   const sorted = [...scored.entries()]
@@ -344,6 +355,8 @@ export function assembleFromCard(card) {
     outputMode: card.outputMode,
     promptMode: card.promptMode || "one-shot",
     libraries: card.libraries,
+    includeComponents: card.includeComponents,
+    forcedComponents: card.forcedComponents,
     brief: card.brief,
   });
 }

@@ -3,6 +3,7 @@
 
 import { el } from "../../lib/dom.js";
 import { LIBRARIES, LIBRARY_CATEGORIES, getLibrariesByStack } from "../../data/libraries.js";
+import { getComponent } from "../../data/components.js";
 
 const STACKS = [
   { id: "html",  name: "Vanilla HTML",    desc: "Single self-contained .html file" },
@@ -29,6 +30,9 @@ export function renderStep4({ state, onStateChange }) {
   if (!state.promptMode) state.promptMode = "one-shot";
   if (!state.libraries) state.libraries = new Set();
   if (Array.isArray(state.libraries)) state.libraries = new Set(state.libraries);
+  if (state.includeComponents == null) state.includeComponents = true;
+  if (!state.forcedComponents) state.forcedComponents = new Set();
+  if (Array.isArray(state.forcedComponents)) state.forcedComponents = new Set(state.forcedComponents);
 
   root.append(
     sectionLabel("Tech stack", "What format does the LLM output?"),
@@ -52,6 +56,68 @@ export function renderStep4({ state, onStateChange }) {
     sectionLabel("Prompt mode", "One-shot for chat; conversational for IDE assistants"),
     radioRow(PROMPT_MODES, state.promptMode, (id) => { state.promptMode = id; onStateChange?.(); }),
   );
+
+  // ─── Components vocabulary ────────────────────────────────────────────────
+  // Toggle the <components> block; show pinned components when present.
+  const componentsLabel = sectionLabel(
+    "Components vocabulary",
+    "Auto-include a list of UI primitives (combobox, modal, datatable…) with when-to-use + a11y notes",
+  );
+  const componentsControls = el("div", { class: "step__components-controls" });
+
+  function rebuildComponentsControls() {
+    componentsControls.replaceChildren();
+
+    // The on/off radio row
+    componentsControls.appendChild(
+      radioRow(
+        [
+          { id: true,  name: "Include",     desc: "Add up to 18 relevant components based on style + sections" },
+          { id: false, name: "Skip",        desc: "Don't add the <components> block (smaller prompt)" },
+        ],
+        state.includeComponents,
+        (id) => { state.includeComponents = id; onStateChange?.(); rebuildComponentsControls(); },
+      ),
+    );
+
+    // Show pinned components (from "Use in Studio" handoff)
+    if (state.forcedComponents.size > 0) {
+      const pinned = Array.from(state.forcedComponents)
+        .map((id) => getComponent(id))
+        .filter(Boolean);
+      const pinnedRow = el(
+        "div",
+        { class: "step__pinned-row" },
+        el(
+          "span",
+          { class: "step__pinned-label" },
+          `Pinned · ${pinned.length}`,
+        ),
+        ...pinned.map((c) =>
+          el(
+            "button",
+            {
+              type: "button",
+              class: "step__pinned-chip",
+              title: `Unpin ${c.name}`,
+              "aria-label": `Unpin ${c.name}`,
+              onClick: () => {
+                state.forcedComponents.delete(c.id);
+                onStateChange?.();
+                rebuildComponentsControls();
+              },
+            },
+            c.name,
+            el("span", { class: "step__pinned-x", "aria-hidden": "true" }, " ✕"),
+          ),
+        ),
+      );
+      componentsControls.appendChild(pinnedRow);
+    }
+  }
+  rebuildComponentsControls();
+
+  root.append(componentsLabel, componentsControls);
 
   // ─── Libraries picker ──────────────────────────────────────────────────────
   const supportedLibs = LIBRARIES.filter((l) => l.stacks.includes(state.stack));

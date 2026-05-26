@@ -32,6 +32,8 @@ const DEFAULT_STATE = () => ({
   outputMode: "single-file",
   promptMode: "one-shot",
   libraries: new Set(),
+  includeComponents: true,
+  forcedComponents: new Set(),
   brief: { name: "", industry: "", audience: "", tone: "", references: "", context: "", avoid: "" },
 });
 
@@ -110,7 +112,26 @@ function resumeOrFresh() {
   if (saved) {
     saved.sections = toSet(saved.sections);
     saved.libraries = toSet(saved.libraries);
+    saved.forcedComponents = toSet(saved.forcedComponents);
+    // Components-page handoff — pinned component ids are merged onto whatever
+    // saved state we resume into (additive — doesn't overwrite other prefs).
+    const pinned = store.get("studio-forced-components", null);
+    if (Array.isArray(pinned) && pinned.length > 0) {
+      for (const id of pinned) saved.forcedComponents.add(id);
+      saved.includeComponents = true; // make sure block isn't suppressed
+      store.remove("studio-forced-components");
+    }
     return saved;
+  }
+
+  // 3b. Fresh state but with components-page handoff
+  const pinnedFresh = store.get("studio-forced-components", null);
+  if (Array.isArray(pinnedFresh) && pinnedFresh.length > 0) {
+    const fresh = DEFAULT_STATE();
+    for (const id of pinnedFresh) fresh.forcedComponents.add(id);
+    fresh.meta.enteredFrom = "components-page";
+    store.remove("studio-forced-components");
+    return fresh;
   }
 
   // 4. Fresh
@@ -122,6 +143,7 @@ function persist(state) {
     ...state,
     sections: state.sections instanceof Set ? Array.from(state.sections) : (state.sections || []),
     libraries: state.libraries instanceof Set ? Array.from(state.libraries) : (state.libraries || []),
+    forcedComponents: state.forcedComponents instanceof Set ? Array.from(state.forcedComponents) : (state.forcedComponents || []),
   };
   store.set(STATE_KEY, serializable);
 }
