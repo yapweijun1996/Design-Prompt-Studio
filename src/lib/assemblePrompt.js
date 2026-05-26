@@ -11,6 +11,7 @@ import { STYLE_PRESETS } from "../data/styles/index.js";
 import { PAGE_TYPES } from "../data/taxonomy.js";
 import { DENSITY_LEVELS, DRAMA_LEVELS, MOTION_LEVELS } from "../data/modifiers.js";
 import { renderGlobalRules } from "../data/global-rules.js";
+import { getLibrary } from "../data/libraries.js";
 
 // ─── Stack defaults ─────────────────────────────────────────────────────────
 const STACKS = {
@@ -141,6 +142,44 @@ function buildDesignSystem(state) {
   ].filter(Boolean).join("\n\n");
 }
 
+// ─── Libraries block ────────────────────────────────────────────────────────
+function buildLibrariesBlock(libraryIds, stack) {
+  if (!libraryIds || libraryIds.length === 0) return null;
+  const libs = libraryIds
+    .map((id) => getLibrary(id))
+    .filter(Boolean)
+    .filter((l) => !stack || l.stacks.length === 0 || l.stacks.includes(stack));
+  if (libs.length === 0) return null;
+
+  const lines = [];
+  lines.push("<libraries>");
+  lines.push("Prefer these libraries instead of writing UI logic from scratch.");
+  lines.push("All are verified business-OK (MIT / Apache-2.0 / BSD / ISC).");
+  lines.push("Load via the CDN URLs below — pin to the exact versions shown.\n");
+
+  for (const lib of libs) {
+    lines.push(`### ${lib.name}`);
+    lines.push(`- Category: ${lib.category}`);
+    lines.push(`- License: ${lib.license} ${lib.businessOk ? "(commercial OK)" : "(verify before commercial use)"}`);
+    if (lib.size) lines.push(`- Size: ${lib.size}`);
+    lines.push(`- ${lib.desc}`);
+    lines.push(`- When to use: ${lib.whenToUse}`);
+    if (lib.whenNotToUse) lines.push(`- When NOT to use: ${lib.whenNotToUse}`);
+    if (lib.caveat) lines.push(`- Caveat: ${lib.caveat}`);
+    if (lib.cdn.js) lines.push(`- CDN (JS): \`${lib.cdn.js}\``);
+    if (lib.cdn.css) lines.push(`- CDN (CSS): \`${lib.cdn.css}\``);
+    lines.push("");
+  }
+
+  lines.push("Usage rules:");
+  lines.push("- Always include CDN script/link tags in the output's <head>.");
+  lines.push("- Pin to the exact version shown — do not use @latest.");
+  lines.push("- If a chosen library is overkill for the actual need, prefer vanilla and note the deviation in Design Decisions.");
+  lines.push("- For any library that returns HTML you didn't write (markdown, rich-text), pipe through DOMPurify before innerHTML.");
+  lines.push("</libraries>");
+  return lines.join("\n");
+}
+
 // ─── Request (brief) block ──────────────────────────────────────────────────
 function buildRequest(brief) {
   const parts = [];
@@ -178,9 +217,14 @@ export function assemblePrompt(state) {
     ? sections.map((s) => `- ${s}`).join("\n")
     : "- (none specified — pick reasonable sections from the design system)";
 
+  const libraryIds = state.libraries instanceof Set
+    ? Array.from(state.libraries)
+    : (Array.isArray(state.libraries) ? state.libraries : []);
+
   const roleBlock = buildRole(promptMode, pageType.name);
   const globalRulesText = renderGlobalRules(style.overrideGlobalRules || []);
   const designSystemBlock = buildDesignSystem(state);
+  const librariesBlock = buildLibrariesBlock(libraryIds, stack);
   const operatingRulesBlock = buildOperatingRules(state, stack, sectionList);
   const requestBlock = buildRequest(state.brief || {});
 
@@ -188,9 +232,10 @@ export function assemblePrompt(state) {
     roleBlock,
     `<global-rules>\n${globalRulesText}\n</global-rules>`,
     `<design-system>\n${designSystemBlock}\n</design-system>`,
+    librariesBlock,
     operatingRulesBlock,
     `<request>\n${requestBlock}\n</request>`,
-  ].join("\n\n");
+  ].filter(Boolean).join("\n\n");
 }
 
 // ─── Token / char stats ─────────────────────────────────────────────────────
@@ -214,6 +259,7 @@ export function assembleFromCard(card) {
     stack: card.stack,
     outputMode: card.outputMode,
     promptMode: card.promptMode || "one-shot",
+    libraries: card.libraries,
     brief: card.brief,
   });
 }

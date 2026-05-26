@@ -9,6 +9,7 @@ import { PAGE_TYPES, pageTypeCount } from "../src/data/taxonomy.js";
 import { assemblePrompt, assembleFromCard, promptStats as charStats } from "../src/lib/assemblePrompt.js";
 import { STYLE_VARIANTS, getVariant, findVariantForState } from "../src/data/style-variants.js";
 import { MOOD_PRESETS } from "../src/data/moods.js";
+import { LIBRARIES, LIBRARY_CATEGORIES, libraryCount, getLibrary } from "../src/data/libraries.js";
 
 const checks = [];
 function check(label, fn) {
@@ -47,6 +48,47 @@ check("compact preset 'linear' has synthesized md > 1000 chars", () => {
 });
 check("compact preset 'memphis' has Bold Factor section in md", () => {
   return STYLE_PRESETS.memphis?.md?.includes("Bold Factor");
+});
+
+// ─── Libraries ─────────────────────────────────────────────────────────────
+check("LIBRARIES has ≥ 30 entries", () => libraryCount() >= 30);
+check("LIBRARY_CATEGORIES has ≥ 10", () => LIBRARY_CATEGORIES.length >= 10);
+check("All libraries are business-OK", () => LIBRARIES.every((l) => l.businessOk === true));
+check("All libraries have license in safe list", () => {
+  const safe = new Set(["MIT", "Apache-2.0", "BSD-2", "BSD-3", "ISC"]);
+  return LIBRARIES.every((l) => safe.has(l.license));
+});
+check("chartjs library exists and has CDN url", () => {
+  const c = getLibrary("chartjs");
+  return c && c.cdn.js?.startsWith("https://");
+});
+check("DOMPurify caveat documented", () => {
+  return getLibrary("dompurify")?.caveat;
+});
+
+// Prompt assembly with libraries
+check("assembling with libraries injects <libraries> block", () => {
+  const prompt = assemblePrompt({
+    style: "monochrome", pageType: "landing",
+    density: "default", drama: "confident", motion: "default",
+    sections: ["hero"], stack: "html", outputMode: "single-file",
+    promptMode: "one-shot",
+    libraries: ["chartjs", "marked", "lucide"],
+    brief: { name: "Test" },
+  });
+  return prompt.includes("<libraries>") && prompt.includes("Chart.js") && prompt.includes("marked.js") && prompt.includes("Lucide");
+});
+
+check("library block omitted when no libraries selected", () => {
+  const prompt = assemblePrompt({
+    style: "monochrome", pageType: "landing",
+    density: "default", drama: "confident", motion: "default",
+    sections: ["hero"], stack: "html",
+    promptMode: "one-shot",
+    libraries: [],
+    brief: { name: "Test" },
+  });
+  return !prompt.includes("<libraries>");
 });
 
 // ─── Assemble each curated ────────────────────────────────────────────────

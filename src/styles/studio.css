@@ -476,6 +476,105 @@
 .step__advanced[open] .step__advanced-summary::before {
   transform: rotate(90deg);
 }
+
+/* ─── Libraries picker (Step 4) ──────────────────────────────────────────── */
+.step__lib-search {
+  width: 100%;
+  padding: var(--space-3);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  background: var(--bg-elevated);
+  color: var(--fg);
+  border: var(--border-thin) solid var(--border);
+  min-height: 44px;
+  margin-bottom: var(--space-2);
+}
+.step__lib-search:focus { outline: 2px solid var(--focus); outline-offset: -1px; }
+
+.step__lib-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: var(--space-3);
+}
+
+.step__lib-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--space-2);
+}
+
+.step__lib-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: var(--space-3);
+  background: var(--bg);
+  border: var(--border-thin) solid var(--border);
+  cursor: pointer;
+  transition: border-color var(--duration-fast) var(--ease-out),
+              background var(--duration-fast) var(--ease-out);
+  position: relative;
+}
+.step__lib-card:hover { border-color: var(--border-strong); }
+.step__lib-card:focus-visible { outline: 2px solid var(--focus); outline-offset: -1px; }
+.step__lib-card.is-checked {
+  border-color: var(--accent);
+  background: color-mix(in oklab, var(--accent) 4%, var(--bg));
+}
+.step__lib-card input { position: absolute; opacity: 0; pointer-events: none; }
+.step__lib-card.is-checked::before {
+  content: "✓";
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.step__lib-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+.step__lib-card-name {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--fg);
+}
+.step__lib-card-license {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--success);
+  padding: 1px 6px;
+  border: 1px solid var(--success);
+  border-radius: 2px;
+}
+.step__lib-card-desc {
+  font-size: 12px;
+  color: var(--fg-muted);
+  line-height: 1.45;
+}
+.step__lib-card-meta {
+  display: flex;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-subtle);
+}
+.step__lib-empty {
+  grid-column: 1 / -1;
+  padding: var(--space-5);
+  text-align: center;
+  color: var(--fg-muted);
+}
 .step__card {
   display: flex;
   flex-direction: column;
