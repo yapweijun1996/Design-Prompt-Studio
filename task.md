@@ -1,9 +1,21 @@
 # Design Prompt Studio — Task Tracker
 
-**Last updated**: 2026-05-26 (P0-P7 SHIPPED locally — awaiting first deploy)
-**Current version**: v0.4.0-rc1 (gallery-first, full wizard, Express mode, PWA)
-**Phase**: 🟢 **Ready to deploy** — all 7 phases complete; build clean; 25 smoke tests passing
+**Last updated**: 2026-05-26 (🚀 **v0.4.0 SHIPPED to production**)
+**Current version**: v0.4.0 (gallery-first, full wizard, Express mode, PWA-ready)
+**Phase**: 🟢 **LIVE** — pushed to origin/main, GHA deploy triggered
+**Live URL**: https://yapweijun1996.github.io/Design-Prompt-Studio/
 **Stack**: Vite 6 + vite-plugin-pwa + ESLint v9 · vanilla ES2022 · localStorage (IDB deferred) · GitHub Pages via Actions · Node 20
+
+## Final v0.4.0 metrics
+- **20** base styles × **9** moods = **180 style variants**
+- **685** total prompts (5 curated + 680 algorithmic)
+- **100** business-free libraries across **16** categories
+- **43/43** smoke tests passing
+- **25** PWA precache entries (322 KB)
+- **241 KB JS** / **49 KB CSS** (77 + 9 KB gzip)
+- **0** runtime npm dependencies
+- **4** devDeps (vite, vite-plugin-pwa, eslint, @resvg/resvg-js)
+- **Zero** ESLint warnings
 
 > See `docs/FLOW.md` for the full architecture, `docs/PROMPT-GALLERY.md` for the 100+ prompt plan, `docs/PROMPT-PATTERNS.md` for the pattern library, `docs/TECH-STACK.md` for infra decisions, and `docs/README.md` for a docs index.
 
@@ -11,7 +23,16 @@
 
 ## 🎯 Where we are right now
 
-**All 7 phases shipped locally.** 7 commits on `main`:
+**🚀 v0.4.0 SHIPPED 2026-05-26.** Live on GitHub Pages.
+
+**All 7 phases + post-ship hardening shipped.** 14 commits on `main`:
+- P0-P7 base architecture
+- 180 style variants (4 batches: 5 → 10 → 20)
+- 100 verified business-free libraries (10 batches)
+- Library state persistence fix
+- PWA hardening (PNG icons + sitemap + prebuild)
+
+Earlier commit history (P0-P7 details preserved below):
 - P0 scaffold (Vite + PWA + GHA)
 - P1 data foundation (175 prompts, taxonomy, styles, assembler)
 - P2 gallery shell (HeroStrip + FilterBar + tile grid)
@@ -313,16 +334,29 @@ Design-Prompt-Studio/
 
 ---
 
-## 🔜 Immediate next steps
+## 🔜 Post-ship — recommended next checks
 
-**v0.4.0-rc1 is built and committed locally.** Two options:
+v0.4.0 is live. After verifying the deployment landed:
 
-| Path | What | Time |
-|---|---|---|
-| **Ship it** | `git push origin main` → GHA runs → live at `*.github.io/Design-Prompt-Studio/` | ~3 min |
-| **Local test first** | `npm run dev` opens `http://localhost:5173/Design-Prompt-Studio/` for spot-check | ~5 min |
+| What | How |
+|---|---|
+| Smoke-test live URL | Open `https://yapweijun1996.github.io/Design-Prompt-Studio/` |
+| Lighthouse PWA audit | Chrome DevTools → Lighthouse → PWA category. Expecting 95-100 |
+| Install as PWA | Click install icon in address bar; verify icon + name |
+| Test offline mode | Network → Offline → reload; should show cached gallery |
+| Share URL test | Copy `#studio?s=...` URL; open in different browser; verify state restored |
+| Real-device test | Open on iPhone Safari + Android Chrome; verify install flow + Copy button works |
 
-Once happy: enable Pages → Settings → Pages → Source: GitHub Actions (one-time, then every push deploys).
+If Lighthouse < 95 PWA: capture report and file follow-up. Most likely path to 100:
+- Add `screenshots` to manifest (form_factor wide + narrow)
+- Add explicit `display_override: ["window-controls-overlay", "standalone"]` confirmation
+
+## v0.5 backlog priorities (post-feedback)
+1. Expand curated prompts 5 → 30 (per docs/PROMPT-GALLERY.md)
+2. P23 Variations feature ("Give 3 options gradient")
+3. P24 Tweakable outputs (LLM emits self-tweak panel)
+4. LLM iframe preview (call Claude/GPT in-Studio)
+5. Skill export `.claude/skills/<name>/SKILL.md`
 
 ---
 

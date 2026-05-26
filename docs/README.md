@@ -35,6 +35,19 @@ See `PROMPT-PATTERNS.md` for the full table.
 
 ---
 
+## 🚀 v0.4.0 production state (2026-05-26)
+
+- **Live**: https://yapweijun1996.github.io/Design-Prompt-Studio/
+- 20 base styles × 9 moods = **180 style variants**
+- 685 total prompts (5 curated + 680 algorithmic)
+- **100 business-free libraries** (16 categories, strict license whitelist)
+- PWA installable (manifest + workbox SW + 6 PNG icons + sitemap)
+- 43/43 smoke tests + ESLint zero warnings + Vite build green
+- localStorage state persistence (gallery handoff + studio + express + URL share)
+- Auto light/dark theme + keyboard nav + skip link + focus-visible everywhere
+
+---
+
 ## Doc conventions
 
 - Every doc has a header with `Status`, date, and `Supersedes` if applicable
