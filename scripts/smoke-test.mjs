@@ -7,6 +7,8 @@ import { ALL_PROMPTS, CURATED_PROMPTS, promptStats, pickFeaturedPrompt, searchPr
 import { STYLE_PRESETS, STYLE_IDS } from "../src/data/styles/index.js";
 import { PAGE_TYPES, pageTypeCount } from "../src/data/taxonomy.js";
 import { assemblePrompt, assembleFromCard, promptStats as charStats } from "../src/lib/assemblePrompt.js";
+import { STYLE_VARIANTS, getVariant, findVariantForState } from "../src/data/style-variants.js";
+import { MOOD_PRESETS } from "../src/data/moods.js";
 
 const checks = [];
 function check(label, fn) {
@@ -19,10 +21,33 @@ function check(label, fn) {
 }
 
 // ─── Counts ────────────────────────────────────────────────────────────────
-check("style count = 5", () => STYLE_IDS.length === 5);
+check("style count = 10 (5 original + 5 compact)", () => STYLE_IDS.length === 10);
 check("page-type count ≥ 30", () => pageTypeCount() >= 30);
 check("curated prompts = 5", () => CURATED_PROMPTS.length === 5);
-check("ALL_PROMPTS ≥ 150", () => ALL_PROMPTS.length >= 150);
+check("ALL_PROMPTS ≥ 300", () => ALL_PROMPTS.length >= 300);
+check("MOOD_PRESETS = 9", () => MOOD_PRESETS.length === 9);
+check("STYLE_VARIANTS = 90 (10×9)", () => STYLE_VARIANTS.length === 90);
+
+// Verify a variant resolves back to its base + modifiers
+check("variant linear--whisper resolves correctly", () => {
+  const v = getVariant("linear--whisper");
+  return v?.baseStyle === "linear" && v?.density === "sparse" && v?.drama === "subtle" && v?.motion === "minimal";
+});
+
+// Reverse lookup
+check("findVariantForState round-trip", () => {
+  const state = { style: "cyberpunk", density: "dense", drama: "loud", motion: "playful" };
+  const v = findVariantForState(state);
+  return v?.id === "cyberpunk--frenzy";
+});
+
+// Compact preset md synthesized
+check("compact preset 'linear' has synthesized md > 1000 chars", () => {
+  return STYLE_PRESETS.linear?.md?.length > 1000;
+});
+check("compact preset 'memphis' has Bold Factor section in md", () => {
+  return STYLE_PRESETS.memphis?.md?.includes("Bold Factor");
+});
 
 // ─── Assemble each curated ────────────────────────────────────────────────
 for (const card of CURATED_PROMPTS) {

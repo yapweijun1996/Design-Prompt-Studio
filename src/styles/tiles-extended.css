@@ -1,0 +1,253 @@
+/* Tile preview thumbnails for the 5 new compact-format styles.
+   linear, swiss, cyberpunk, newspaper, memphis. */
+
+/* ─── LINEAR / MODERN ────────────────────────────────────────── */
+.tile__preview--tile-linear {
+  background:
+    radial-gradient(ellipse at top, rgba(94,106,210,0.4) 0%, transparent 60%),
+    #050506;
+  padding: 12px 14px;
+  display: flex; flex-direction: column;
+  justify-content: space-between;
+  color: #EDEDEF;
+  position: relative;
+}
+.tile__preview--tile-linear::after {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(600px 200px at 50% 100%, rgba(94,106,210,0.2), transparent);
+  pointer-events: none;
+}
+.tile__preview--tile-linear .meta {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 8px; letter-spacing: 0.15em; text-transform: uppercase;
+  color: #8A8F98;
+  display: flex; align-items: center; gap: 6px;
+  position: relative; z-index: 1;
+}
+.tile__preview--tile-linear .meta .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #5E6AD2;
+  box-shadow: 0 0 6px rgba(94,106,210,0.6);
+}
+.tile__preview--tile-linear .big {
+  font-family: "Inter Tight", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  background: linear-gradient(to bottom, #ffffff, rgba(255,255,255,0.7));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  position: relative; z-index: 1;
+}
+.tile__preview--tile-linear .big em { font-weight: 600; font-style: normal; color: #5E6AD2; }
+.tile__preview--tile-linear .cta {
+  position: relative; z-index: 1;
+}
+.tile__preview--tile-linear .cta span {
+  display: inline-block;
+  padding: 4px 10px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  font-family: "Inter Tight", sans-serif;
+  font-size: 10px;
+  color: #EDEDEF;
+  box-shadow: 0 0 0 1px rgba(94,106,210,0.3), 0 4px 12px rgba(94,106,210,0.2);
+}
+
+/* ─── SWISS / GRID ───────────────────────────────────────────── */
+.tile__preview--tile-swiss {
+  background: #FFFFFF;
+  padding: 12px 14px;
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  grid-template-rows: 1fr auto;
+  gap: 10px;
+  position: relative;
+}
+.tile__preview--tile-swiss::before {
+  content: ""; position: absolute; left: 50%; top: 12px; bottom: 12px;
+  width: 1px; background: rgba(0,0,0,0.06);
+}
+.tile__preview--tile-swiss .num {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  color: #E30613;
+}
+.tile__preview--tile-swiss .text {
+  display: flex; flex-direction: column;
+  justify-content: space-between;
+}
+.tile__preview--tile-swiss .text .big {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: #000;
+}
+.tile__preview--tile-swiss .text .small {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #666;
+}
+.tile__preview--tile-swiss .bar {
+  grid-column: 1 / -1;
+  height: 4px;
+  background: #000;
+}
+
+/* ─── CYBERPUNK ────────────────────────────────────────────── */
+.tile__preview--tile-cyberpunk {
+  background: #0A0014;
+  padding: 12px 14px;
+  display: flex; flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  color: #E5E5FF;
+}
+.tile__preview--tile-cyberpunk::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.025) 2px, rgba(255,255,255,0.025) 4px);
+}
+.tile__preview--tile-cyberpunk::after {
+  content: ""; position: absolute; right: -40px; top: -40px;
+  width: 100px; height: 100px;
+  background: radial-gradient(circle, rgba(255,0,128,0.4), transparent 60%);
+}
+.tile__preview--tile-cyberpunk .head {
+  font-family: "Space Mono", "Courier New", monospace;
+  font-weight: 700;
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  color: #00FFFF;
+  text-shadow: 0 0 4px rgba(0,255,255,0.6);
+  position: relative; z-index: 1;
+}
+.tile__preview--tile-cyberpunk .big {
+  font-family: "Space Mono", "Courier New", monospace;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #FF0080;
+  text-shadow:
+    0 0 6px rgba(255,0,128,0.8),
+    0 0 16px rgba(255,0,128,0.4);
+  position: relative; z-index: 1;
+}
+.tile__preview--tile-cyberpunk .cta {
+  font-family: "Space Mono", monospace;
+  font-weight: 700;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: #00FFFF;
+  align-self: flex-start;
+  padding: 4px 10px;
+  border: 1px solid #00FFFF;
+  text-shadow: 0 0 4px rgba(0,255,255,0.6);
+  position: relative; z-index: 1;
+}
+
+/* ─── NEWSPAPER ────────────────────────────────────────────── */
+.tile__preview--tile-newspaper {
+  background: #F7F2E8;
+  padding: 10px 14px;
+  display: grid;
+  grid-template-rows: auto auto auto auto 1fr;
+  gap: 4px;
+  color: #1A1A1A;
+}
+.tile__preview--tile-newspaper .rule {
+  background: #1A1A1A;
+}
+.tile__preview--tile-newspaper .rule.top { height: 2px; }
+.tile__preview--tile-newspaper .rule.bot { height: 3px; box-shadow: 0 4px 0 #F7F2E8, 0 5px 0 #1A1A1A; }
+.tile__preview--tile-newspaper .masthead {
+  font-family: "Tiempos Headline", "Times New Roman", serif;
+  font-weight: 900;
+  font-size: 38px;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  text-align: center;
+}
+.tile__preview--tile-newspaper .meta {
+  text-align: center;
+  font-family: "Lyon Text", "Times", serif;
+  font-size: 7px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #555;
+}
+.tile__preview--tile-newspaper .cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px;
+  margin-top: 8px;
+}
+.tile__preview--tile-newspaper .cols span {
+  height: 28px;
+  background:
+    repeating-linear-gradient(0deg, #1A1A1A 0, #1A1A1A 1px, transparent 1px, transparent 3px);
+  opacity: 0.4;
+}
+
+/* ─── MEMPHIS ──────────────────────────────────────────────── */
+.tile__preview--tile-memphis {
+  background: #FFF5E1;
+  padding: 12px 14px;
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.tile__preview--tile-memphis .dot {
+  position: absolute;
+  border-radius: 50%;
+}
+.tile__preview--tile-memphis .dot-red {
+  width: 14px; height: 14px; background: #FF3333;
+  top: 8px; left: 8px;
+}
+.tile__preview--tile-memphis .dot-blue {
+  width: 20px; height: 20px; background: #0066CC;
+  bottom: 8px; right: 12px;
+}
+.tile__preview--tile-memphis .squiggle {
+  position: absolute;
+  top: 50%; left: 6px;
+  font-family: "Source Serif 4", serif;
+  font-size: 30px;
+  color: #FF6BAA;
+  font-weight: 700;
+  transform: rotate(-5deg);
+}
+.tile__preview--tile-memphis .word {
+  font-family: "Fraunces", "Source Serif 4", serif;
+  font-weight: 900;
+  font-size: 48px;
+  line-height: 1;
+  color: #FFD500;
+  text-shadow:
+    -2px 2px 0 #0066CC;
+  letter-spacing: -0.02em;
+  transform: rotate(-3deg);
+}
+.tile__preview--tile-memphis .tri {
+  position: absolute;
+  top: 12px; right: 8px;
+  width: 0; height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 18px solid #A8E6CF;
+  transform: rotate(10deg);
+}

@@ -35,6 +35,31 @@ const STYLE_BRIEF_DEFAULTS = {
     references: "visionOS, macOS Sonoma control center, Linear marketing, meditation app onboarding",
     avoid: "saturated colors, hard shadows, sharp corners, serif typography, opaque backgrounds",
   },
+  linear: {
+    tone: "premium, precise, technical-minimalist, expensive-feeling, considered",
+    references: "Linear, Vercel dashboard, Raycast, Arc browser, Cursor IDE, Apollo",
+    avoid: "pure black backgrounds, flat dark mode, bouncy springs, colorful accents, web-2.0 gradients",
+  },
+  swiss: {
+    tone: "formal, functional, modular, deliberate, intellectual",
+    references: "Müller-Brockmann posters, Vignelli's NYC subway map, IBM 1970s, MIT Press Design",
+    avoid: "serifs, centered headlines, rounded corners, more than one accent color, off-grid alignment",
+  },
+  cyberpunk: {
+    tone: "electric, dystopian-optimistic, hacker, nocturnal, glitched",
+    references: "Cyberpunk 2077 ads, Akira, Ghost in the Shell, Mr. Robot titles, Anamanaguchi cover art",
+    avoid: "Inter / Helvetica headlines, light backgrounds, soft shadows, pastel accents",
+  },
+  newspaper: {
+    tone: "broadsheet, considered, literate, civic, slow-reading",
+    references: "The New York Times Sunday, The Guardian Weekend, Le Monde, NYT T Magazine print",
+    avoid: "sans-serif body, pure white background, single column body, modern minimalist hero",
+  },
+  memphis: {
+    tone: "joyful, irreverent, geometric, post-modern, primary-saturated",
+    references: "Ettore Sottsass furniture, Memphis Group catalogs, Nathalie Du Pasquier textiles, Bottega Veneta SS22",
+    avoid: "tasteful restraint, symmetric layouts, muted colors, single shape vocabulary",
+  },
 };
 
 /**

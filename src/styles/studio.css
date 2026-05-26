@@ -361,11 +361,120 @@
   color: var(--fg-subtle);
 }
 
-/* Style cards */
+/* Style cards (legacy — kept for backwards-compat) */
 .step__cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: var(--space-3);
+}
+
+/* Style variant picker (Step 1 — 90 variants) */
+.step__variant-filter {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+.step__variant-search {
+  width: 100%;
+  padding: var(--space-3);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  background: var(--bg-elevated);
+  color: var(--fg);
+  border: var(--border-thin) solid var(--border);
+  min-height: 44px;
+}
+.step__variant-search:focus { outline: 2px solid var(--focus); outline-offset: -1px; }
+
+.step__variant-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.step__variant-count {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-subtle);
+  margin: 0;
+}
+
+.step__variant-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+}
+
+.step__variant-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  border: var(--border-thin) solid var(--border);
+  cursor: pointer;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+.step__variant-card:hover, .step__variant-card:focus-visible { border-color: var(--border-strong); }
+.step__variant-card.is-active {
+  border-color: var(--accent);
+  outline: var(--border-medium) solid var(--accent);
+  outline-offset: -1px;
+}
+.step__variant-preview {
+  /* Inherits from .tile__preview-- variants */
+}
+.step__variant-info {
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.step__variant-name {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+}
+.step__variant-mood-tag {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-subtle);
+}
+.step__variant-empty {
+  grid-column: 1 / -1;
+  padding: var(--space-6);
+  text-align: center;
+  color: var(--fg-muted);
+}
+
+.step__advanced {
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: var(--border-thin) solid var(--border);
+}
+.step__advanced-summary {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  cursor: pointer;
+  padding: var(--space-2) 0;
+  list-style: none;
+}
+.step__advanced-summary::before {
+  content: "▸ ";
+  display: inline-block;
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+.step__advanced[open] .step__advanced-summary::before {
+  transform: rotate(90deg);
 }
 .step__card {
   display: flex;

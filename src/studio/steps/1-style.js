@@ -1,76 +1,163 @@
 // Step 1 — Style & feel
-// Choose: style preset (5 cards w/ live preview), density, drama, motion modifiers.
+// Picker: 90 variant cards (10 base styles × 9 moods). Search + base-style filter chips.
+// Clicking a card sets state.style + density + drama + motion together.
+// Modifier radio rows remain available below for power-users who want to tune off-mood.
 
 import { el } from "../../lib/dom.js";
 import { STYLE_PRESETS, STYLE_LIST } from "../../data/styles/index.js";
+import { STYLE_VARIANTS, findVariantForState } from "../../data/style-variants.js";
 import { DENSITY_LEVELS, DRAMA_LEVELS, MOTION_LEVELS } from "../../data/modifiers.js";
+import { MOOD_PRESETS } from "../../data/moods.js";
 
 export function renderStep1({ state, onStateChange }) {
   const root = el("section", { class: "step step--style" });
 
-  // ─── Style preset cards ──────────────────────────────────────────────────
-  const cards = el("div", { class: "step__cards", role: "radiogroup", "aria-label": "Style preset" });
-  for (const preset of STYLE_LIST) {
-    const isActive = state.style === preset.id;
-    cards.appendChild(
-      el(
-        "label",
-        {
-          class: "step__card" + (isActive ? " is-active" : ""),
-          tabindex: "0",
-          role: "radio",
-          "aria-checked": isActive ? "true" : "false",
-          onClick: () => {
-            state.style = preset.id;
-            onStateChange?.();
-          },
-          onKeydown: (e) => {
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault();
-              state.style = preset.id;
-              onStateChange?.();
-            }
-          },
-        },
-        el("div", {
-          class: "step__card-preview tile__preview tile__preview--" + preset.tile,
-          "aria-hidden": "true",
-          html: preset.tileHTML,
-        }),
-        el(
-          "div",
-          { class: "step__card-info" },
-          el("div", { class: "step__card-name" }, preset.name),
-          el("div", { class: "step__card-tag" }, preset.tag),
-          el("div", { class: "step__card-desc" }, preset.desc),
-          preset.feel ? el("div", { class: "step__card-feel" }, `"${preset.feel}"`) : null,
-        ),
-      ),
-    );
+  // ─── State for the filter UI (local — not persisted) ─────────────────────
+  const ui = {
+    query: "",
+    baseFilter: null, // null = all
+    moodFilter: null,
+  };
+
+  // ─── Filter bar ──────────────────────────────────────────────────────────
+  const filterBar = el("div", { class: "step__variant-filter" });
+  const searchInput = el("input", {
+    type: "search",
+    class: "step__variant-search",
+    placeholder: `Search ${STYLE_VARIANTS.length} style presets…`,
+    "aria-label": "Search style presets",
+  });
+  searchInput.addEventListener("input", (e) => {
+    ui.query = e.target.value;
+    rebuildCards();
+  });
+
+  const baseChips = el(
+    "div",
+    { class: "step__variant-chips", role: "radiogroup", "aria-label": "Filter by base style" },
+    chip("All bases", null, () => { ui.baseFilter = null; rebuildAll(); }, ui.baseFilter === null),
+    ...STYLE_LIST.map((s) =>
+      chip(s.name, s.id, () => { ui.baseFilter = s.id; rebuildAll(); }, ui.baseFilter === s.id),
+    ),
+  );
+
+  const moodChips = el(
+    "div",
+    { class: "step__variant-chips", role: "radiogroup", "aria-label": "Filter by mood" },
+    chip("All moods", null, () => { ui.moodFilter = null; rebuildAll(); }, ui.moodFilter === null),
+    ...MOOD_PRESETS.map((m) =>
+      chip(m.name, m.id, () => { ui.moodFilter = m.id; rebuildAll(); }, ui.moodFilter === m.id),
+    ),
+  );
+
+  filterBar.append(searchInput, baseChips, moodChips);
+
+  // ─── Variant grid ────────────────────────────────────────────────────────
+  const grid = el("div", { class: "step__variant-grid", role: "radiogroup", "aria-label": "Style preset" });
+  const countLine = el("p", { class: "step__variant-count", "aria-live": "polite" });
+
+  function applyVariant(variant) {
+    state.style = variant.baseStyle;
+    state.density = variant.density;
+    state.drama = variant.drama;
+    state.motion = variant.motion;
+    onStateChange?.();
   }
 
+  function rebuildCards() {
+    const q = ui.query.trim().toLowerCase();
+    const visible = STYLE_VARIANTS.filter((v) => {
+      if (ui.baseFilter && v.baseStyle !== ui.baseFilter) return false;
+      if (ui.moodFilter && v.moodId !== ui.moodFilter) return false;
+      if (q) {
+        const hay = (v.name + " " + v.tag + " " + (v.feel || "")).toLowerCase();
+        if (!hay.includes(q)) return false;
+      }
+      return true;
+    });
+
+    grid.replaceChildren();
+    countLine.textContent = `${visible.length} of ${STYLE_VARIANTS.length} variants`;
+
+    if (visible.length === 0) {
+      grid.appendChild(el("p", { class: "step__variant-empty" }, "No matches. Clear filters to see all 90."));
+      return;
+    }
+
+    const activeVariant = findVariantForState(state);
+    const activeId = activeVariant?.id;
+
+    for (const v of visible) {
+      const isActive = v.id === activeId;
+      grid.appendChild(
+        el(
+          "label",
+          {
+            class: "step__variant-card" + (isActive ? " is-active" : ""),
+            tabindex: "0",
+            role: "radio",
+            "aria-checked": isActive ? "true" : "false",
+            onClick: () => applyVariant(v),
+            onKeydown: (e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                applyVariant(v);
+              }
+            },
+          },
+          el("div", {
+            class: "step__variant-preview tile__preview tile__preview--" + (v.tile || "tile-mono"),
+            "aria-hidden": "true",
+            html: v.tileHTML || "",
+          }),
+          el(
+            "div",
+            { class: "step__variant-info" },
+            el("div", { class: "step__variant-name" }, v.name),
+            el("div", { class: "step__variant-mood-tag" }, v.tag),
+          ),
+        ),
+      );
+    }
+  }
+
+  function rebuildAll() {
+    rebuildChip(baseChips, [{ id: null, name: "All bases" }, ...STYLE_LIST.map((s) => ({ id: s.id, name: s.name }))], ui.baseFilter, (id) => { ui.baseFilter = id; rebuildAll(); });
+    rebuildChip(moodChips, [{ id: null, name: "All moods" }, ...MOOD_PRESETS.map((m) => ({ id: m.id, name: m.name }))], ui.moodFilter, (id) => { ui.moodFilter = id; rebuildAll(); });
+    rebuildCards();
+  }
+
+  function rebuildChip(parent, options, selected, onSelect) {
+    parent.replaceChildren(...options.map((o) => chip(o.name, o.id, () => onSelect(o.id), o.id === selected)));
+  }
+
+  // ─── Initial paint ───────────────────────────────────────────────────────
   root.append(
-    sectionLabel("Style preset", `${STYLE_LIST.length} options`),
-    cards,
+    sectionLabel(`Style preset · ${STYLE_VARIANTS.length} variants`, "10 base styles × 9 moods"),
+    filterBar,
+    countLine,
+    grid,
   );
 
-  // ─── Modifiers ────────────────────────────────────────────────────────────
-  root.append(
-    sectionLabel("Density", "Cross-cutting"),
-    renderRadioRow(DENSITY_LEVELS, state.density, (id) => { state.density = id; onStateChange?.(); }),
+  // Modifier radio rows (kept for power users who want fine-tune off-mood)
+  const advancedToggle = el(
+    "details",
+    { class: "step__advanced" },
+    el("summary", { class: "step__advanced-summary" }, "Fine-tune modifiers (advanced)"),
+    sectionLabel("Density", ""),
+    radioRow(DENSITY_LEVELS, state.density, (id) => { state.density = id; onStateChange?.(); rebuildCards(); }),
+    sectionLabel("Drama", ""),
+    radioRow(DRAMA_LEVELS, state.drama, (id) => { state.drama = id; onStateChange?.(); rebuildCards(); }),
+    sectionLabel("Motion", ""),
+    radioRow(MOTION_LEVELS, state.motion, (id) => { state.motion = id; onStateChange?.(); rebuildCards(); }),
   );
-  root.append(
-    sectionLabel("Drama", "Cross-cutting"),
-    renderRadioRow(DRAMA_LEVELS, state.drama, (id) => { state.drama = id; onStateChange?.(); }),
-  );
-  root.append(
-    sectionLabel("Motion", "Optional override"),
-    renderRadioRow(MOTION_LEVELS, state.motion, (id) => { state.motion = id; onStateChange?.(); }),
-  );
+  root.appendChild(advancedToggle);
 
+  rebuildCards();
   return root;
 }
 
+// ─── Helpers ────────────────────────────────────────────────────────────────
 function sectionLabel(title, hint) {
   return el(
     "div",
@@ -80,7 +167,21 @@ function sectionLabel(title, hint) {
   );
 }
 
-function renderRadioRow(items, selected, onSelect) {
+function chip(label, id, onSelect, isActive) {
+  return el(
+    "button",
+    {
+      type: "button",
+      class: "chip" + (isActive ? " is-active" : ""),
+      role: "radio",
+      "aria-checked": isActive ? "true" : "false",
+      onClick: onSelect,
+    },
+    label,
+  );
+}
+
+function radioRow(items, selected, onSelect) {
   const row = el("div", { class: "radio-row", role: "radiogroup" });
   for (const item of items) {
     const isActive = item.id === selected;
@@ -102,5 +203,5 @@ function renderRadioRow(items, selected, onSelect) {
   return row;
 }
 
-// Re-export for the style-card preview tile referenced from STYLE_PRESETS keys
+// Eliminate unused import lint complaints — these are referenced via imports above.
 void STYLE_PRESETS;

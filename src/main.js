@@ -6,6 +6,7 @@ import "./styles/reset.css";
 import "./styles/tokens.css";
 import "./styles/main.css";
 import "./styles/tiles.css";
+import "./styles/tiles-extended.css";
 import "./styles/gallery.css";
 import "./styles/studio.css";
 
