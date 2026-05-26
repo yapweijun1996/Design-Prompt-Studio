@@ -13,6 +13,18 @@ import { cyberpunk } from "./cyberpunk.js";
 import { newspaper } from "./newspaper.js";
 import { memphis } from "./memphis.js";
 
+// Compact-format additions, batch 2 (2026-05-26 expansion to 20 base styles)
+import { sketch } from "./sketch.js";
+import { vaporwave } from "./vaporwave.js";
+import { cottagecore } from "./cottagecore.js";
+import { solarpunk } from "./solarpunk.js";
+import { bauhaus } from "./bauhaus.js";
+import { industrial } from "./industrial.js";
+import { pixel } from "./pixel.js";
+import { tropical } from "./tropical.js";
+import { constructivist } from "./constructivist.js";
+import { zine } from "./zine.js";
+
 export const STYLE_PRESETS = {
   // Tier 1 — original 5 with hand-written ~250-line md
   monochrome,
@@ -20,12 +32,23 @@ export const STYLE_PRESETS = {
   editorial,
   y2k,
   glass,
-  // Tier 2 — compact format with synthesized md
+  // Tier 2 — compact format with synthesized md (batch 1)
   linear,
   swiss,
   cyberpunk,
   newspaper,
   memphis,
+  // Tier 2 — batch 2
+  sketch,
+  vaporwave,
+  cottagecore,
+  solarpunk,
+  bauhaus,
+  industrial,
+  pixel,
+  tropical,
+  constructivist,
+  zine,
 };
 
 export const STYLE_IDS = Object.keys(STYLE_PRESETS);

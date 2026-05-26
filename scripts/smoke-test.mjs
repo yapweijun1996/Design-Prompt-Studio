@@ -21,12 +21,12 @@ function check(label, fn) {
 }
 
 // ─── Counts ────────────────────────────────────────────────────────────────
-check("style count = 10 (5 original + 5 compact)", () => STYLE_IDS.length === 10);
+check("style count = 20 (5 original + 15 compact)", () => STYLE_IDS.length === 20);
 check("page-type count ≥ 30", () => pageTypeCount() >= 30);
 check("curated prompts = 5", () => CURATED_PROMPTS.length === 5);
-check("ALL_PROMPTS ≥ 300", () => ALL_PROMPTS.length >= 300);
+check("ALL_PROMPTS ≥ 600", () => ALL_PROMPTS.length >= 600);
 check("MOOD_PRESETS = 9", () => MOOD_PRESETS.length === 9);
-check("STYLE_VARIANTS = 90 (10×9)", () => STYLE_VARIANTS.length === 90);
+check("STYLE_VARIANTS = 180 (20×9)", () => STYLE_VARIANTS.length === 180);
 
 // Verify a variant resolves back to its base + modifiers
 check("variant linear--whisper resolves correctly", () => {

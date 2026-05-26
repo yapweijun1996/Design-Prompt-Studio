@@ -60,6 +60,56 @@ const STYLE_BRIEF_DEFAULTS = {
     references: "Ettore Sottsass furniture, Memphis Group catalogs, Nathalie Du Pasquier textiles, Bottega Veneta SS22",
     avoid: "tasteful restraint, symmetric layouts, muted colors, single shape vocabulary",
   },
+  sketch: {
+    tone: "warm, hand-made, approachable, illustrative, imperfect, slow",
+    references: "Oliver Jeffers picture books, Quentin Blake illustrations, Aesop letters, Field Notes notebooks",
+    avoid: "perfect geometry, neon accents, sans-serif body, strict grid alignment",
+  },
+  vaporwave: {
+    tone: "nostalgic, dreamy, ironic, 90s-mall, classical-pastiche",
+    references: "Macintosh Plus Floral Shoppe, MTV bumpers 1989-1993, Japanese 1980s ads, Greek statue motifs",
+    avoid: "tight letter-spacing, modern grid, hacker-neon, single-color palettes",
+  },
+  cottagecore: {
+    tone: "warm, slow, considered, folk, handmade, unhurried",
+    references: "Toast catalogs, William Morris textiles, Beatrix Potter, Anthropologie store interiors",
+    avoid: "saturated colors, cool palette, sans-serif body, strict grid",
+  },
+  solarpunk: {
+    tone: "optimistic, forward-looking, verdant, sun-warmed, regenerative",
+    references: "Studio Ghibli landscapes, Allbirds brand book, Patagonia regenerative reports, community gardens",
+    avoid: "dystopian palette, geometric primitives only, doom messaging, neon green",
+  },
+  bauhaus: {
+    tone: "modernist, modular, deliberate, geometric, declarative",
+    references: "Herbert Bayer typography, Moholy-Nagy compositions, Bauhaus 1923 posters, Albers' Homage to the Square",
+    avoid: "display serif, pastel primaries, capitalized headlines, off-grid placement",
+  },
+  industrial: {
+    tone: "functional, raw, weathered, mil-spec, honest",
+    references: "Barbican Centre wayfinding, Carhartt catalogs, Anchor Brewing labels, factory safety signage",
+    avoid: "soft rounding, pastel safety yellow, sans-serif body, pristine cleanliness",
+  },
+  pixel: {
+    tone: "playful, retro, blocky, arcade, frame-by-frame",
+    references: "Super Mario Bros (1985), Game Boy Pokemon Red, Pico-8 game jams, NES Punch-Out",
+    avoid: "anti-aliased smoothness, full RGB palette, modern UI patterns (FAB / modals), smooth ease animations",
+  },
+  tropical: {
+    tone: "warm, hospitality, sunset, considered-luxury, golden-hour",
+    references: "Hôtel Esencia Tulum, Aman Tokyo, Slim Aarons photography, mid-century Acapulco postcards",
+    avoid: "saturated primaries, sharp corners, cool grey palette, sans-serif display",
+  },
+  constructivist: {
+    tone: "bold, declarative, pamphleteering, agitprop, confident",
+    references: "El Lissitzky propaganda posters, Rodchenko photomontages, Stenberg Brothers film posters, Shepard Fairey OBEY",
+    avoid: "more than 3 colors, humanist sans, centered symmetric layout, rounded corners",
+  },
+  zine: {
+    tone: "DIY, raw, confidently amateur, punk, photocopied",
+    references: "Sniffin' Glue 1977, Bikini Kill zines, Crass Records sleeves, early Vice magazine",
+    avoid: "modern sans body, perfect grid alignment, pure white background, full-color photography",
+  },
 };
 
 /**

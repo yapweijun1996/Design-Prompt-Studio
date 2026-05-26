@@ -1,0 +1,359 @@
+/* Tile preview thumbnails for the 10 additional compact-format styles.
+   sketch, vaporwave, cottagecore, solarpunk, bauhaus, industrial, pixel, tropical,
+   constructivist, zine. */
+
+/* ─── SKETCH ─────────────────────────────────────────────────────────────── */
+.tile__preview--tile-sketch {
+  background: #FAF6EE;
+  padding: 14px;
+  position: relative;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(0,0,0,0.015) 1px, transparent 2px),
+    radial-gradient(circle at 70% 60%, rgba(0,0,0,0.012) 1px, transparent 2px);
+  background-size: 50px 50px;
+}
+.tile__preview--tile-sketch .paper {
+  display: flex; flex-direction: column; gap: 6px;
+  transform: rotate(-1deg);
+}
+.tile__preview--tile-sketch .word {
+  font-family: "Caveat", "Comic Sans MS", cursive;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 1;
+  color: #2B2820;
+}
+.tile__preview--tile-sketch .underline {
+  height: 8px;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 8"><path d="M2,5 Q25,2 50,4 T98,5" fill="none" stroke="%23C97B30" stroke-width="2"/></svg>') no-repeat center / 80% 100%;
+  width: 80%;
+}
+.tile__preview--tile-sketch .arrow {
+  font-family: "Caveat", cursive;
+  font-size: 16px;
+  color: #6E6960;
+  margin-top: 12px;
+}
+
+/* ─── VAPORWAVE ──────────────────────────────────────────────────────────── */
+.tile__preview--tile-vaporwave {
+  background: linear-gradient(180deg, #0F0B2A 0%, #9B59B6 40%, #FF6EC7 75%, #F5D8B5 100%);
+  padding: 14px;
+  position: relative;
+  overflow: hidden;
+  color: #FFE5F1;
+}
+.tile__preview--tile-vaporwave .kata {
+  font-family: serif;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: #5EE5D5;
+}
+.tile__preview--tile-vaporwave .word {
+  font-family: "Times New Roman", serif;
+  font-weight: 400;
+  font-size: 40px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: #FFE5F1;
+  text-shadow: -2px 0 #FF6EC7, 2px 0 #5EE5D5;
+  margin: 8px 0;
+}
+.tile__preview--tile-vaporwave .grid {
+  position: absolute;
+  bottom: 0; left: 0; right: 0; height: 50%;
+  background-image:
+    linear-gradient(to right, rgba(255,110,199,0.6) 1px, transparent 1px),
+    linear-gradient(to top, rgba(255,110,199,0.6) 1px, transparent 1px);
+  background-size: 24px 24px;
+  transform: perspective(120px) rotateX(60deg);
+  transform-origin: center bottom;
+}
+
+/* ─── COTTAGECORE ────────────────────────────────────────────────────────── */
+.tile__preview--tile-cottagecore {
+  background: #F5EFE0;
+  padding: 14px 16px;
+  display: flex; flex-direction: column;
+  justify-content: space-between;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(0,0,0,0.015) 1px, transparent 2px);
+  background-size: 60px 60px;
+}
+.tile__preview--tile-cottagecore .dingbat {
+  font-size: 18px;
+  color: #8FA989;
+  text-align: center;
+}
+.tile__preview--tile-cottagecore .word {
+  font-family: "Fraunces", "Source Serif 4", serif;
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 1;
+  color: #3A2C1E;
+  text-align: center;
+}
+.tile__preview--tile-cottagecore .word em {
+  font-style: italic;
+  font-weight: 400;
+  color: #C97B5B;
+}
+.tile__preview--tile-cottagecore .rule {
+  height: 1px;
+  background: #8FA989;
+  opacity: 0.4;
+  width: 60%;
+  margin: 0 auto;
+}
+
+/* ─── SOLARPUNK ──────────────────────────────────────────────────────────── */
+.tile__preview--tile-solarpunk {
+  background: linear-gradient(135deg, #FDF8EF 0%, #F0E5C8 60%, #C8DCB8 100%);
+  padding: 14px;
+  position: relative;
+  display: flex; flex-direction: column;
+  justify-content: space-between;
+  color: #1F3326;
+}
+.tile__preview--tile-solarpunk .leaf {
+  font-size: 16px;
+  color: #3A8B45;
+}
+.tile__preview--tile-solarpunk .word {
+  font-family: "Söhne", "Lexend", system-ui;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: #1F3326;
+}
+.tile__preview--tile-solarpunk .word em {
+  font-style: italic;
+  font-weight: 600;
+  color: #3A8B45;
+}
+.tile__preview--tile-solarpunk .cta {
+  background: #3A8B45;
+  color: #FDF8EF;
+  padding: 4px 10px;
+  border-radius: 40% 20% 40% 20%;
+  font-family: "Söhne", system-ui;
+  font-size: 9px;
+  font-weight: 600;
+  align-self: flex-start;
+}
+
+/* ─── BAUHAUS ────────────────────────────────────────────────────────────── */
+.tile__preview--tile-bauhaus {
+  background: #F5F5F0;
+  padding: 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 16px;
+  gap: 8px;
+  position: relative;
+}
+.tile__preview--tile-bauhaus .circle {
+  background: #DC2626;
+  border-radius: 50%;
+  grid-row: 1;
+  grid-column: 1;
+}
+.tile__preview--tile-bauhaus .square {
+  background: #FCD34D;
+  grid-row: 1;
+  grid-column: 2;
+}
+.tile__preview--tile-bauhaus .tri {
+  width: 0; height: 0;
+  border-left: 24px solid transparent;
+  border-right: 24px solid transparent;
+  border-bottom: 40px solid #2563EB;
+  grid-row: 2;
+  grid-column: 1;
+  align-self: center;
+}
+.tile__preview--tile-bauhaus .word {
+  font-family: "Futura PT", "Avenir Next", system-ui;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1;
+  text-transform: lowercase;
+  color: #0F0F0F;
+  grid-row: 2;
+  grid-column: 2;
+  align-self: center;
+}
+
+/* ─── INDUSTRIAL ─────────────────────────────────────────────────────────── */
+.tile__preview--tile-industrial {
+  background: #EBE7E0;
+  padding: 12px 14px;
+  display: flex; flex-direction: column;
+  justify-content: space-between;
+  border: 3px solid #1A1A1A;
+}
+.tile__preview--tile-industrial .label {
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 700;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #1A1A1A;
+  background: #FFCC00;
+  display: inline-block;
+  padding: 2px 6px;
+  align-self: flex-start;
+}
+.tile__preview--tile-industrial .word {
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: #1A1A1A;
+}
+.tile__preview--tile-industrial .stripe {
+  height: 12px;
+  background: repeating-linear-gradient(-45deg, #FFCC00 0, #FFCC00 8px, #1A1A1A 8px, #1A1A1A 16px);
+}
+
+/* ─── PIXEL ──────────────────────────────────────────────────────────────── */
+.tile__preview--tile-pixel {
+  background: #0F0F23;
+  padding: 12px 14px;
+  position: relative;
+  color: #FFE3A4;
+  display: flex; flex-direction: column;
+  justify-content: space-between;
+}
+.tile__preview--tile-pixel::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: repeating-linear-gradient(0deg, transparent 0, transparent 2px, rgba(0,0,0,0.2) 2px, rgba(0,0,0,0.2) 4px);
+}
+.tile__preview--tile-pixel .score {
+  font-family: "VT323", "Courier New", monospace;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: #5DE5FF;
+}
+.tile__preview--tile-pixel .word {
+  font-family: "Press Start 2P", "VT323", monospace;
+  font-size: 22px;
+  line-height: 1.2;
+  color: #FF4D8B;
+  text-shadow: 2px 2px 0 #3D0F4D;
+}
+.tile__preview--tile-pixel .hearts {
+  font-size: 18px;
+  color: #FF4D8B;
+  letter-spacing: 4px;
+}
+
+/* ─── TROPICAL ────────────────────────────────────────────────────────────── */
+.tile__preview--tile-tropical {
+  background: linear-gradient(135deg, #FF7F66 0%, #FFB07F 40%, #FFE0BC 70%, #7AC6BD 100%);
+  padding: 14px;
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+}
+.tile__preview--tile-tropical .card {
+  background: rgba(247, 240, 229, 0.85);
+  backdrop-filter: blur(6px);
+  border-radius: 16px;
+  padding: 10px 14px;
+  display: flex; flex-direction: column; gap: 6px;
+  min-width: 80%;
+}
+.tile__preview--tile-tropical .meta {
+  font-family: "Söhne", "Inter Tight", system-ui;
+  font-weight: 500;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #7B6155;
+}
+.tile__preview--tile-tropical .word {
+  font-family: "Domaine Display", "GT Sectra", "Playfair Display", serif;
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: #2E1F1A;
+}
+.tile__preview--tile-tropical .word em {
+  font-style: italic;
+  font-weight: 500;
+  color: #FF7F66;
+}
+
+/* ─── CONSTRUCTIVIST ─────────────────────────────────────────────────────── */
+.tile__preview--tile-constructivist {
+  background: #EFE9D8;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+.tile__preview--tile-constructivist .diag {
+  position: absolute;
+  top: -10%; left: -10%; width: 120%; height: 60%;
+  background: #D7263D;
+  transform: rotate(-12deg);
+}
+.tile__preview--tile-constructivist .word {
+  position: absolute;
+  bottom: 16px; left: 14px;
+  font-family: "Druk Wide", "League Gothic", "Oswald", sans-serif;
+  font-weight: 900;
+  font-size: 48px;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: #0F0F0F;
+  transform: rotate(-3deg);
+  transform-origin: left center;
+}
+.tile__preview--tile-constructivist .circle {
+  position: absolute;
+  top: 30%; right: 12px;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: #0F0F0F;
+}
+
+/* ─── ZINE ───────────────────────────────────────────────────────────────── */
+.tile__preview--tile-zine {
+  background: #F7F4EE;
+  padding: 16px 14px;
+  position: relative;
+  background-image:
+    radial-gradient(circle at 25% 30%, rgba(0,0,0,0.04) 1px, transparent 2px),
+    radial-gradient(circle at 70% 60%, rgba(0,0,0,0.03) 1px, transparent 2px);
+  background-size: 50px 50px;
+  display: flex; flex-direction: column;
+  justify-content: space-between;
+}
+.tile__preview--tile-zine .tape {
+  position: absolute;
+  width: 50px; height: 14px;
+  background: rgba(15,15,15,0.08);
+  border: 1px solid rgba(15,15,15,0.2);
+}
+.tile__preview--tile-zine .tape.t1 { top: 4px; left: 18px; transform: rotate(-6deg); }
+.tile__preview--tile-zine .tape.t2 { bottom: 8px; right: 12px; transform: rotate(8deg); }
+.tile__preview--tile-zine .head {
+  font-family: "Knockout", "Anton", "Bebas Neue", sans-serif;
+  font-weight: 900;
+  font-size: 48px;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  color: #0F0F0F;
+  transform: rotate(-2deg);
+}
+.tile__preview--tile-zine .body {
+  font-family: "Courier Prime", "Courier New", monospace;
+  font-size: 9px;
+  color: #4A4A4A;
+  letter-spacing: 0.02em;
+  transform: rotate(1deg);
+}
