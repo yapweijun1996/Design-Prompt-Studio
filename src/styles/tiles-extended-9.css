@@ -1,0 +1,100 @@
+/* Tile preview thumbnails for batch-9 — milestone 100 🎯
+   gallery, bookstore. */
+
+/* ─── PHOTO GALLERY ────────────────────────────────────────────── */
+.tile__preview--tile-gallery {
+  background: #F5F2EC;
+  padding: 10px;
+  display: flex; flex-direction: column; gap: 6px;
+  font-family: "Söhne Mono", "JetBrains Mono", monospace;
+  color: #1A1A1A;
+}
+.tile__preview--tile-gallery .grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  grid-template-rows: 1fr 0.7fr;
+  gap: 3px;
+  flex: 1;
+  grid-template-areas:
+    "a b"
+    "a c"
+    "d c";
+}
+.tile__preview--tile-gallery .im {
+  background: #E5E1D8;
+  background-size: cover;
+  background-position: center;
+}
+.tile__preview--tile-gallery .im.a {
+  grid-area: a;
+  background: linear-gradient(135deg, #3A3530 0%, #6B5F4D 100%);
+}
+.tile__preview--tile-gallery .im.b {
+  grid-area: b;
+  background: linear-gradient(135deg, #A5B5A0 0%, #5C7060 100%);
+}
+.tile__preview--tile-gallery .im.c {
+  grid-area: c;
+  background: linear-gradient(135deg, #C9B59A 0%, #8B7355 100%);
+}
+.tile__preview--tile-gallery .im.d {
+  grid-area: d;
+  background: linear-gradient(135deg, #D8D2C5 0%, #A09B8E 100%);
+}
+.tile__preview--tile-gallery .cap {
+  font-family: "Söhne Mono", "JetBrains Mono", monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: #7A7A7A;
+}
+
+/* ─── INDEPENDENT BOOKSTORE ────────────────────────────────────── */
+.tile__preview--tile-bookstore {
+  background: #FBF6E8;
+  padding: 10px 14px;
+  display: flex; flex-direction: column; gap: 3px;
+  font-family: "Sabon", "Caslon", "Source Serif 4", Georgia, serif;
+  color: #1F1610;
+}
+.tile__preview--tile-bookstore .brow {
+  font-family: "Courier Prime", "Special Elite", monospace;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  color: #7A2E2A;
+  text-transform: uppercase;
+}
+.tile__preview--tile-bookstore .head {
+  font-family: "Sabon", "Caslon", serif;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1.1;
+  color: #1F1610;
+  margin-top: 2px;
+}
+.tile__preview--tile-bookstore .head em {
+  font-style: italic;
+  color: #1F1610;
+}
+.tile__preview--tile-bookstore .auth {
+  font-family: "Caslon", serif;
+  font-style: italic;
+  font-size: 11px;
+  color: #6B5F4D;
+}
+.tile__preview--tile-bookstore .pr {
+  font-family: "Caslon", serif;
+  font-size: 13px;
+  color: #1F1610;
+  font-variant-numeric: tabular-nums;
+  margin-top: 2px;
+}
+.tile__preview--tile-bookstore .note {
+  margin-top: auto;
+  font-family: "Caveat", "Kalam", cursive;
+  font-size: 13px;
+  line-height: 1.25;
+  color: #7A2E2A;
+  border-top: 1px dashed #D9CFB8;
+  padding-top: 4px;
+  transform: rotate(-1deg);
+}

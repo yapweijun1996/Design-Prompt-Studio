@@ -1,0 +1,152 @@
+/* Tile preview thumbnails for batch-5 B2B SaaS subsegments.
+   hr, cms, analytics, email. */
+
+/* ─── HR / RECRUITING ──────────────────────────────────────────── */
+.tile__preview--tile-hr {
+  background: #F7F9FA;
+  padding: 8px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+  font-family: "Inter", system-ui, sans-serif;
+}
+.tile__preview--tile-hr .col {
+  background: rgba(255,255,255,0.4);
+  border-radius: 6px; padding: 5px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.tile__preview--tile-hr .hd {
+  font-size: 9px; font-weight: 600; color: #1F2937;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.tile__preview--tile-hr .hd .ct {
+  background: #E5E7EB; border-radius: 8px; padding: 0 5px;
+  font-size: 8px; color: #4B5563;
+  font-variant-numeric: tabular-nums;
+}
+.tile__preview--tile-hr .card {
+  background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 5px;
+  padding: 4px 6px;
+  display: grid; grid-template-columns: 18px 1fr; gap: 5px;
+  align-items: center;
+}
+.tile__preview--tile-hr .card.hl {
+  border-color: #2E8E5C;
+  box-shadow: 0 1px 3px rgba(46,142,92,0.2);
+}
+.tile__preview--tile-hr .av {
+  width: 18px; height: 18px; border-radius: 50%;
+  background: #2E8E5C; color: #FFFFFF;
+  display: grid; place-items: center;
+  font-size: 8px; font-weight: 700;
+}
+.tile__preview--tile-hr .nm {
+  font-size: 9px; color: #1F2937; font-weight: 500;
+}
+
+/* ─── MARKETING CMS ────────────────────────────────────────────── */
+.tile__preview--tile-cms {
+  background: #F4F4F6;
+  display: grid; grid-template-columns: 40px 1fr 40px;
+  padding: 0;
+  font-family: "Inter", sans-serif;
+  height: 100%;
+}
+.tile__preview--tile-cms .rail {
+  background: #FAFAFA;
+  border-right: 1px solid #E1E1E5;
+  background-image:
+    linear-gradient(180deg, transparent 6px, #E1E1E5 6px 8px, transparent 8px),
+    linear-gradient(180deg, transparent 16px, #E1E1E5 16px 18px, transparent 18px),
+    linear-gradient(180deg, transparent 26px, #146EF5 26px 28px, transparent 28px),
+    linear-gradient(180deg, transparent 36px, #E1E1E5 36px 38px, transparent 38px);
+  background-repeat: no-repeat;
+  background-position: 8px 0;
+  background-size: 24px 100%;
+}
+.tile__preview--tile-cms .canvas {
+  padding: 8px 6px;
+  display: flex; flex-direction: column; gap: 5px;
+  background: #F4F4F6;
+}
+.tile__preview--tile-cms .bar {
+  background: #FFFFFF; border: 1px solid #E1E1E5; border-radius: 3px;
+  height: 12px;
+}
+.tile__preview--tile-cms .blk {
+  background: #FFFFFF; border: 1px solid #E1E1E5; border-radius: 3px;
+  flex: 1;
+  position: relative;
+  display: grid; place-items: center;
+}
+.tile__preview--tile-cms .blk.hl {
+  outline: 2px solid #146EF5; outline-offset: 1px;
+}
+.tile__preview--tile-cms .blk.hl span {
+  position: absolute; top: -10px; left: 0;
+  background: #146EF5; color: #FFFFFF;
+  font-size: 8px; font-weight: 600;
+  padding: 1px 4px; border-radius: 2px 2px 0 0;
+}
+.tile__preview--tile-cms .props {
+  background: #FAFAFA;
+  border-left: 1px solid #E1E1E5;
+}
+
+/* ─── PRODUCT ANALYTICS ────────────────────────────────────────── */
+.tile__preview--tile-analytics {
+  background: #FFFFFF;
+  padding: 10px 12px;
+  display: flex; flex-direction: column; gap: 4px;
+  font-family: "Inter", system-ui, sans-serif;
+}
+.tile__preview--tile-analytics .hd {
+  font-size: 9px; letter-spacing: 0.08em; color: #6B7280;
+  font-weight: 600;
+}
+.tile__preview--tile-analytics .bars {
+  width: 100%; height: 44px;
+}
+.tile__preview--tile-analytics .lbl {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  font-size: 8px; color: #6B7280;
+  text-align: left;
+}
+.tile__preview--tile-analytics .ft {
+  margin-top: auto;
+  font-size: 10px; color: #111827;
+  font-variant-numeric: tabular-nums;
+  border-top: 1px solid #E5E7EB; padding-top: 4px;
+}
+.tile__preview--tile-analytics .ft strong { color: #7C3AED; font-weight: 700; }
+.tile__preview--tile-analytics .ft em { color: #EF4444; font-style: normal; font-weight: 700; margin-left: 4px; }
+
+/* ─── EMAIL PLATFORM ───────────────────────────────────────────── */
+.tile__preview--tile-email {
+  background: #FCFAF7;
+  padding: 10px 12px;
+  display: flex; flex-direction: column; gap: 6px;
+  font-family: "Inter", system-ui, sans-serif;
+}
+.tile__preview--tile-email .card {
+  background: #FFFFFF; border: 1px solid #E5E0D5; border-radius: 8px;
+  padding: 8px 10px;
+}
+.tile__preview--tile-email .card.sm {
+  opacity: 0.85;
+}
+.tile__preview--tile-email .subj {
+  font-size: 12px; font-weight: 600; color: #241C15;
+  margin-bottom: 2px;
+}
+.tile__preview--tile-email .row {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 9px; color: #7A6E5F;
+}
+.tile__preview--tile-email .row .rate {
+  background: #ECFDF5; color: #166534;
+  font-weight: 700; padding: 1px 6px; border-radius: 8px;
+  font-variant-numeric: tabular-nums;
+}
+.tile__preview--tile-email .row .st {
+  background: #FFF9D6; color: #7A5C00;
+  font-weight: 600; padding: 1px 6px; border-radius: 8px;
+}

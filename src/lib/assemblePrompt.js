@@ -12,6 +12,15 @@ import { PAGE_TYPES } from "../data/taxonomy.js";
 import { DENSITY_LEVELS, DRAMA_LEVELS, MOTION_LEVELS } from "../data/modifiers.js";
 import { renderGlobalRules } from "../data/global-rules.js";
 import { getLibrary } from "../data/libraries.js";
+import {
+  getComponent,
+  getComponentsForStyle,
+  getComponentsForContext,
+} from "../data/components.js";
+
+// Cap the number of components included per prompt. Each adds ~4 lines;
+// 18 keeps the block under ~80 lines and prompt token-budget reasonable.
+const MAX_COMPONENTS_PER_PROMPT = 18;
 
 // ─── Stack defaults ─────────────────────────────────────────────────────────
 const STACKS = {
@@ -180,6 +189,79 @@ function buildLibrariesBlock(libraryIds, stack) {
   return lines.join("\n");
 }
 
+// ─── Components block ───────────────────────────────────────────────────────
+// Auto-include UI component primitives the LLM should pick from based on
+// the chosen style + page sections + page-type purpose. Capped at
+// MAX_COMPONENTS_PER_PROMPT to keep prompt budget reasonable.
+//
+// Scoring:
+//   +3 — implied by a section / page-type keyword (strongest signal)
+//   +2 — commonly paired with the chosen style
+//   Tier 1 outranks Tier 2 outranks Tier 3 on equal scores.
+function buildComponentsBlock(state, sectionNames, pageType) {
+  if (state.includeComponents === false) return null;
+
+  const contextKeywords = [
+    ...sectionNames,
+    pageType?.id,
+    pageType?.purpose,
+  ].filter(Boolean);
+
+  const scored = new Map();
+  for (const c of getComponentsForStyle(state.style)) {
+    scored.set(c.id, (scored.get(c.id) || 0) + 2);
+  }
+  for (const c of getComponentsForContext(contextKeywords)) {
+    scored.set(c.id, (scored.get(c.id) || 0) + 3);
+  }
+  if (scored.size === 0) return null;
+
+  const sorted = [...scored.entries()]
+    .map(([id, score]) => ({ component: getComponent(id), score }))
+    .filter((e) => e.component)
+    .sort((a, b) => {
+      if (b.score !== a.score) return b.score - a.score;
+      return a.component.tier - b.component.tier;
+    })
+    .slice(0, MAX_COMPONENTS_PER_PROMPT);
+
+  if (sorted.length === 0) return null;
+
+  const lines = ["<components>"];
+  lines.push(
+    "Pick from these component primitives when the brief or sections imply them.",
+  );
+  lines.push(
+    "Each entry tells you WHEN to use, when NOT to use (and what to use instead), and the accessibility musts.",
+  );
+  lines.push("");
+
+  for (const { component: c } of sorted) {
+    lines.push(`### ${c.name} _(${c.category} · tier ${c.tier})_`);
+    lines.push(`- **When**: ${c.whenToUse}`);
+    lines.push(`- **Not when**: ${c.whenNotToUse}`);
+    lines.push(`- **A11y**: ${c.a11y}`);
+    if (c.variants?.length) lines.push(`- **Variants**: ${c.variants.join(" · ")}`);
+    if (c.pairsWithLibraries?.length) {
+      lines.push(`- **Libs**: ${c.pairsWithLibraries.join(", ")}`);
+    }
+    lines.push("");
+  }
+
+  lines.push("Rules:");
+  lines.push(
+    "- Match a primitive to user needs implied by the sections + brief — don't invent ad-hoc widgets when a primitive fits.",
+  );
+  lines.push(
+    "- A11y notes are non-negotiable. Failing them is a failure mode, same as breaking the design system.",
+  );
+  lines.push(
+    "- If you deliberately skip a recommended primitive, note it in Design Decisions with the reason.",
+  );
+  lines.push("</components>");
+  return lines.join("\n");
+}
+
 // ─── Request (brief) block ──────────────────────────────────────────────────
 function buildRequest(brief) {
   const parts = [];
@@ -225,6 +307,7 @@ export function assemblePrompt(state) {
   const globalRulesText = renderGlobalRules(style.overrideGlobalRules || []);
   const designSystemBlock = buildDesignSystem(state);
   const librariesBlock = buildLibrariesBlock(libraryIds, stack);
+  const componentsBlock = buildComponentsBlock(state, sections, pageType);
   const operatingRulesBlock = buildOperatingRules(state, stack, sectionList);
   const requestBlock = buildRequest(state.brief || {});
 
@@ -233,6 +316,7 @@ export function assemblePrompt(state) {
     `<global-rules>\n${globalRulesText}\n</global-rules>`,
     `<design-system>\n${designSystemBlock}\n</design-system>`,
     librariesBlock,
+    componentsBlock,
     operatingRulesBlock,
     `<request>\n${requestBlock}\n</request>`,
   ].filter(Boolean).join("\n\n");

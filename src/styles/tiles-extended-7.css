@@ -1,0 +1,543 @@
+/* Tile preview thumbnails for batch-7 (consumer apps / experimental / verticals).
+   dating, fitness, music, maps,
+   riso, antidesign, maximalist, geocities,
+   lms, jobs, bank, bto. */
+
+/* ─── DATING ───────────────────────────────────────────────────── */
+.tile__preview--tile-dating {
+  background: linear-gradient(135deg, #FFF5F2 0%, #FFE5DB 100%);
+  padding: 10px;
+  display: grid; grid-template-columns: 60px 1fr; gap: 8px;
+  font-family: "Söhne", "Inter", sans-serif;
+}
+.tile__preview--tile-dating .ph {
+  position: relative;
+  background: linear-gradient(135deg, #FF4D6D 0%, #FFAE5C 100%);
+  border-radius: 12px;
+  aspect-ratio: 3/4;
+}
+.tile__preview--tile-dating .heart {
+  position: absolute; bottom: 4px; right: 4px;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: #FFFFFF; color: #FF4D6D;
+  display: grid; place-items: center;
+  font-size: 10px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.tile__preview--tile-dating .pcard {
+  background: #FFFFFF; border: 1px solid #F0E5E0; border-radius: 10px;
+  padding: 8px 10px;
+  align-self: center;
+}
+.tile__preview--tile-dating .pcard .q {
+  font-weight: 700; font-size: 10px; color: #1A1A1A;
+}
+.tile__preview--tile-dating .pcard .a {
+  font-weight: 500; font-size: 12px; color: #1A1A1A;
+  line-height: 1.3; margin-top: 2px;
+}
+
+/* ─── FITNESS ──────────────────────────────────────────────────── */
+.tile__preview--tile-fitness {
+  background: #FFFFFF;
+  padding: 8px 10px;
+  display: flex; flex-direction: column; gap: 4px;
+  font-family: "Inter", sans-serif;
+  color: #0F1620;
+}
+.tile__preview--tile-fitness .hd {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 10px; font-weight: 600; color: #0F1620;
+}
+.tile__preview--tile-fitness .av {
+  width: 16px; height: 16px; border-radius: 50%; background: #FC4C02;
+}
+.tile__preview--tile-fitness .nm { font-size: 11px; }
+.tile__preview--tile-fitness .trace {
+  width: 100%; height: 30px;
+  background: linear-gradient(135deg, #E8F4F0 0%, #C5E5D7 100%);
+  border-radius: 4px;
+}
+.tile__preview--tile-fitness .row {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  font-family: "Inter", sans-serif;
+  margin-top: auto;
+  border-top: 1px solid #E5E7EB;
+  padding-top: 4px;
+}
+.tile__preview--tile-fitness .row > div {
+  display: flex; flex-direction: column;
+}
+.tile__preview--tile-fitness .row .n {
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 700; font-size: 13px; color: #0F1620;
+  font-variant-numeric: tabular-nums;
+}
+.tile__preview--tile-fitness .row .l {
+  font-size: 8px; color: #6B7280;
+  letter-spacing: 0.06em; text-transform: uppercase;
+}
+
+/* ─── MUSIC STREAMING ──────────────────────────────────────────── */
+.tile__preview--tile-music {
+  background: #121212;
+  padding: 0;
+  display: flex; flex-direction: column;
+  font-family: "Söhne", "Inter", sans-serif;
+  color: #FFFFFF;
+}
+.tile__preview--tile-music .hero {
+  padding: 8px 10px 6px;
+  background: linear-gradient(180deg, #B85728 0%, #121212 100%);
+}
+.tile__preview--tile-music .hero .ttl {
+  font-weight: 900; font-size: 18px;
+  letter-spacing: -0.025em;
+}
+.tile__preview--tile-music .hero .ar {
+  font-size: 9px; color: rgba(255,255,255,0.7);
+}
+.tile__preview--tile-music .tracks {
+  padding: 4px 10px;
+  font-size: 10px;
+  color: #B3B3B3;
+}
+.tile__preview--tile-music .tr {
+  padding: 1px 0;
+  display: flex; justify-content: space-between;
+}
+.tile__preview--tile-music .tr span {
+  font-variant-numeric: tabular-nums;
+}
+.tile__preview--tile-music .play {
+  margin-top: auto;
+  background: #181818;
+  border-top: 1px solid #2A2A2A;
+  padding: 6px 10px;
+  font-size: 9px; color: #B3B3B3;
+  display: flex; align-items: center; gap: 6px;
+  font-variant-numeric: tabular-nums;
+}
+.tile__preview--tile-music .play i {
+  flex: 1; height: 3px; background: #4A4A4A; border-radius: 2px;
+  position: relative;
+}
+.tile__preview--tile-music .play i::after {
+  content: ""; position: absolute; left: 0; top: 0;
+  height: 100%; width: 35%;
+  background: #1DB954; border-radius: 2px;
+}
+
+/* ─── MAPS / NAVIGATION ────────────────────────────────────────── */
+.tile__preview--tile-maps {
+  background: #F1EFE8;
+  padding: 0;
+  display: flex; flex-direction: column;
+  font-family: "Roboto", "Inter", sans-serif;
+}
+.tile__preview--tile-maps .map {
+  flex: 1; position: relative;
+  background:
+    linear-gradient(135deg, #E8E5DA 0%, #D8D4C5 100%);
+}
+.tile__preview--tile-maps .srch {
+  position: absolute; top: 6px; left: 6px; right: 6px;
+  background: #FFFFFF; border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 10px; color: #5F6368;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+.tile__preview--tile-maps .pin {
+  position: absolute;
+  width: 16px; height: 16px; border-radius: 50%;
+  background: #1A73E8; color: #FFFFFF;
+  display: grid; place-items: center;
+  font-size: 9px; font-weight: 700;
+  border: 2px solid #FFFFFF;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+.tile__preview--tile-maps .pin.a { top: 30%; left: 22%; }
+.tile__preview--tile-maps .pin.b { bottom: 28%; right: 18%; }
+.tile__preview--tile-maps .rt {
+  position: absolute;
+  width: 100%; height: 100%;
+  top: 0; left: 0;
+  pointer-events: none;
+}
+.tile__preview--tile-maps .poi {
+  background: #FFFFFF;
+  border-top: 1px solid #E0E0E0;
+  padding: 6px 10px;
+}
+.tile__preview--tile-maps .ttl {
+  font-weight: 600; font-size: 11px; color: #202124;
+}
+.tile__preview--tile-maps .meta {
+  font-size: 9px; color: #5F6368;
+}
+
+/* ─── RISOGRAPH PRINT ──────────────────────────────────────────── */
+.tile__preview--tile-riso {
+  background-color: #F1ECDC;
+  background-image:
+    radial-gradient(circle at 25% 30%, rgba(0,0,0,0.03) 1px, transparent 2px),
+    radial-gradient(circle at 60% 80%, rgba(0,0,0,0.025) 1px, transparent 2px);
+  background-size: 50px 50px;
+  padding: 12px 14px;
+  display: flex; flex-direction: column; gap: 4px;
+  font-family: "Druk", "Anton", "Helvetica", sans-serif;
+  color: #0F1A33;
+  position: relative;
+}
+.tile__preview--tile-riso .head {
+  font-family: "Druk", "Anton", "Bebas Neue", sans-serif;
+  font-weight: 900; font-size: 44px;
+  line-height: 0.9; color: #0F1A33;
+  letter-spacing: -0.03em;
+  position: relative;
+}
+.tile__preview--tile-riso .head::before {
+  content: attr(data-text);
+  position: absolute;
+  top: 2px; left: -3px;
+  color: #FF48B0;
+  z-index: -1;
+}
+.tile__preview--tile-riso .meta {
+  font-family: "Courier New", monospace;
+  font-size: 10px; color: #6B6B6B;
+  letter-spacing: 0.04em;
+}
+.tile__preview--tile-riso .dot {
+  margin-top: auto;
+  width: 36px; height: 36px;
+  background-color: #FFC836;
+  background-image:
+    radial-gradient(circle at 30% 30%, rgba(0,0,0,0.12) 1.5px, transparent 2px);
+  background-size: 6px 6px;
+  border-radius: 50%;
+  align-self: flex-end;
+  transform: translate(2px, 0);
+}
+
+/* ─── ANTI-DESIGN ──────────────────────────────────────────────── */
+.tile__preview--tile-antidesign {
+  background: #FFFFFF;
+  padding: 8px 10px;
+  font-family: "Times New Roman", serif;
+  color: #000000;
+  position: relative;
+}
+.tile__preview--tile-antidesign .h1 {
+  font-family: "Times New Roman", serif;
+  font-size: 28px; font-weight: 400;
+  color: #000000;
+  text-decoration: underline wavy #FF00FF;
+  transform: rotate(-2deg);
+  display: inline-block;
+}
+.tile__preview--tile-antidesign .h2 {
+  font-family: "Comic Sans MS", cursive;
+  font-size: 11px;
+  color: #0000EE;
+  margin-top: -4px;
+  display: block;
+  transform: rotate(1deg);
+}
+.tile__preview--tile-antidesign .hr {
+  border-top: 2px dashed #000;
+  margin: 6px 0;
+}
+.tile__preview--tile-antidesign .lnk {
+  color: #0000EE; text-decoration: underline;
+  font-family: "Times New Roman", serif;
+  font-size: 13px;
+}
+.tile__preview--tile-antidesign .block {
+  display: inline-block;
+  background: #FFFF00;
+  color: #000;
+  padding: 2px 6px;
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+  margin-top: 4px;
+  transform: rotate(-1deg);
+}
+
+/* ─── MAXIMALIST ───────────────────────────────────────────────── */
+.tile__preview--tile-maximalist {
+  background-color: #F8EFE0;
+  background-image:
+    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60"><g fill="none" stroke="%23B89D63" stroke-width="0.5" opacity="0.3"><path d="M30,8 C16,16 16,32 30,40 C44,32 44,16 30,8 Z"/><path d="M30,18 C24,22 24,30 30,34 M30,18 C36,22 36,30 30,34"/></g></svg>');
+  background-size: 60px 60px;
+  padding: 12px 14px;
+  display: flex; flex-direction: column; gap: 4px;
+  text-align: center;
+  font-family: "Playfair Display", "Bodoni Moda", serif;
+  color: #1F1A14;
+}
+.tile__preview--tile-maximalist .brow {
+  font-family: "Optima", "Trajan Pro", serif;
+  font-size: 9px; letter-spacing: 0.18em;
+  color: #B89D63;
+  text-transform: uppercase;
+}
+.tile__preview--tile-maximalist .head {
+  font-family: "Playfair Display", serif;
+  font-weight: 400; font-size: 36px;
+  line-height: 1; color: #1F1A14;
+  letter-spacing: -0.005em;
+}
+.tile__preview--tile-maximalist .head em {
+  font-family: "Allura", "Tangerine", "Brush Script MT", cursive;
+  font-style: normal;
+  color: #7A2E2A;
+  font-size: 1.2em;
+  margin-right: 0.05em;
+}
+.tile__preview--tile-maximalist .div {
+  color: #B89D63;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  margin: 2px 0;
+}
+.tile__preview--tile-maximalist .sub {
+  font-family: "Source Serif 4", serif;
+  font-style: italic;
+  font-size: 10px;
+  color: #6E5E4D;
+  margin-top: auto;
+}
+
+/* ─── GEOCITIES '99 ────────────────────────────────────────────── */
+.tile__preview--tile-geocities {
+  background-color: #000080;
+  background-image:
+    radial-gradient(circle at 20% 30%, white 1px, transparent 2px),
+    radial-gradient(circle at 70% 60%, yellow 1.5px, transparent 2.5px),
+    radial-gradient(circle at 40% 80%, white 1px, transparent 2px);
+  background-size: 30px 30px;
+  padding: 0;
+  display: flex; flex-direction: column;
+  font-family: "Times New Roman", serif;
+  color: #00FF00;
+  text-align: center;
+}
+.tile__preview--tile-geocities .marq {
+  background: #FF0000;
+  color: #FFFF00;
+  padding: 2px 4px;
+  font-family: "Impact", sans-serif;
+  font-size: 11px;
+  overflow: hidden; white-space: nowrap;
+}
+.tile__preview--tile-geocities .marq span {
+  display: inline-block; padding-left: 100%;
+  animation: geo-marq 10s linear infinite;
+}
+@keyframes geo-marq {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+.tile__preview--tile-geocities .word {
+  font-family: "Comic Sans MS", cursive;
+  font-weight: 700;
+  font-size: 22px;
+  color: #FFFF00;
+  text-shadow: 2px 2px 0 #FF00FF;
+  padding: 8px 4px 4px;
+}
+.tile__preview--tile-geocities .word em {
+  color: #00FFFF;
+  font-style: italic;
+}
+.tile__preview--tile-geocities .ctr {
+  background: #000;
+  color: #00FF00;
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+  padding: 2px 8px;
+  display: inline-block;
+  border: 2px inset #C0C0C0;
+  letter-spacing: 2px;
+  margin: 0 auto;
+}
+.tile__preview--tile-geocities .cnst {
+  background: #FFA500;
+  color: #000;
+  font-family: "Impact", sans-serif;
+  font-size: 10px;
+  padding: 2px 6px;
+  border: 2px ridge #C0C0C0;
+  margin-top: auto;
+  align-self: center;
+}
+
+/* ─── EDUCATION LMS ────────────────────────────────────────────── */
+.tile__preview--tile-lms {
+  background: #FFFFFF;
+  padding: 8px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+  font-family: "Inter", sans-serif;
+  color: #1F2937;
+  grid-template-areas:
+    "vp syl"
+    "vp syl"
+    "prog prog";
+}
+.tile__preview--tile-lms .vp {
+  grid-area: vp;
+  background: #000;
+  border-radius: 5px;
+  display: grid; place-items: center;
+}
+.tile__preview--tile-lms .vp .play {
+  color: #FFFFFF;
+  background: rgba(255,255,255,0.2);
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  font-size: 11px;
+}
+.tile__preview--tile-lms .syl {
+  grid-area: syl;
+  background: #F5F7FA;
+  border-radius: 5px;
+  padding: 4px 6px;
+  display: flex; flex-direction: column; gap: 1px;
+}
+.tile__preview--tile-lms .syl .row {
+  font-size: 9px; color: #1F2937;
+  padding: 1px 2px;
+}
+.tile__preview--tile-lms .syl .row.done { color: #10B981; }
+.tile__preview--tile-lms .syl .row.cur {
+  background: #FFFFFF;
+  border-left: 2px solid #0056D2;
+  padding-left: 4px;
+  color: #0056D2;
+  font-weight: 600;
+}
+.tile__preview--tile-lms .prog {
+  grid-area: prog;
+  display: flex; align-items: center; gap: 6px;
+}
+.tile__preview--tile-lms .prog .bar {
+  flex: 1; height: 5px; background: #E5E7EB; border-radius: 3px;
+  overflow: hidden;
+}
+.tile__preview--tile-lms .prog .bar i {
+  display: block; height: 100%; width: 38%; background: #10B981;
+}
+.tile__preview--tile-lms .prog span {
+  font-size: 10px; font-weight: 600; color: #6B7280;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── JOB BOARD ────────────────────────────────────────────────── */
+.tile__preview--tile-jobs {
+  background: #F4F4F7;
+  padding: 6px 8px;
+  display: flex; flex-direction: column; gap: 4px;
+  font-family: "Inter", sans-serif;
+  color: #1A1A1A;
+}
+.tile__preview--tile-jobs .card {
+  background: #FFFFFF; border: 1px solid #E0E0E0; border-radius: 5px;
+  padding: 6px 8px;
+  display: grid; grid-template-columns: 22px 1fr; gap: 8px;
+  align-items: center;
+}
+.tile__preview--tile-jobs .card.hl { border-color: #0A66C2; }
+.tile__preview--tile-jobs .lg {
+  width: 22px; height: 22px; background: #F4F4F7; border-radius: 3px;
+}
+.tile__preview--tile-jobs .tt {
+  font-size: 11px; font-weight: 600; color: #1A1A1A; line-height: 1.2;
+}
+.tile__preview--tile-jobs .co {
+  font-size: 9px; color: #6B6F73;
+}
+.tile__preview--tile-jobs .tg {
+  display: flex; gap: 3px; margin-top: 2px;
+}
+.tile__preview--tile-jobs .rm {
+  font-size: 8px; padding: 1px 5px; border-radius: 7px;
+  background: #EAF4FB; color: #0A66C2; font-weight: 500;
+}
+.tile__preview--tile-jobs .ez {
+  font-size: 8px; padding: 1px 5px; border-radius: 7px;
+  background: #E6F4EA; color: #057642; font-weight: 600;
+}
+
+/* ─── PERSONAL BANKING ─────────────────────────────────────────── */
+.tile__preview--tile-bank {
+  background: #F4F6F9;
+  padding: 8px 10px;
+  display: flex; flex-direction: column; gap: 4px;
+  font-family: "Inter", sans-serif;
+  color: #0B2545;
+}
+.tile__preview--tile-bank .acc {
+  background: #FFFFFF; border: 1px solid #D5DAE0;
+  border-radius: 8px;
+  padding: 6px 10px;
+}
+.tile__preview--tile-bank .acc .nm {
+  font-size: 8px; letter-spacing: 0.08em; color: #5C6B7F;
+  font-family: "JetBrains Mono", monospace;
+}
+.tile__preview--tile-bank .acc .bal {
+  font-weight: 700; font-size: 22px; color: #0B2545;
+  font-variant-numeric: tabular-nums; line-height: 1; margin-top: 2px;
+}
+.tile__preview--tile-bank .acc .bal .c {
+  font-size: 14px; color: #5C6B7F;
+}
+.tile__preview--tile-bank .qr {
+  background: #FFFFFF; border: 1px solid #D5DAE0; border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 9px; color: #0A4D8C; font-weight: 500;
+  text-align: center;
+}
+.tile__preview--tile-bank .txn {
+  display: flex; justify-content: space-between;
+  font-size: 10px; color: #0B2545;
+  font-variant-numeric: tabular-nums;
+  padding: 2px 4px;
+  border-bottom: 1px solid #D5DAE0;
+}
+.tile__preview--tile-bank .txn .pos { color: #1B7A3E; font-weight: 600; }
+.tile__preview--tile-bank .txn .neg { color: #0B2545; font-weight: 600; }
+
+/* ─── BTO / GOV HOUSING ────────────────────────────────────────── */
+.tile__preview--tile-bto {
+  background: #FFFFFF;
+  padding: 0;
+  display: flex; flex-direction: column;
+  font-family: "Inter", sans-serif;
+  color: #1A2A3A;
+}
+.tile__preview--tile-bto .hd {
+  background: #0066B3; color: #FFFFFF;
+  padding: 4px 10px;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.tile__preview--tile-bto .row {
+  display: flex; justify-content: space-between;
+  padding: 5px 10px;
+  font-size: 11px; color: #1A2A3A;
+  border-bottom: 1px solid #CFD8DC;
+}
+.tile__preview--tile-bto .row b {
+  font-weight: 600; color: #1A2A3A;
+}
+.tile__preview--tile-bto .ok {
+  margin-top: auto;
+  background: #E0F2E9;
+  color: #0E7C40;
+  padding: 6px 10px;
+  font-size: 11px; font-weight: 600;
+  border-top: 2px solid #0E7C40;
+}

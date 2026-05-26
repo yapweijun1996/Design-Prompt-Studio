@@ -5,11 +5,13 @@
 import { el } from "../lib/dom.js";
 import { PURPOSE_BUCKETS } from "../data/taxonomy.js";
 import { STYLE_PRESETS } from "../data/styles/index.js";
+import { STYLE_CATEGORIES, STYLE_CATEGORY_MAP, categoryCount } from "../data/styles/categories.js";
 
 export function renderFilterBar({ initial = {}, onChange }) {
   const state = {
     query: initial.query || "",
     purpose: initial.purpose || null,
+    category: initial.category || null,
     style: initial.style || null,
     tier: initial.tier || null,
   };
@@ -51,12 +53,36 @@ export function renderFilterBar({ initial = {}, onChange }) {
     },
   });
 
-  const styleChips = renderChipGroup({
-    label: "Style",
+  // Category chips (primary — cascades to style chips below)
+  const categoryChips = renderChipGroup({
+    label: "Category",
     options: [
       { id: null, name: "All" },
-      ...Object.values(STYLE_PRESETS).map((s) => ({ id: s.id, name: s.name })),
+      ...Object.values(STYLE_CATEGORIES).map((c) => ({ id: c.id, name: `${c.name} · ${categoryCount(c.id)}` })),
     ],
+    selected: state.category,
+    onSelect: (id) => {
+      state.category = id;
+      state.style = null; // reset secondary when category changes
+      onChange?.({ ...state });
+      refresh();
+    },
+  });
+
+  // Style chips filtered by selected category. Renders the FULL list when
+  // no category is picked, so existing power-users keep their flat browse.
+  function stylesForCategory(catId) {
+    const all = Object.values(STYLE_PRESETS);
+    const filtered = catId ? all.filter((s) => STYLE_CATEGORY_MAP[s.id] === catId) : all;
+    return [
+      { id: null, name: "All" },
+      ...filtered.map((s) => ({ id: s.id, name: s.name })),
+    ];
+  }
+
+  const styleChips = renderChipGroup({
+    label: "Style",
+    options: stylesForCategory(state.category),
     selected: state.style,
     onSelect: (id) => {
       state.style = id;
@@ -81,9 +107,16 @@ export function renderFilterBar({ initial = {}, onChange }) {
   });
 
   function refresh() {
-    purposeChips.replaceWith(rebuiltGroup("Purpose", Object.values(PURPOSE_BUCKETS).map((b) => ({ id: b.id, name: b.name })), state.purpose, (id) => { state.purpose = id; onChange?.({ ...state }); refresh(); }));
-    styleChips.replaceWith(rebuiltGroup("Style", Object.values(STYLE_PRESETS).map((s) => ({ id: s.id, name: s.name })), state.style, (id) => { state.style = id; onChange?.({ ...state }); refresh(); }));
-    tierChips.replaceWith(rebuiltGroup("Tier", [ { id: "curated", name: "★ Curated" }, { id: "standard", name: "Standard" } ], state.tier, (id) => { state.tier = id; onChange?.({ ...state }); refresh(); }));
+    const purposeOpts = Object.values(PURPOSE_BUCKETS).map((b) => ({ id: b.id, name: b.name }));
+    const categoryOpts = Object.values(STYLE_CATEGORIES).map((c) => ({ id: c.id, name: `${c.name} · ${categoryCount(c.id)}` }));
+    const tierOpts = [{ id: "curated", name: "★ Curated" }, { id: "standard", name: "Standard" }];
+    // stylesForCategory already returns the leading "All" option; pass through wrapped: false
+    const styleOpts = stylesForCategory(state.category).slice(1); // drop dup "All"; rebuiltGroup re-prepends it
+
+    purposeChips.replaceWith(rebuiltGroup("Purpose", purposeOpts, state.purpose, (id) => { state.purpose = id; onChange?.({ ...state }); refresh(); }));
+    categoryChips.replaceWith(rebuiltGroup("Category", categoryOpts, state.category, (id) => { state.category = id; state.style = null; onChange?.({ ...state }); refresh(); }));
+    styleChips.replaceWith(rebuiltGroup("Style", styleOpts, state.style, (id) => { state.style = id; onChange?.({ ...state }); refresh(); }));
+    tierChips.replaceWith(rebuiltGroup("Tier", tierOpts, state.tier, (id) => { state.tier = id; onChange?.({ ...state }); refresh(); }));
   }
 
   function rebuiltGroup(label, options, selected, onSelect) {

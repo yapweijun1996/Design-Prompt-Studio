@@ -393,6 +393,20 @@
   gap: 4px;
 }
 
+/* Category row — primary chips, slightly emphasised over base/mood. */
+.step__variant-chips--category {
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--rule, #E5E5E5);
+  margin-bottom: 6px;
+}
+.step__variant-chips--category .chip {
+  font-weight: 600;
+}
+.step__variant-chips--category .chip.is-active {
+  background: var(--fg, #0F0F0F);
+  color: var(--bg, #FFFFFF);
+}
+
 .step__variant-count {
   font-family: var(--font-mono);
   font-size: 10px;

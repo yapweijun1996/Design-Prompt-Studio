@@ -1,0 +1,546 @@
+/* Tile preview thumbnails for the 20 batch-3 styles (corporate / business /
+   commerce / institutional / hospitality / healthcare).
+
+   corporate, saas, enterprise, consulting, fintech,
+   admin, darkboard, crm, devtool, internal,
+   marketplace, utility, boutique, flash, story,
+   government, academic, restaurant, cafe, medical. */
+
+/* ─── CORPORATE TRUST ──────────────────────────────────────────── */
+.tile__preview--tile-corporate {
+  background: #FFFFFF;
+  padding: 12px 14px;
+  display: flex; flex-direction: column; gap: 4px;
+  border-left: 3px solid #C9A24B;
+}
+.tile__preview--tile-corporate .eyebrow {
+  font-family: "Inter", sans-serif; font-size: 8px; letter-spacing: 0.16em;
+  color: #5A6679;
+}
+.tile__preview--tile-corporate .word {
+  font-family: "Source Serif 4", Georgia, serif;
+  font-weight: 500; font-size: 22px; line-height: 1.05; color: #0B1F3A;
+  letter-spacing: -0.01em;
+}
+.tile__preview--tile-corporate .rule {
+  height: 1px; background: #D9D3C7; margin: 4px 0;
+}
+.tile__preview--tile-corporate .stat {
+  font-family: "Source Serif 4", serif; font-weight: 400;
+  font-size: 32px; line-height: 1; color: #0B1F3A;
+  font-variant-numeric: tabular-nums;
+}
+.tile__preview--tile-corporate .label {
+  font-family: "Inter", sans-serif; font-size: 8px; letter-spacing: 0.12em;
+  color: #5A6679;
+}
+
+/* ─── SAAS MODERN ──────────────────────────────────────────────── */
+.tile__preview--tile-saas {
+  padding: 14px;
+  background:
+    radial-gradient(ellipse at top, rgba(99,102,241,0.12), transparent 60%),
+    radial-gradient(ellipse at bottom right, rgba(168,85,247,0.08), transparent 60%),
+    #FFFFFF;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.tile__preview--tile-saas .badge {
+  display: inline-block; align-self: flex-start;
+  background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 999px;
+  padding: 2px 8px; font-family: "Inter", sans-serif; font-size: 9px;
+  color: #6366F1;
+}
+.tile__preview--tile-saas .word {
+  font-family: "Inter", system-ui; font-weight: 700; font-size: 28px;
+  line-height: 1; color: #0A0A0A; letter-spacing: -0.025em; margin-top: 2px;
+}
+.tile__preview--tile-saas .sub {
+  font-family: "Inter", sans-serif; font-size: 11px; color: #6B7280;
+}
+.tile__preview--tile-saas .btn {
+  align-self: flex-start; margin-top: auto;
+  background: #0A0A0A; color: #FFFFFF; border-radius: 6px;
+  padding: 5px 10px; font-family: "Inter", sans-serif; font-size: 10px; font-weight: 600;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+/* ─── ENTERPRISE ERP ───────────────────────────────────────────── */
+.tile__preview--tile-enterprise {
+  background: #F4F4F4;
+  padding: 8px 10px;
+  font-family: "IBM Plex Sans", "Inter", sans-serif;
+  font-size: 10px; color: #161616;
+  display: flex; flex-direction: column; gap: 1px;
+}
+.tile__preview--tile-enterprise .row {
+  display: grid; grid-template-columns: 1fr auto auto;
+  gap: 8px; padding: 4px 8px; background: #FFFFFF;
+  border-bottom: 1px solid #E0E0E0; align-items: center;
+}
+.tile__preview--tile-enterprise .row.head {
+  background: #F4F4F4; font-weight: 600; font-size: 9px;
+  text-transform: uppercase; letter-spacing: 0.06em; color: #525252;
+}
+.tile__preview--tile-enterprise .pill {
+  display: inline-block; border-radius: 9px; padding: 1px 6px;
+  font-size: 8px; font-weight: 500;
+}
+.tile__preview--tile-enterprise .pill.ok   { background: #DEFBE6; color: #044317; }
+.tile__preview--tile-enterprise .pill.warn { background: #FCF4D6; color: #684E00; }
+.tile__preview--tile-enterprise .pill.err  { background: #FFD7D9; color: #750E13; }
+.tile__preview--tile-enterprise .num {
+  font-variant-numeric: tabular-nums; font-weight: 500;
+}
+
+/* ─── CONSULTING FIRM ──────────────────────────────────────────── */
+.tile__preview--tile-consulting {
+  background: #FFFFFF;
+  padding: 12px 16px;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.tile__preview--tile-consulting .eyebrow {
+  font-family: "Inter", sans-serif; font-size: 8px; letter-spacing: 0.16em;
+  color: #B5302C; text-transform: uppercase;
+}
+.tile__preview--tile-consulting .word {
+  font-family: "Tiempos Headline", "Source Serif 4", Georgia, serif;
+  font-weight: 400; font-size: 28px; line-height: 1.05; color: #1A1A1A;
+  letter-spacing: -0.01em;
+}
+.tile__preview--tile-consulting .byline {
+  font-family: "Source Serif 4", serif; font-style: italic;
+  font-size: 11px; color: #5A5A5A;
+}
+.tile__preview--tile-consulting .rule {
+  height: 1px; background: #CFCFCF; margin-top: auto;
+}
+
+/* ─── FINTECH CLEAN ────────────────────────────────────────────── */
+.tile__preview--tile-fintech {
+  background: #FAFAF7;
+  padding: 14px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.tile__preview--tile-fintech .label {
+  font-family: "Inter", sans-serif; font-size: 8px; letter-spacing: 0.12em;
+  color: #6B7280; text-transform: uppercase;
+}
+.tile__preview--tile-fintech .bal {
+  font-family: "Söhne", "Inter", system-ui;
+  font-weight: 500; font-size: 30px; line-height: 1; color: #0F1419;
+  font-variant-numeric: tabular-nums; margin: 2px 0 6px;
+}
+.tile__preview--tile-fintech .bal .cents { font-size: 18px; color: #6B7280; }
+.tile__preview--tile-fintech .row {
+  display: flex; justify-content: space-between;
+  font-family: "Inter", sans-serif; font-size: 10px;
+  padding: 3px 0; border-top: 1px solid #E8E6E0;
+  font-variant-numeric: tabular-nums;
+}
+.tile__preview--tile-fintech .row .pos { color: #0FA968; font-weight: 500; }
+.tile__preview--tile-fintech .row .neg { color: #0F1419; font-weight: 500; }
+
+/* ─── ADMIN DENSE ──────────────────────────────────────────────── */
+.tile__preview--tile-admin {
+  display: grid; grid-template-columns: 36px 1fr;
+  background: #F9FAFB;
+  height: 100%;
+}
+.tile__preview--tile-admin .rail {
+  background: #111827;
+  background-image:
+    linear-gradient(180deg, transparent 0 12px, #2563EB 12px 24px, transparent 24px),
+    linear-gradient(180deg, transparent 0 32px, rgba(255,255,255,0.15) 32px 36px, transparent 36px);
+  background-repeat: no-repeat;
+}
+.tile__preview--tile-admin .main {
+  display: flex; flex-direction: column; gap: 4px; padding: 10px;
+}
+.tile__preview--tile-admin .bar {
+  height: 14px; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 4px;
+}
+.tile__preview--tile-admin .row {
+  height: 10px; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 3px;
+}
+.tile__preview--tile-admin .row.last { background: #EFF6FF; border-color: #BFDBFE; }
+
+/* ─── DASHBOARD DARK ───────────────────────────────────────────── */
+.tile__preview--tile-darkboard {
+  background: #0B1020;
+  padding: 12px;
+  color: #E5E7EB;
+  font-family: "Inter", sans-serif;
+  display: flex; flex-direction: column; gap: 4px;
+  position: relative;
+}
+.tile__preview--tile-darkboard .head {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 9px; color: #8B93A7; letter-spacing: 0.06em; text-transform: uppercase;
+}
+.tile__preview--tile-darkboard .live {
+  color: #10B981; font-weight: 500;
+}
+.tile__preview--tile-darkboard .kpi {
+  font-family: "JetBrains Mono", monospace; font-weight: 500;
+  font-size: 36px; line-height: 1; color: #E5E7EB;
+  font-variant-numeric: tabular-nums; margin-top: 2px;
+}
+.tile__preview--tile-darkboard .kpi .pct { font-size: 18px; color: #8B93A7; }
+.tile__preview--tile-darkboard .lbl {
+  font-size: 8px; letter-spacing: 0.12em; color: #8B93A7; text-transform: uppercase;
+}
+.tile__preview--tile-darkboard .spark {
+  width: 100%; height: 20px; margin-top: auto;
+}
+
+/* ─── CRM FRIENDLY ─────────────────────────────────────────────── */
+.tile__preview--tile-crm {
+  background: #F5F8FA;
+  padding: 10px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+  font-family: "Lexend Deca", "Inter", sans-serif;
+}
+.tile__preview--tile-crm .col {
+  background: #F5F8FA;
+  border-radius: 10px;
+  padding: 6px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.tile__preview--tile-crm .head {
+  font-size: 9px; font-weight: 600; color: #33475B;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.tile__preview--tile-crm .head .ct {
+  background: #FFFFFF; border-radius: 8px; padding: 0 5px; font-size: 8px; color: #7C98B6;
+}
+.tile__preview--tile-crm .card {
+  background: #FFFFFF; border: 1px solid #CBD6E2; border-radius: 6px;
+  padding: 5px 6px;
+}
+.tile__preview--tile-crm .card.hl { border-color: #FF7A59; box-shadow: 0 1px 3px rgba(255,122,89,0.2); }
+.tile__preview--tile-crm .nm { font-size: 9px; color: #33475B; font-weight: 500; }
+.tile__preview--tile-crm .amt { font-size: 9px; color: #00BDA5; font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* ─── DEVELOPER TOOL ───────────────────────────────────────────── */
+.tile__preview--tile-devtool {
+  background: #000000;
+  padding: 12px;
+  color: #FAFAFA;
+  font-family: "Geist Mono", "JetBrains Mono", monospace;
+  display: flex; flex-direction: column; gap: 3px;
+  font-size: 10px;
+}
+.tile__preview--tile-devtool .term { font-size: 11px; color: #FAFAFA; }
+.tile__preview--tile-devtool .term::before { content: "$ "; color: #3ECF8E; }
+.tile__preview--tile-devtool .out { color: #A1A1AA; padding-left: 12px; }
+.tile__preview--tile-devtool .out.ok { color: #3ECF8E; }
+.tile__preview--tile-devtool .btn {
+  align-self: flex-start; margin-top: auto;
+  background: #3ECF8E; color: #000; font-family: "Geist Sans", "Inter", sans-serif;
+  font-weight: 600; font-size: 10px;
+  border-radius: 4px; padding: 4px 10px;
+  box-shadow: 0 0 16px rgba(62,207,142,0.4);
+}
+
+/* ─── INTERNAL TOOL ────────────────────────────────────────────── */
+.tile__preview--tile-internal {
+  background: #F4F5F7;
+  padding: 8px;
+  font-family: "Inter", system-ui, sans-serif;
+  display: flex; flex-direction: column; gap: 4px;
+  font-size: 9px;
+}
+.tile__preview--tile-internal .bar {
+  background: #FFFFFF; border: 1px solid #D1D5DB; border-radius: 3px;
+  padding: 4px 8px; color: #1F2937;
+}
+.tile__preview--tile-internal .form {
+  display: grid; grid-template-columns: 60px 1fr; gap: 4px;
+  background: #FFFFFF; padding: 6px; border-radius: 3px; border: 1px solid #D1D5DB;
+}
+.tile__preview--tile-internal .lbl { color: #4B5563; }
+.tile__preview--tile-internal .ipt {
+  background: #F4F5F7; padding: 1px 6px; border-radius: 2px; color: #1F2937;
+}
+.tile__preview--tile-internal .json {
+  background: #1F2937; color: #E5E7EB; padding: 4px 6px;
+  font-family: "JetBrains Mono", monospace; font-size: 9px; border-radius: 3px;
+  margin-top: auto;
+}
+
+/* ─── MARKETPLACE VIBRANT ──────────────────────────────────────── */
+.tile__preview--tile-marketplace {
+  background: #F5F5F5;
+  padding: 0;
+  font-family: "Roboto", "Inter", sans-serif;
+  display: flex; flex-direction: column;
+}
+.tile__preview--tile-marketplace .flash {
+  background: linear-gradient(90deg, #EE4D2D, #F53D2D);
+  color: #FFF; padding: 4px 8px; font-size: 9px; font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.tile__preview--tile-marketplace .grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px;
+  padding: 6px; flex: 1;
+}
+.tile__preview--tile-marketplace .prod {
+  background: #FFFFFF; border: 1px solid #E5E5E5; border-radius: 3px;
+  padding: 4px; display: flex; flex-direction: column; gap: 2px;
+}
+.tile__preview--tile-marketplace .prod.hl { border-color: #EE4D2D; }
+.tile__preview--tile-marketplace .img {
+  height: 24px; background: #F5F5F5; border-radius: 2px;
+}
+.tile__preview--tile-marketplace .p {
+  color: #EE4D2D; font-weight: 700; font-size: 12px; line-height: 1;
+}
+.tile__preview--tile-marketplace .p small { font-size: 8px; }
+.tile__preview--tile-marketplace .was {
+  color: #999; font-size: 8px; text-decoration: line-through;
+}
+
+/* ─── UTILITY RETAIL (Amazon) ──────────────────────────────────── */
+.tile__preview--tile-utility {
+  background: #FFFFFF;
+  font-family: "Inter", Arial, sans-serif;
+  display: flex; flex-direction: column;
+}
+.tile__preview--tile-utility .hdr {
+  background: #131921; color: #FFFFFF;
+  padding: 4px 8px; display: flex; gap: 6px; align-items: center;
+  font-size: 10px;
+}
+.tile__preview--tile-utility .hdr .srch {
+  flex: 1; background: #FFFFFF; color: #565959; padding: 2px 6px; border-radius: 2px;
+  font-size: 9px;
+}
+.tile__preview--tile-utility .title {
+  font-size: 11px; padding: 6px 8px 2px; color: #0F1111;
+}
+.tile__preview--tile-utility .stars {
+  color: #FFA41C; font-size: 10px; padding: 0 8px;
+}
+.tile__preview--tile-utility .stars .cnt { color: #007185; font-size: 9px; }
+.tile__preview--tile-utility .price {
+  color: #0F1111; font-size: 22px; font-weight: 400;
+  padding: 0 8px; font-variant-numeric: tabular-nums;
+}
+.tile__preview--tile-utility .price sup { font-size: 11px; }
+.tile__preview--tile-utility .buy {
+  margin: 4px 8px 8px; background: linear-gradient(180deg, #F7DFA5, #F0C14B);
+  border: 1px solid #A88734; border-radius: 3px; padding: 4px;
+  text-align: center; font-size: 10px; color: #111;
+}
+
+/* ─── BOUTIQUE LUX ─────────────────────────────────────────────── */
+.tile__preview--tile-boutique {
+  background: #FAF8F3;
+  padding: 12px 14px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.tile__preview--tile-boutique .img {
+  flex: 1; min-height: 50px;
+  background: linear-gradient(135deg, #D8D2C5 0%, #E8E2D5 100%);
+  margin-bottom: 6px;
+}
+.tile__preview--tile-boutique .cap {
+  font-family: "Söhne Mono", "JetBrains Mono", monospace;
+  font-size: 8px; letter-spacing: 0.08em; color: #7A736A;
+}
+.tile__preview--tile-boutique .nm {
+  font-family: "Tiempos Headline", serif;
+  font-weight: 400; font-size: 18px; color: #1A1815;
+}
+.tile__preview--tile-boutique .pr {
+  font-family: "Söhne Mono", monospace; font-size: 11px;
+  color: #1A1815; letter-spacing: 0.04em; font-variant-numeric: tabular-nums;
+}
+
+/* ─── FLASH SALE HYPE ──────────────────────────────────────────── */
+.tile__preview--tile-flash {
+  background: #FFF4E0;
+  padding: 8px;
+  font-family: "Bebas Neue", "Anton", sans-serif;
+  display: flex; flex-direction: column; gap: 4px;
+  text-align: center;
+}
+.tile__preview--tile-flash .hype {
+  background: linear-gradient(90deg, #FF0000, #FF6B00);
+  color: #FFF; font-size: 14px; letter-spacing: 0.06em;
+  padding: 4px 8px; transform: skewX(-6deg);
+}
+.tile__preview--tile-flash .time {
+  font-family: "Bebas Neue", sans-serif; font-size: 24px;
+  background: #1A0000; color: #FFF; padding: 4px 8px; letter-spacing: 0.08em;
+  border-radius: 4px;
+}
+.tile__preview--tile-flash .prc {
+  font-family: "Bebas Neue", sans-serif; font-size: 24px; color: #FF0000;
+  font-style: italic;
+}
+.tile__preview--tile-flash .prc s { color: #999; font-size: 12px; margin-right: 4px; }
+.tile__preview--tile-flash .prc sup { font-size: 12px; }
+.tile__preview--tile-flash .bar {
+  height: 5px; background: #FFE4C7; border-radius: 3px; overflow: hidden;
+}
+.tile__preview--tile-flash .bar i {
+  display: block; height: 100%; width: 87%;
+  background: linear-gradient(90deg, #FF0000, #FF6B00);
+}
+.tile__preview--tile-flash .left {
+  font-family: "Inter", sans-serif; font-size: 9px; font-weight: 700; color: #B81E1E;
+}
+
+/* ─── SUBSCRIPTION STORY ───────────────────────────────────────── */
+.tile__preview--tile-story {
+  background: #F8F4ED;
+  padding: 14px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.tile__preview--tile-story .eyebrow {
+  font-family: "Inter", sans-serif; font-size: 8px; letter-spacing: 0.16em;
+  color: #8FA989; text-transform: uppercase;
+}
+.tile__preview--tile-story .word {
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 400; font-size: 22px; line-height: 1.1; color: #2B2018;
+}
+.tile__preview--tile-story .word em {
+  font-style: italic; color: #C56A4A;
+}
+.tile__preview--tile-story .sub {
+  font-family: "Inter", sans-serif; font-size: 10px; color: #6B5F52;
+  line-height: 1.4;
+}
+.tile__preview--tile-story .cta {
+  margin-top: auto;
+  font-family: "Inter", sans-serif; font-size: 10px; font-weight: 500;
+  color: #C56A4A;
+}
+
+/* ─── GOVERNMENT FORMAL ────────────────────────────────────────── */
+.tile__preview--tile-government {
+  background: #FFFFFF;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  display: flex; flex-direction: column;
+}
+.tile__preview--tile-government .crown {
+  background: #0B0C0C; color: #FFFFFF;
+  padding: 4px 12px; font-weight: 700; font-size: 12px; letter-spacing: 0.04em;
+}
+.tile__preview--tile-government .hero {
+  background: #1D70B8; color: #FFFFFF;
+  padding: 10px 12px;
+  flex: 1; display: flex; flex-direction: column; gap: 4px;
+}
+.tile__preview--tile-government .word {
+  font-weight: 700; font-size: 22px; line-height: 1.1;
+}
+.tile__preview--tile-government .sub {
+  font-size: 10px; line-height: 1.3;
+}
+.tile__preview--tile-government .btn {
+  align-self: flex-start; margin-top: auto;
+  background: #00703C; color: #FFFFFF;
+  padding: 4px 10px; font-size: 10px; font-weight: 700;
+  box-shadow: 0 2px 0 #002D18;
+}
+
+/* ─── ACADEMIC HERITAGE ────────────────────────────────────────── */
+.tile__preview--tile-academic {
+  background: #FAF8F4;
+  padding: 12px 14px;
+  display: flex; flex-direction: column; gap: 4px;
+  text-align: center;
+}
+.tile__preview--tile-academic .crest {
+  font-size: 24px; color: #A41E2F; line-height: 1;
+}
+.tile__preview--tile-academic .name {
+  font-family: "Sabon", "Source Serif 4", serif;
+  font-weight: 500; font-size: 14px; letter-spacing: 0.12em; color: #1A1A1A;
+}
+.tile__preview--tile-academic .motto {
+  font-family: "Sabon", serif; font-style: italic;
+  font-size: 9px; letter-spacing: 0.06em; color: #B89D63;
+}
+.tile__preview--tile-academic .head {
+  font-family: "Sabon", "Source Serif 4", serif;
+  font-weight: 500; font-size: 18px; line-height: 1.15; color: #1A1A1A;
+  margin-top: 4px;
+}
+
+/* ─── RESTAURANT WARM ──────────────────────────────────────────── */
+.tile__preview--tile-restaurant {
+  background: #F4EFE3;
+  padding: 12px 14px;
+  display: flex; flex-direction: column; gap: 3px;
+}
+.tile__preview--tile-restaurant .head {
+  font-family: "Canela Deck", "Tiempos Headline", serif;
+  font-weight: 400; font-size: 22px; color: #1F1612; letter-spacing: 0.01em;
+}
+.tile__preview--tile-restaurant .sub {
+  font-family: "Tiempos Text", serif; font-style: italic;
+  font-size: 10px; color: #6E5E54; margin-bottom: 4px;
+}
+.tile__preview--tile-restaurant .row {
+  display: flex; justify-content: space-between;
+  font-family: "Tiempos Text", serif; font-size: 10px;
+  padding: 3px 0; border-bottom: 1px solid #D7CCB7;
+}
+.tile__preview--tile-restaurant .row .nm { color: #1F1612; }
+.tile__preview--tile-restaurant .row .pr { color: #6B1A1A; }
+
+/* ─── CAFE COZY ────────────────────────────────────────────────── */
+.tile__preview--tile-cafe {
+  background: #FBF6E8;
+  padding: 12px 14px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.tile__preview--tile-cafe .steam {
+  color: #9CB291; font-size: 14px; line-height: 1;
+}
+.tile__preview--tile-cafe .head {
+  font-family: "Caveat", cursive; font-weight: 700;
+  font-size: 32px; line-height: 1; color: #3A2A1E;
+  transform: rotate(-2deg); display: inline-block;
+}
+.tile__preview--tile-cafe .head em { color: #C97B30; font-style: normal; }
+.tile__preview--tile-cafe .sub {
+  font-family: "Fraunces", Georgia, serif; font-style: italic;
+  font-size: 10px; color: #7A6450; margin-bottom: 2px;
+}
+.tile__preview--tile-cafe .row {
+  display: flex; justify-content: space-between;
+  font-family: "Fraunces", serif; font-style: italic;
+  font-size: 10px; color: #3A2A1E;
+  padding: 2px 0; border-bottom: 1px dashed #D9C8A8;
+}
+
+/* ─── HEALTHCARE CALM ──────────────────────────────────────────── */
+.tile__preview--tile-medical {
+  background: #F7F4EE;
+  padding: 14px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.tile__preview--tile-medical .logo {
+  font-family: "Söhne", "Inter", sans-serif; font-weight: 600;
+  font-size: 11px; color: #2E7D7B; letter-spacing: 0.02em;
+}
+.tile__preview--tile-medical .word {
+  font-family: "Söhne", "Inter Display", system-ui;
+  font-weight: 600; font-size: 22px; line-height: 1.1; color: #1F2937;
+  letter-spacing: -0.015em;
+}
+.tile__preview--tile-medical .sub {
+  font-family: "Inter", sans-serif; font-size: 10px; color: #6B7280;
+  line-height: 1.4;
+}
+.tile__preview--tile-medical .btn {
+  align-self: flex-start; margin-top: auto;
+  background: #2E7D7B; color: #FFFFFF;
+  padding: 5px 12px; border-radius: 999px;
+  font-family: "Inter", sans-serif; font-size: 10px; font-weight: 500;
+}

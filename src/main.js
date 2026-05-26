@@ -8,17 +8,26 @@ import "./styles/main.css";
 import "./styles/tiles.css";
 import "./styles/tiles-extended.css";
 import "./styles/tiles-extended-2.css";
+import "./styles/tiles-extended-3.css";
+import "./styles/tiles-extended-4.css";
+import "./styles/tiles-extended-5.css";
+import "./styles/tiles-extended-6.css";
+import "./styles/tiles-extended-7.css";
+import "./styles/tiles-extended-8.css";
+import "./styles/tiles-extended-9.css";
 import "./styles/gallery.css";
 import "./styles/studio.css";
+import "./styles/components-page.css";
 
 import { el } from "./lib/dom.js";
 import { store } from "./lib/store.js";
 import { renderGallery } from "./gallery/Gallery.js";
 import { renderStudio } from "./studio/Studio.js";
 import { renderExpress } from "./studio/Express.js";
+import { renderComponentsPage } from "./components-page/ComponentsPage.js";
 
 const VERSION = "0.4.0";
-const ROUTES = ["gallery", "studio", "express"];
+const ROUTES = ["gallery", "studio", "express", "components"];
 const DEFAULT_ROUTE = "gallery";
 
 // ─── Router ─────────────────────────────────────────────────────────────────
@@ -77,6 +86,8 @@ function render() {
     root.appendChild(renderGallery({ onTune: handleTune }));
   } else if (route === "studio") {
     root.appendChild(renderStudio({ onExit: () => { location.hash = "gallery"; } }));
+  } else if (route === "components") {
+    root.appendChild(renderComponentsPage());
   } else {
     root.appendChild(renderExpress({ onExit: () => { location.hash = "gallery"; } }));
   }
@@ -123,4 +134,15 @@ if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", boot);
 } else {
   boot();
+}
+
+// Auto-reload once when a new service worker takes control, so users always
+// see the latest deployed source without manually hard-refreshing.
+if ("serviceWorker" in navigator) {
+  let reloading = false;
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    if (reloading) return;
+    reloading = true;
+    location.reload();
+  });
 }

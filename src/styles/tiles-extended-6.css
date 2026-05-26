@@ -1,0 +1,185 @@
+/* Tile preview thumbnails for batch-6 regional / cultural styles.
+   japanese, korean, chinese, arabic. */
+
+/* ─── JAPANESE BRAND ───────────────────────────────────────────── */
+.tile__preview--tile-japanese {
+  background: #FAF8F2;
+  padding: 14px 16px;
+  display: flex; flex-direction: column; gap: 4px;
+  font-family: "Noto Sans JP", "Hiragino Sans", "Inter", sans-serif;
+  color: #1A1A1A;
+  position: relative;
+}
+.tile__preview--tile-japanese .ka {
+  font-family: "Noto Sans JP", "Hiragino Sans", sans-serif;
+  font-weight: 300;
+  font-size: 9px;
+  letter-spacing: 0.4em;
+  color: #6B6B6B;
+}
+.tile__preview--tile-japanese .word {
+  font-family: "Inter", "Noto Sans JP", sans-serif;
+  font-weight: 300;
+  font-size: 28px;
+  line-height: 1.15;
+  letter-spacing: -0.005em;
+  color: #1A1A1A;
+  margin-top: 4px;
+}
+.tile__preview--tile-japanese .sub {
+  font-family: "Noto Sans JP", sans-serif;
+  font-weight: 300;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  color: #6B6B6B;
+  margin-top: auto;
+}
+.tile__preview--tile-japanese .pr {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  color: #1E3A5F;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── KOREAN E-COMMERCE ────────────────────────────────────────── */
+.tile__preview--tile-korean {
+  background: #FBFAF6;
+  padding: 0;
+  display: flex; flex-direction: column;
+  font-family: "Pretendard", "Spoqa Han Sans", "Noto Sans KR", "Inter", sans-serif;
+  color: #191919;
+}
+.tile__preview--tile-korean .drop {
+  background: #191919; color: #FED131;
+  padding: 4px 10px;
+  font-weight: 700; font-size: 10px;
+  letter-spacing: -0.01em;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.tile__preview--tile-korean .row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4px;
+  padding: 6px; flex: 1;
+}
+.tile__preview--tile-korean .card {
+  background: #FFFFFF; border: 1px solid #E5E1D8; border-radius: 4px;
+  padding: 4px 6px;
+  display: flex; flex-direction: column; gap: 1px;
+}
+.tile__preview--tile-korean .card.hl {
+  border-color: #FED131;
+  box-shadow: 0 1px 4px rgba(254,209,49,0.4);
+}
+.tile__preview--tile-korean .img {
+  height: 28px;
+  background: #F4F1EA;
+  border-radius: 2px;
+  margin-bottom: 2px;
+}
+.tile__preview--tile-korean .br {
+  font-weight: 700;
+  font-size: 9px;
+  letter-spacing: -0.01em;
+  color: #191919;
+}
+.tile__preview--tile-korean .nm {
+  font-size: 9px;
+  color: #7A7A7A;
+  line-height: 1.2;
+}
+.tile__preview--tile-korean .pr {
+  font-weight: 700;
+  font-size: 11px;
+  color: #191919;
+  font-variant-numeric: tabular-nums;
+  margin-top: 1px;
+}
+
+/* ─── CHINESE EDITORIAL ────────────────────────────────────────── */
+.tile__preview--tile-chinese {
+  background: #FCFAF4;
+  padding: 0;
+  display: flex; flex-direction: column;
+  font-family: "Source Han Serif SC", "Noto Serif SC", "Songti SC", serif;
+  color: #1A1A1A;
+}
+.tile__preview--tile-chinese .nav {
+  background: #1A1A1A; color: #FCFAF4;
+  padding: 3px 10px;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+}
+.tile__preview--tile-chinese .head {
+  padding: 8px 12px 2px;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: #1A1A1A;
+}
+.tile__preview--tile-chinese .by {
+  padding: 0 12px;
+  font-size: 9px;
+  color: #5A5A5A;
+}
+.tile__preview--tile-chinese .body {
+  padding: 4px 12px 10px;
+  margin-top: auto;
+  font-size: 11px;
+  line-height: 1.7;
+  color: #1A1A1A;
+  text-indent: 1.5em;
+  border-top: 1px solid #CFCAB7;
+  padding-top: 6px;
+}
+
+/* ─── ARABIC / GULF LUXURY ─────────────────────────────────────── */
+.tile__preview--tile-arabic {
+  background-color: #FBF8F1;
+  background-image:
+    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60"><g fill="none" stroke="%23B8923D" stroke-width="0.5" opacity="0.16"><polygon points="30,4 44,18 44,42 30,56 16,42 16,18"/><polygon points="30,12 38,22 38,38 30,48 22,38 22,22"/></g></svg>');
+  background-size: 60px 60px;
+  padding: 12px 14px;
+  direction: rtl;
+  display: flex; flex-direction: column; gap: 4px;
+  font-family: "GE SS Two", "Noto Sans Arabic", "Cairo", "Söhne", sans-serif;
+  color: #0F2A2A;
+  text-align: right;
+}
+.tile__preview--tile-arabic .brow {
+  font-family: "Söhne", "Inter", sans-serif;
+  font-size: 8px;
+  letter-spacing: 0.16em;
+  color: #B8923D;
+  direction: ltr;
+  text-align: left;
+}
+.tile__preview--tile-arabic .word {
+  font-family: "29LT Adir", "Aref Ruqaa", "Noto Naskh Arabic", serif;
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 1.2;
+  color: #0F2A2A;
+}
+.tile__preview--tile-arabic .sub {
+  font-family: "Söhne", "Inter", sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  color: #6B7770;
+  text-transform: uppercase;
+  direction: ltr;
+  text-align: left;
+}
+.tile__preview--tile-arabic .rule {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #B8923D, transparent);
+  margin-top: auto;
+}
+.tile__preview--tile-arabic .cta {
+  font-family: "GE SS Two", "Cairo", sans-serif;
+  font-weight: 600;
+  font-size: 11px;
+  color: #B8923D;
+  align-self: flex-start;
+}

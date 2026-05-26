@@ -1,0 +1,617 @@
+/* Tile preview thumbnails for the 20 batch-4 styles (portfolio / content /
+   booking / specialized).
+
+   portfolio, agency, creator, resume,
+   blog, news, podcast, video, docs,
+   hotel, airline, realestate, legal, salon,
+   crypto, gaming, nonprofit, event, church, museum. */
+
+/* ─── PORTFOLIO ────────────────────────────────────────────────── */
+.tile__preview--tile-portfolio {
+  background: #0E0E10; color: #EDEDEF;
+  padding: 12px 14px;
+  display: flex; flex-direction: column; gap: 4px;
+  font-family: "Inter", system-ui, sans-serif;
+}
+.tile__preview--tile-portfolio .meta {
+  font-family: "JetBrains Mono", monospace; font-size: 8px;
+  letter-spacing: 0.1em; color: #8A8A92;
+}
+.tile__preview--tile-portfolio .name {
+  font-weight: 600; font-size: 26px; line-height: 0.95;
+  letter-spacing: -0.025em; color: #EDEDEF; margin: 2px 0;
+}
+.tile__preview--tile-portfolio .now {
+  margin-top: auto;
+  font-family: "JetBrains Mono", monospace; font-size: 9px;
+  color: #A78BFA; border: 1px dashed #26262A; padding: 3px 6px;
+}
+
+/* ─── CREATIVE AGENCY ──────────────────────────────────────────── */
+.tile__preview--tile-agency {
+  background: #FAFAF8;
+  padding: 12px 14px;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.tile__preview--tile-agency .word {
+  font-family: "Tiempos Headline", "Times New Roman", serif;
+  font-weight: 400; font-size: 34px; line-height: 0.85;
+  letter-spacing: -0.045em; color: #0A0A0A;
+}
+.tile__preview--tile-agency .word em {
+  color: #FF4D2E; font-style: italic;
+}
+.tile__preview--tile-agency .by {
+  font-family: "JetBrains Mono", monospace; font-size: 8px;
+  letter-spacing: 0.1em; text-transform: uppercase; color: #6B6B6B;
+}
+
+/* ─── CREATOR PERSONAL ─────────────────────────────────────────── */
+.tile__preview--tile-creator {
+  background: #FFFFFF;
+  padding: 12px 16px;
+  display: flex; flex-direction: column; gap: 4px;
+  font-family: "Source Serif 4", "Charter", Georgia, serif;
+  color: #1A1A1A;
+}
+.tile__preview--tile-creator .date {
+  font-size: 9px; color: #666; font-family: "Inter", sans-serif;
+}
+.tile__preview--tile-creator .head {
+  font-weight: 600; font-size: 20px; line-height: 1.15; color: #1A1A1A;
+}
+.tile__preview--tile-creator .body {
+  font-size: 11px; line-height: 1.45; color: #1A1A1A;
+}
+.tile__preview--tile-creator .sub {
+  margin-top: auto; font-size: 10px; color: #A52A2A;
+}
+
+/* ─── CV / RESUME ──────────────────────────────────────────────── */
+.tile__preview--tile-resume {
+  background: #FFFFFF;
+  padding: 10px 14px;
+  font-family: "Source Serif 4", Georgia, serif;
+  color: #0F0F0F;
+  display: flex; flex-direction: column; gap: 2px;
+}
+.tile__preview--tile-resume .head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  border-bottom: 1px solid #CCCCCC; padding-bottom: 4px; margin-bottom: 4px;
+}
+.tile__preview--tile-resume .nm { font-size: 18px; font-weight: 500; }
+.tile__preview--tile-resume .loc { font-size: 9px; color: #666; font-style: italic; }
+.tile__preview--tile-resume .row {
+  display: flex; justify-content: space-between; font-size: 10px;
+  padding: 2px 0; font-variant-numeric: tabular-nums;
+}
+.tile__preview--tile-resume .lbl {
+  font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; color: #666;
+}
+.tile__preview--tile-resume .role { color: #0F0F0F; }
+.tile__preview--tile-resume .yr   { color: #666; }
+
+/* ─── BLOG ─────────────────────────────────────────────────────── */
+.tile__preview--tile-blog {
+  background: #FFFFFF;
+  padding: 12px 16px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.tile__preview--tile-blog .head {
+  font-family: "Inter Display", "Inter", system-ui;
+  font-weight: 700; font-size: 22px; line-height: 1.1;
+  letter-spacing: -0.02em; color: #1A1A1A;
+}
+.tile__preview--tile-blog .by {
+  font-family: "Inter", sans-serif; font-size: 10px; color: #6B6B6B;
+}
+.tile__preview--tile-blog .body {
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: 12px; line-height: 1.5; color: #1A1A1A;
+}
+.tile__preview--tile-blog .tag {
+  margin-top: auto; font-family: "Inter", sans-serif;
+  font-size: 9px; color: #1E88E5;
+}
+
+/* ─── NEWS SITE ────────────────────────────────────────────────── */
+.tile__preview--tile-news {
+  background: #FFFFFF;
+  padding: 0;
+  display: flex; flex-direction: column;
+  font-family: "Inter", sans-serif;
+}
+.tile__preview--tile-news .live {
+  background: #0F0F0F; color: #FFFFFF;
+  padding: 3px 10px; font-size: 9px; font-weight: 500;
+}
+.tile__preview--tile-news .cat {
+  padding: 6px 12px 0;
+  font-size: 9px; font-weight: 700; letter-spacing: 0.08em;
+  color: #FA4616;
+}
+.tile__preview--tile-news .head {
+  padding: 2px 12px;
+  font-size: 17px; line-height: 1.15; font-weight: 800;
+  color: #0F0F0F; letter-spacing: -0.02em;
+}
+.tile__preview--tile-news .by {
+  padding: 4px 12px 8px;
+  margin-top: auto;
+  font-size: 10px; color: #5C5C5C;
+}
+
+/* ─── PODCAST ──────────────────────────────────────────────────── */
+.tile__preview--tile-podcast {
+  background: #0F0F0F; color: #F5F5F5;
+  padding: 12px 14px;
+  display: flex; flex-direction: column; gap: 6px;
+  font-family: "Söhne", "Inter", sans-serif;
+}
+.tile__preview--tile-podcast .ep {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9px; letter-spacing: 0.08em; color: #9A9A9A;
+}
+.tile__preview--tile-podcast .head {
+  font-size: 16px; line-height: 1.15; font-weight: 600; color: #F5F5F5;
+}
+.tile__preview--tile-podcast .row {
+  margin-top: auto;
+  display: grid; grid-template-columns: 22px 1fr auto;
+  align-items: center; gap: 6px;
+}
+.tile__preview--tile-podcast .play {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: #FF6B35; color: #FFFFFF;
+  display: grid; place-items: center;
+  font-size: 8px;
+}
+.tile__preview--tile-podcast .bar {
+  height: 3px; background: #2A2A2A; border-radius: 2px; overflow: hidden;
+}
+.tile__preview--tile-podcast .bar i {
+  display: block; height: 100%; width: 28%; background: #FF6B35;
+}
+.tile__preview--tile-podcast .t {
+  font-family: "JetBrains Mono", monospace; font-size: 9px; color: #9A9A9A;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── VIDEO STREAMING ──────────────────────────────────────────── */
+.tile__preview--tile-video {
+  background: #0F0F0F; color: #FFFFFF;
+  padding: 0;
+  display: flex; flex-direction: column;
+}
+.tile__preview--tile-video .bill {
+  flex: 1; min-height: 60px;
+  background:
+    linear-gradient(180deg, transparent 40%, rgba(15,15,15,0.85) 100%),
+    linear-gradient(135deg, #5B1A2A 0%, #1A0E14 100%);
+  display: flex; align-items: flex-end; padding: 8px 10px;
+}
+.tile__preview--tile-video .ttl {
+  font-family: "Söhne", "Inter Display", system-ui;
+  font-weight: 800; font-size: 18px; letter-spacing: -0.025em;
+  color: #FFFFFF;
+}
+.tile__preview--tile-video .lbl {
+  padding: 6px 10px 4px;
+  font-size: 9px; font-weight: 600; letter-spacing: 0.08em;
+  color: #A1A1A1;
+}
+.tile__preview--tile-video .row {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px;
+  padding: 0 10px 8px;
+}
+.tile__preview--tile-video .t {
+  aspect-ratio: 16/9; background: #1A1A1A; border-radius: 3px;
+}
+.tile__preview--tile-video .t.hl {
+  background: linear-gradient(135deg, #E50914, #7A0510);
+}
+
+/* ─── TECHNICAL DOCS ───────────────────────────────────────────── */
+.tile__preview--tile-docs {
+  background: #FFFFFF;
+  padding: 0;
+  display: grid; grid-template-columns: 70px 1fr;
+  font-family: "Inter", sans-serif;
+}
+.tile__preview--tile-docs .side {
+  background: #FAFAFA; border-right: 1px solid #E5E7EB;
+  padding: 8px 6px;
+  display: flex; flex-direction: column; gap: 2px;
+}
+.tile__preview--tile-docs .grp {
+  font-size: 8px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: #6B7280; padding: 2px 4px; margin-bottom: 2px;
+}
+.tile__preview--tile-docs .li {
+  font-size: 9px; color: #6B7280; padding: 2px 6px; border-radius: 3px;
+}
+.tile__preview--tile-docs .li.hl {
+  background: #DDF4FF; color: #0969DA; font-weight: 500;
+}
+.tile__preview--tile-docs .body {
+  padding: 8px 10px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.tile__preview--tile-docs .bc {
+  font-size: 8px; color: #6B7280;
+}
+.tile__preview--tile-docs .hd {
+  font-size: 14px; font-weight: 700; color: #1F2328;
+  letter-spacing: -0.01em;
+}
+.tile__preview--tile-docs .code {
+  margin-top: auto;
+  background: #F6F8FA; border: 1px solid #E5E7EB; border-radius: 3px;
+  padding: 4px 6px;
+  font-family: "JetBrains Mono", monospace; font-size: 9px; color: #1F2328;
+  overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+}
+
+/* ─── HOTEL ────────────────────────────────────────────────────── */
+.tile__preview--tile-hotel {
+  background: #FBF9F4;
+  padding: 0;
+  display: flex; flex-direction: column;
+  font-family: "Söhne", "Inter", sans-serif;
+}
+.tile__preview--tile-hotel .img {
+  flex: 1; min-height: 50px;
+  background: linear-gradient(135deg, #C9B59A 0%, #6B5A45 100%);
+}
+.tile__preview--tile-hotel .nm {
+  padding: 6px 14px 0;
+  font-family: "Canela", "Tiempos Headline", serif;
+  font-weight: 300; font-size: 26px; color: #2C2A26;
+  letter-spacing: 0.02em;
+}
+.tile__preview--tile-hotel .loc {
+  padding: 0 14px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 8px; letter-spacing: 0.16em; color: #7A736A;
+}
+.tile__preview--tile-hotel .bk {
+  margin-top: auto;
+  padding: 6px 14px 10px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 8px; letter-spacing: 0.06em; color: #2C2A26;
+  border-top: 1px solid #D8D2C5;
+}
+
+/* ─── AIRLINE ──────────────────────────────────────────────────── */
+.tile__preview--tile-airline {
+  background: #FFFFFF;
+  padding: 10px 12px;
+  display: flex; flex-direction: column; gap: 6px;
+  font-family: "Söhne", "Inter", sans-serif;
+}
+.tile__preview--tile-airline .srch {
+  display: grid; grid-template-columns: 1fr 1fr 1fr auto;
+  gap: 4px;
+  border: 1px solid #D5DAE0; border-radius: 4px;
+  background: #FFFFFF; padding: 6px;
+}
+.tile__preview--tile-airline .fld {
+  display: flex; flex-direction: column; gap: 1px;
+  padding: 2px 4px; border-right: 1px solid #D5DAE0;
+}
+.tile__preview--tile-airline .fld:nth-last-child(2) { border-right: 0; }
+.tile__preview--tile-airline .fld span {
+  font-size: 7px; letter-spacing: 0.06em; color: #5C6B7F;
+}
+.tile__preview--tile-airline .fld b {
+  font-size: 12px; font-weight: 600; color: #0D1B2A;
+}
+.tile__preview--tile-airline .btn {
+  background: #003876; color: #FFFFFF;
+  border-radius: 3px;
+  padding: 6px 10px;
+  font-size: 10px; font-weight: 600;
+  align-self: stretch;
+  display: grid; place-items: center;
+}
+.tile__preview--tile-airline .tier {
+  margin-top: auto;
+  background: linear-gradient(135deg, #F0B323, #B58A20);
+  color: #FFFFFF; padding: 4px 10px; border-radius: 999px;
+  font-size: 9px; font-weight: 600; letter-spacing: 0.04em;
+  align-self: flex-start;
+}
+
+/* ─── REAL ESTATE ──────────────────────────────────────────────── */
+.tile__preview--tile-realestate {
+  background: #FFFFFF;
+  padding: 0;
+  display: grid; grid-template-columns: 1fr 1fr;
+  font-family: "Inter", sans-serif;
+}
+.tile__preview--tile-realestate .map {
+  background:
+    linear-gradient(135deg, #E8EEF4 0%, #C5D3E0 100%);
+  position: relative; padding: 8px;
+}
+.tile__preview--tile-realestate .pin {
+  background: #FFFFFF; border: 2px solid #0061DF; color: #0E1A2B;
+  padding: 1px 5px; border-radius: 10px;
+  font-size: 8px; font-weight: 700; font-variant-numeric: tabular-nums;
+  display: inline-block; margin: 1px 2px;
+}
+.tile__preview--tile-realestate .pin.hl {
+  background: #0E1A2B; color: #FFFFFF; border-color: #0E1A2B;
+}
+.tile__preview--tile-realestate .list { padding: 8px; }
+.tile__preview--tile-realestate .card {
+  background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 6px;
+  overflow: hidden;
+}
+.tile__preview--tile-realestate .card .img {
+  height: 40px;
+  background: linear-gradient(135deg, #C5D3E0, #E8EEF4);
+}
+.tile__preview--tile-realestate .pr {
+  font-size: 14px; font-weight: 700; color: #0E1A2B;
+  padding: 4px 6px 0; font-variant-numeric: tabular-nums;
+}
+.tile__preview--tile-realestate .sp {
+  font-size: 9px; color: #5C6B7F;
+  padding: 0 6px 4px;
+}
+
+/* ─── LEGAL / LAW FIRM ─────────────────────────────────────────── */
+.tile__preview--tile-legal {
+  background: #FFFFFF;
+  padding: 12px 14px;
+  display: flex; flex-direction: column; gap: 4px;
+  font-family: "Source Serif 4", "Sabon", Georgia, serif;
+  color: #0B1F3A;
+}
+.tile__preview--tile-legal .brow {
+  font-size: 8px; letter-spacing: 0.16em; color: #7A1F2B;
+  font-family: "Source Serif 4", serif;
+}
+.tile__preview--tile-legal .word {
+  font-family: "Sabon", "Source Serif 4", serif;
+  font-weight: 400; font-size: 22px; line-height: 1; color: #0B1F3A;
+}
+.tile__preview--tile-legal .rule {
+  height: 1px; background: #CFC9B8; margin-top: auto;
+}
+.tile__preview--tile-legal .aw {
+  font-style: italic; font-size: 10px; color: #5A6679;
+}
+
+/* ─── SALON / WELLNESS ─────────────────────────────────────────── */
+.tile__preview--tile-salon {
+  background: #FBF7F2;
+  padding: 12px 14px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.tile__preview--tile-salon .hd {
+  font-family: "Fraunces", serif; font-weight: 400; font-size: 22px;
+  color: #3A2E2A;
+}
+.tile__preview--tile-salon .row {
+  display: grid; grid-template-columns: 1fr auto auto;
+  gap: 6px; align-items: baseline;
+  padding: 2px 0; border-bottom: 1px solid #E5D8CE;
+}
+.tile__preview--tile-salon .nm {
+  font-family: "Fraunces", serif; font-size: 12px; color: #3A2E2A;
+}
+.tile__preview--tile-salon .dur {
+  font-family: "JetBrains Mono", monospace; font-size: 8px;
+  letter-spacing: 0.06em; color: #7A6B65;
+}
+.tile__preview--tile-salon .pr {
+  font-family: "JetBrains Mono", monospace; font-size: 10px;
+  color: #3A2E2A; font-variant-numeric: tabular-nums;
+}
+.tile__preview--tile-salon .btn {
+  margin-top: auto; align-self: flex-start;
+  background: #D4A5A5; color: #3A2E2A;
+  padding: 5px 14px; border-radius: 999px;
+  font-family: "Inter", sans-serif; font-size: 10px; font-weight: 500;
+}
+
+/* ─── CRYPTO / WEB3 ────────────────────────────────────────────── */
+.tile__preview--tile-crypto {
+  background:
+    radial-gradient(ellipse 200px 150px at 20% 10%, rgba(255,0,122,0.25), transparent),
+    radial-gradient(ellipse 200px 150px at 80% 80%, rgba(123,97,255,0.25), transparent),
+    #0E0E1A;
+  padding: 12px;
+  color: #F5F5FA;
+  font-family: "Inter", sans-serif;
+  display: flex; flex-direction: column; gap: 5px;
+}
+.tile__preview--tile-crypto .row {
+  display: grid; grid-template-columns: 26px 36px 1fr auto;
+  align-items: center; gap: 6px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 6px; padding: 4px 8px;
+  font-size: 10px;
+}
+.tile__preview--tile-crypto .chain {
+  background: rgba(255,255,255,0.1);
+  color: #9095B5;
+  font-family: "JetBrains Mono", monospace; font-size: 8px; font-weight: 700;
+  padding: 1px 4px; border-radius: 2px;
+}
+.tile__preview--tile-crypto .tok { font-weight: 600; color: #F5F5FA; }
+.tile__preview--tile-crypto .pr {
+  font-family: "JetBrains Mono", monospace; font-variant-numeric: tabular-nums;
+  text-align: right; color: #F5F5FA;
+}
+.tile__preview--tile-crypto .ch { color: #26C281; font-weight: 600; font-size: 9px; }
+.tile__preview--tile-crypto .ch.dn { color: #FF4757; }
+.tile__preview--tile-crypto .cta {
+  margin-top: auto; align-self: flex-start;
+  background: linear-gradient(135deg, #FF007A, #7B61FF);
+  color: #FFFFFF; padding: 5px 14px; border-radius: 999px;
+  font-weight: 700; font-size: 10px;
+  box-shadow: 0 0 20px rgba(255,0,122,0.4);
+}
+
+/* ─── GAMING / ESPORTS ─────────────────────────────────────────── */
+.tile__preview--tile-gaming {
+  background: #0D1117;
+  padding: 0;
+  position: relative;
+  color: #F0F6FC;
+  font-family: "Inter", sans-serif;
+  overflow: hidden;
+}
+.tile__preview--tile-gaming .bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 40% 40%, rgba(0,255,224,0.18), transparent 60%),
+    radial-gradient(ellipse at 80% 70%, rgba(255,45,159,0.18), transparent 60%),
+    linear-gradient(135deg, #14171F 0%, #0D1117 100%);
+}
+.tile__preview--tile-gaming .word {
+  position: relative; z-index: 2;
+  padding: 10px 14px 0;
+  font-family: "Bebas Neue", "Anton", "Druk Wide", sans-serif;
+  font-weight: 800; font-size: 34px; line-height: 0.9;
+  letter-spacing: 0.02em; text-transform: uppercase;
+  color: #F0F6FC;
+}
+.tile__preview--tile-gaming .meta {
+  position: relative; z-index: 2;
+  padding: 4px 14px;
+  font-family: "JetBrains Mono", monospace; font-size: 8px;
+  letter-spacing: 0.16em; color: #00FFE0;
+}
+.tile__preview--tile-gaming .btn {
+  position: absolute; bottom: 10px; left: 14px; z-index: 2;
+  background: #00FFE0; color: #0D1117;
+  padding: 4px 12px;
+  font-family: "Bebas Neue", sans-serif; font-weight: 800;
+  font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  clip-path: polygon(8% 0, 100% 0, 92% 100%, 0 100%);
+  box-shadow: 0 0 20px rgba(0,255,224,0.5);
+}
+
+/* ─── NONPROFIT ────────────────────────────────────────────────── */
+.tile__preview--tile-nonprofit {
+  background: #FFFFFF;
+  padding: 0;
+  display: flex; flex-direction: column;
+  font-family: "Söhne", "Inter", sans-serif;
+}
+.tile__preview--tile-nonprofit .img {
+  height: 50px;
+  background:
+    linear-gradient(0deg, rgba(0,0,0,0.4), transparent 60%),
+    linear-gradient(135deg, #3B6B8C 0%, #1F3A4F 100%);
+}
+.tile__preview--tile-nonprofit .word {
+  padding: 6px 12px 0;
+  font-weight: 800; font-size: 22px; line-height: 0.95;
+  letter-spacing: -0.025em; color: #1A1A1A;
+}
+.tile__preview--tile-nonprofit .impact {
+  padding: 4px 12px;
+  font-size: 10px; color: #5C5C5C; font-style: italic;
+}
+.tile__preview--tile-nonprofit .impact strong { color: #1B6CAC; font-style: normal; }
+.tile__preview--tile-nonprofit .btn {
+  margin: 4px 12px 10px;
+  background: #FFC907; color: #1A1A1A;
+  padding: 5px; text-align: center;
+  border-radius: 999px;
+  font-weight: 700; font-size: 11px;
+  box-shadow: 0 2px 6px rgba(255,201,7,0.4);
+}
+
+/* ─── EVENT / CONFERENCE ───────────────────────────────────────── */
+.tile__preview--tile-event {
+  background: #0E0E10; color: #F5F5F5;
+  padding: 12px;
+  text-align: center;
+  display: flex; flex-direction: column; gap: 4px;
+  font-family: "Söhne", "Inter", sans-serif;
+}
+.tile__preview--tile-event .hd {
+  font-family: "PP Editorial New", "Tiempos Headline", serif;
+  font-weight: 600; font-size: 18px; letter-spacing: -0.025em;
+  color: #F5F5F5;
+}
+.tile__preview--tile-event .cd {
+  font-family: "JetBrains Mono", monospace; font-weight: 700;
+  font-size: 28px; color: #E12C75;
+  font-variant-numeric: tabular-nums;
+  margin: 4px 0;
+}
+.tile__preview--tile-event .lbl {
+  font-family: "JetBrains Mono", monospace; font-size: 8px;
+  letter-spacing: 0.1em; color: #9A9A9A;
+}
+.tile__preview--tile-event .btn {
+  margin-top: auto; align-self: center;
+  background: #E12C75; color: #FFFFFF;
+  padding: 5px 14px;
+  font-weight: 700; font-size: 10px; letter-spacing: 0.08em;
+  border-radius: 4px;
+}
+
+/* ─── CHURCH / FAITH ───────────────────────────────────────────── */
+.tile__preview--tile-church {
+  background: #FBF6EC;
+  padding: 12px 14px;
+  display: flex; flex-direction: column; gap: 4px;
+  text-align: center;
+  font-family: "Source Serif 4", "Fraunces", Georgia, serif;
+  color: #2D2018;
+}
+.tile__preview--tile-church .hd {
+  font-family: "Fraunces", serif; font-weight: 400;
+  font-size: 22px; line-height: 1.05; color: #2D2018;
+}
+.tile__preview--tile-church .hd em {
+  font-style: italic; color: #9B6B3A;
+}
+.tile__preview--tile-church .loc {
+  font-style: italic; font-size: 10px; color: #6B5B4D;
+}
+.tile__preview--tile-church .scr {
+  font-style: italic; font-size: 12px; line-height: 1.4;
+  color: #5D2E1F; max-width: 28ch; margin: 4px auto 0;
+  border-top: 1px solid #D9C9B0; padding-top: 4px;
+}
+.tile__preview--tile-church .cite {
+  font-style: normal; font-size: 8px; letter-spacing: 0.1em;
+  color: #9B6B3A; margin-top: auto;
+}
+
+/* ─── MUSEUM / GALLERY ─────────────────────────────────────────── */
+.tile__preview--tile-museum {
+  background: #FFFFFF;
+  padding: 12px 14px;
+  display: flex; flex-direction: column; gap: 4px;
+  font-family: "Söhne", "Inter", sans-serif;
+  color: #0F0F0F;
+}
+.tile__preview--tile-museum .lbl {
+  font-family: "JetBrains Mono", monospace; font-size: 8px;
+  letter-spacing: 0.16em; color: #C41E3A;
+}
+.tile__preview--tile-museum .word {
+  font-family: "Bebas Neue", "Anton", "Knockout", sans-serif;
+  font-weight: 800; font-size: 36px; line-height: 0.9;
+  letter-spacing: -0.02em; color: #0F0F0F;
+}
+.tile__preview--tile-museum .dates {
+  font-size: 11px; color: #5C5C5C;
+}
+.tile__preview--tile-museum .visit {
+  margin-top: auto;
+  font-family: "JetBrains Mono", monospace; font-size: 9px;
+  letter-spacing: 0.04em; color: #0F0F0F;
+  border-top: 1px solid #D9D9D9; padding-top: 4px;
+}

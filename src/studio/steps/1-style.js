@@ -8,6 +8,7 @@ import { STYLE_PRESETS, STYLE_LIST } from "../../data/styles/index.js";
 import { STYLE_VARIANTS, findVariantForState } from "../../data/style-variants.js";
 import { DENSITY_LEVELS, DRAMA_LEVELS, MOTION_LEVELS } from "../../data/modifiers.js";
 import { MOOD_PRESETS } from "../../data/moods.js";
+import { STYLE_CATEGORIES, STYLE_CATEGORY_MAP, categoryCount } from "../../data/styles/categories.js";
 
 export function renderStep1({ state, onStateChange }) {
   const root = el("section", { class: "step step--style" });
@@ -15,7 +16,8 @@ export function renderStep1({ state, onStateChange }) {
   // ─── State for the filter UI (local — not persisted) ─────────────────────
   const ui = {
     query: "",
-    baseFilter: null, // null = all
+    categoryFilter: null, // null = all categories
+    baseFilter: null, // null = all bases
     moodFilter: null,
   };
 
@@ -32,13 +34,24 @@ export function renderStep1({ state, onStateChange }) {
     rebuildCards();
   });
 
+  // Category chip row (primary — cascades to base chips)
+  const categoryChips = el(
+    "div",
+    { class: "step__variant-chips step__variant-chips--category", role: "radiogroup", "aria-label": "Filter by category" },
+    chip("All", null, () => { ui.categoryFilter = null; ui.baseFilter = null; rebuildAll(); }, ui.categoryFilter === null),
+    ...Object.values(STYLE_CATEGORIES).map((c) =>
+      chip(`${c.name} · ${categoryCount(c.id)}`, c.id, () => {
+        ui.categoryFilter = c.id;
+        ui.baseFilter = null; // reset secondary base filter when category changes
+        rebuildAll();
+      }, ui.categoryFilter === c.id),
+    ),
+  );
+
   const baseChips = el(
     "div",
     { class: "step__variant-chips", role: "radiogroup", "aria-label": "Filter by base style" },
-    chip("All bases", null, () => { ui.baseFilter = null; rebuildAll(); }, ui.baseFilter === null),
-    ...STYLE_LIST.map((s) =>
-      chip(s.name, s.id, () => { ui.baseFilter = s.id; rebuildAll(); }, ui.baseFilter === s.id),
-    ),
+    ...basesForCategory(ui.categoryFilter, ui.baseFilter),
   );
 
   const moodChips = el(
@@ -50,7 +63,19 @@ export function renderStep1({ state, onStateChange }) {
     ),
   );
 
-  filterBar.append(searchInput, baseChips, moodChips);
+  filterBar.append(searchInput, categoryChips, baseChips, moodChips);
+
+  // Helper: build base-style chips filtered by current category.
+  // Returns array of chip elements (with leading "All bases" chip).
+  function basesForCategory(catId, selected) {
+    const stylesInCat = STYLE_LIST.filter((s) => !catId || STYLE_CATEGORY_MAP[s.id] === catId);
+    return [
+      chip("All bases", null, () => { ui.baseFilter = null; rebuildAll(); }, selected === null),
+      ...stylesInCat.map((s) =>
+        chip(s.name, s.id, () => { ui.baseFilter = s.id; rebuildAll(); }, selected === s.id),
+      ),
+    ];
+  }
 
   // ─── Variant grid ────────────────────────────────────────────────────────
   const grid = el("div", { class: "step__variant-grid", role: "radiogroup", "aria-label": "Style preset" });
@@ -67,6 +92,7 @@ export function renderStep1({ state, onStateChange }) {
   function rebuildCards() {
     const q = ui.query.trim().toLowerCase();
     const visible = STYLE_VARIANTS.filter((v) => {
+      if (ui.categoryFilter && STYLE_CATEGORY_MAP[v.baseStyle] !== ui.categoryFilter) return false;
       if (ui.baseFilter && v.baseStyle !== ui.baseFilter) return false;
       if (ui.moodFilter && v.moodId !== ui.moodFilter) return false;
       if (q) {
@@ -122,8 +148,23 @@ export function renderStep1({ state, onStateChange }) {
   }
 
   function rebuildAll() {
-    rebuildChip(baseChips, [{ id: null, name: "All bases" }, ...STYLE_LIST.map((s) => ({ id: s.id, name: s.name }))], ui.baseFilter, (id) => { ui.baseFilter = id; rebuildAll(); });
+    // Category chips (primary)
+    const categoryOptions = [
+      { id: null, name: "All" },
+      ...Object.values(STYLE_CATEGORIES).map((c) => ({ id: c.id, name: `${c.name} · ${categoryCount(c.id)}` })),
+    ];
+    rebuildChip(categoryChips, categoryOptions, ui.categoryFilter, (id) => {
+      ui.categoryFilter = id;
+      ui.baseFilter = null; // reset secondary when category changes
+      rebuildAll();
+    });
+
+    // Base chips (cascade by category)
+    baseChips.replaceChildren(...basesForCategory(ui.categoryFilter, ui.baseFilter));
+
+    // Mood chips (unchanged)
     rebuildChip(moodChips, [{ id: null, name: "All moods" }, ...MOOD_PRESETS.map((m) => ({ id: m.id, name: m.name }))], ui.moodFilter, (id) => { ui.moodFilter = id; rebuildAll(); });
+
     rebuildCards();
   }
 

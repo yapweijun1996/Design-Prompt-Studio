@@ -1,0 +1,707 @@
+/* Tile preview thumbnails for batch-8 (B2C subsegments + deeper creative + verticals).
+   rideshare, delivery, bizcard, insurance, telehealth, chat,
+   swisslate, artdeco, postmemphis, brutalmod, lowpoly, cinema,
+   legalsaas, construction, agtech, automotive, nonprofitgov, biotech. */
+
+/* ─── RIDESHARE ────────────────────────────────────────────────── */
+.tile__preview--tile-rideshare {
+  background: #FFFFFF;
+  padding: 0;
+  display: flex; flex-direction: column;
+  font-family: "Söhne", "Inter", sans-serif;
+}
+.tile__preview--tile-rideshare .map {
+  flex: 1; position: relative;
+  background: linear-gradient(135deg, #E8E5DA 0%, #C5C0B5 100%);
+}
+.tile__preview--tile-rideshare .pin {
+  position: absolute;
+  width: 16px; height: 16px; border-radius: 50%;
+  background: #000; color: #FFFFFF;
+  display: grid; place-items: center;
+  font-size: 9px; font-weight: 700;
+  border: 2px solid #FFFFFF;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+.tile__preview--tile-rideshare .pin.a { top: 25%; left: 18%; }
+.tile__preview--tile-rideshare .pin.b { bottom: 22%; right: 16%; background: #1E8E3E; }
+.tile__preview--tile-rideshare .rt {
+  position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none;
+}
+.tile__preview--tile-rideshare .sheet {
+  background: #FFFFFF; border-top: 1px solid #E0E0E0;
+  padding: 6px 12px;
+}
+.tile__preview--tile-rideshare .row {
+  display: grid; grid-template-columns: 1fr auto auto;
+  gap: 8px; align-items: center;
+  font-size: 11px;
+}
+.tile__preview--tile-rideshare .eta {
+  color: #1E8E3E; font-weight: 600;
+}
+.tile__preview--tile-rideshare .pr {
+  font-weight: 700; font-variant-numeric: tabular-nums;
+}
+
+/* ─── FOOD DELIVERY ────────────────────────────────────────────── */
+.tile__preview--tile-delivery {
+  background: #FFFFFF;
+  padding: 8px 10px;
+  display: flex; flex-direction: column; gap: 4px;
+  font-family: "Inter", sans-serif;
+  color: #191919;
+}
+.tile__preview--tile-delivery .card {
+  border-radius: 8px;
+  overflow: hidden;
+  flex: 1;
+  display: flex; flex-direction: column;
+}
+.tile__preview--tile-delivery .img {
+  height: 44px;
+  background: linear-gradient(135deg, #FFA07A 0%, #FF5C2A 50%, #C7472D 100%);
+}
+.tile__preview--tile-delivery .nm {
+  font-weight: 700; font-size: 13px; padding: 4px 0 0;
+  color: #191919;
+}
+.tile__preview--tile-delivery .row {
+  display: flex; gap: 6px; flex-wrap: wrap;
+  font-size: 10px; color: #767676;
+  align-items: center;
+}
+.tile__preview--tile-delivery .r { color: #F5A623; font-weight: 600; }
+.tile__preview--tile-delivery .eta {
+  background: #F4F4F4; padding: 1px 5px; border-radius: 3px;
+  font-weight: 600; font-size: 9px; color: #191919;
+}
+.tile__preview--tile-delivery .pm { color: #00A862; font-weight: 600; font-size: 9px; }
+.tile__preview--tile-delivery .cart {
+  background: #EB1700; color: #FFFFFF;
+  padding: 4px 8px; border-radius: 4px;
+  font-size: 10px; font-weight: 700;
+  text-align: center;
+  margin-top: auto;
+}
+
+/* ─── CORPORATE SPEND ──────────────────────────────────────────── */
+.tile__preview--tile-bizcard {
+  background: #F7F8FA;
+  padding: 8px;
+  display: flex; flex-direction: column; gap: 4px;
+  font-family: "Söhne", "Inter", sans-serif;
+  color: #0E0F11;
+}
+.tile__preview--tile-bizcard .card {
+  background: linear-gradient(135deg, #0E0F11 0%, #2A2D33 100%);
+  color: #FFFFFF; border-radius: 6px;
+  padding: 8px 10px;
+}
+.tile__preview--tile-bizcard .card .num {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 13px; letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+  margin-top: 4px;
+}
+.tile__preview--tile-bizcard .card .nm {
+  font-size: 9px; color: rgba(255,255,255,0.7);
+  letter-spacing: 0.04em; text-transform: uppercase;
+}
+.tile__preview--tile-bizcard .row {
+  display: grid; grid-template-columns: 1fr 60px auto auto;
+  gap: 6px; padding: 3px 6px;
+  background: #FFFFFF;
+  border: 1px solid #E1E3E8; border-radius: 4px;
+  font-size: 10px; align-items: center;
+}
+.tile__preview--tile-bizcard .amt { font-weight: 600; font-variant-numeric: tabular-nums; }
+.tile__preview--tile-bizcard .bd { font-size: 9px; padding: 1px 5px; border-radius: 8px; font-weight: 600; }
+.tile__preview--tile-bizcard .bd.ok { background: #F0F7E8; color: #0A8C5C; }
+.tile__preview--tile-bizcard .bd.wn { background: #FFF4E0; color: #E08E00; }
+
+/* ─── INSURANCE D2C ────────────────────────────────────────────── */
+.tile__preview--tile-insurance {
+  background: #FFF5F8;
+  padding: 12px;
+  display: flex; flex-direction: column; gap: 6px;
+  font-family: "Söhne", "Inter", sans-serif;
+  color: #1A1A1A;
+  align-items: center;
+  text-align: center;
+}
+.tile__preview--tile-insurance .prog {
+  display: flex; gap: 6px;
+}
+.tile__preview--tile-insurance .prog .d {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #F0E5EC;
+}
+.tile__preview--tile-insurance .prog .d.done { background: #FF0083; }
+.tile__preview--tile-insurance .prog .d.cur {
+  background: #FF0083;
+  box-shadow: 0 0 0 3px rgba(255,0,131,0.2);
+}
+.tile__preview--tile-insurance .q {
+  font-size: 11px; color: #6B6B6B; margin-top: 4px;
+}
+.tile__preview--tile-insurance .pr {
+  font-family: "Söhne", system-ui;
+  font-weight: 800; font-size: 40px;
+  color: #FF0083;
+  font-variant-numeric: tabular-nums; line-height: 1;
+}
+.tile__preview--tile-insurance .pr span {
+  font-size: 14px; color: #6B6B6B;
+}
+.tile__preview--tile-insurance .cta {
+  margin-top: auto;
+  background: #FF0083; color: #FFFFFF;
+  border-radius: 999px;
+  padding: 5px 16px;
+  font-size: 11px; font-weight: 700;
+}
+
+/* ─── TELEHEALTH ───────────────────────────────────────────────── */
+.tile__preview--tile-telehealth {
+  background: #F7F4EE;
+  padding: 12px;
+  font-family: "Söhne", "Inter", sans-serif;
+  color: #1F2937;
+}
+.tile__preview--tile-telehealth .card {
+  background: #FFFFFF; border: 1px solid #E5E1D8; border-radius: 10px;
+  padding: 10px;
+  display: grid; grid-template-columns: 36px 1fr auto;
+  gap: 8px; align-items: center;
+}
+.tile__preview--tile-telehealth .ph {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: linear-gradient(135deg, #A5BFA0 0%, #2E7D7B 100%);
+}
+.tile__preview--tile-telehealth .bd .nm {
+  font-size: 12px; font-weight: 600; color: #1F2937;
+}
+.tile__preview--tile-telehealth .bd .cr {
+  font-size: 10px; color: #6B7280;
+}
+.tile__preview--tile-telehealth .bd .av {
+  font-size: 10px; color: #1B7A3E; font-weight: 600;
+}
+.tile__preview--tile-telehealth .btn {
+  background: #2E7D7B; color: #FFFFFF;
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 10px; font-weight: 600;
+}
+
+/* ─── REAL-TIME CHAT ───────────────────────────────────────────── */
+.tile__preview--tile-chat {
+  background: #FFFFFF;
+  padding: 0;
+  display: grid; grid-template-columns: 86px 1fr;
+  font-family: "Lato", "Söhne", sans-serif;
+}
+.tile__preview--tile-chat .rail {
+  background: #3F0E40; color: #E3D8E3;
+  padding: 8px 4px;
+  display: flex; flex-direction: column; gap: 2px;
+}
+.tile__preview--tile-chat .ch {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: #BCB2BC;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.tile__preview--tile-chat .ch.hl {
+  background: #1164A3; color: #FFFFFF; font-weight: 700;
+}
+.tile__preview--tile-chat .ch .ct {
+  background: #E01E5A; color: #FFFFFF;
+  font-size: 8px; padding: 0 4px; border-radius: 6px;
+  font-weight: 700;
+}
+.tile__preview--tile-chat .msg {
+  padding: 8px 10px;
+  display: flex; flex-direction: column; gap: 2px;
+}
+.tile__preview--tile-chat .msg .row {
+  display: flex; gap: 6px; align-items: baseline;
+  font-size: 11px;
+}
+.tile__preview--tile-chat .msg .row b { color: #1D1C1D; }
+.tile__preview--tile-chat .msg .row .t { font-size: 9px; color: #616061; }
+.tile__preview--tile-chat .msg .body {
+  font-size: 11px; color: #1D1C1D;
+}
+.tile__preview--tile-chat .msg .rx {
+  font-size: 10px; color: #1264A3;
+  background: #E8F4FB;
+  border-radius: 10px;
+  padding: 1px 6px;
+  display: inline-block;
+  margin-top: 2px;
+  font-weight: 600;
+  align-self: flex-start;
+}
+
+/* ─── SWISS LATE-PERIOD ────────────────────────────────────────── */
+.tile__preview--tile-swisslate {
+  background: #F2F0EB;
+  padding: 14px 16px;
+  display: grid; grid-template-columns: 1fr auto;
+  grid-template-rows: 1fr auto;
+  gap: 4px;
+  font-family: "Helvetica Now", "Helvetica Neue", "Inter", sans-serif;
+  color: #0A0A0A;
+}
+.tile__preview--tile-swisslate .word {
+  font-weight: 700; font-size: 36px; line-height: 0.9;
+  letter-spacing: -0.04em; color: #0A0A0A;
+  grid-column: 1; grid-row: 1;
+  align-self: end;
+}
+.tile__preview--tile-swisslate .dot {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: #E63946;
+  grid-column: 2; grid-row: 1;
+  align-self: start;
+}
+.tile__preview--tile-swisslate .meta {
+  font-size: 9px; color: #0A0A0A;
+  grid-column: 1 / -1; grid-row: 2;
+  border-top: 2px solid #0A0A0A;
+  padding-top: 3px;
+  letter-spacing: 0.02em;
+}
+
+/* ─── ART DECO ─────────────────────────────────────────────────── */
+.tile__preview--tile-artdeco {
+  background: #0A0908;
+  padding: 12px;
+  display: flex; flex-direction: column; gap: 4px;
+  text-align: center;
+  font-family: "Cinzel", "Playfair Display", "Cormorant Garamond", serif;
+  color: #F5EBD7;
+  position: relative;
+  overflow: hidden;
+}
+.tile__preview--tile-artdeco .rays {
+  position: absolute; top: -20%; left: 50%; transform: translateX(-50%);
+  width: 200%; height: 100%;
+  background-image:
+    conic-gradient(from -90deg at 50% 100%,
+      #C9A24B 0deg 3deg, transparent 3deg 12deg,
+      #C9A24B 12deg 15deg, transparent 15deg 24deg,
+      #C9A24B 24deg 27deg, transparent 27deg 36deg,
+      #C9A24B 36deg 39deg, transparent 39deg 48deg,
+      #8B6F2F 48deg 51deg, transparent 51deg 180deg);
+  opacity: 0.35;
+}
+.tile__preview--tile-artdeco .word {
+  position: relative;
+  font-family: "Cinzel", "Playfair Display", serif;
+  font-weight: 500; font-size: 32px;
+  letter-spacing: 0.18em;
+  color: #C9A24B;
+  text-shadow: 0 2px 0 #8B6F2F;
+  z-index: 2;
+  margin-top: 16px;
+}
+.tile__preview--tile-artdeco .sub {
+  position: relative; z-index: 2;
+  font-style: italic; font-size: 10px;
+  letter-spacing: 0.04em;
+  color: #F5EBD7;
+}
+.tile__preview--tile-artdeco .chev {
+  position: relative; z-index: 2;
+  margin-top: auto;
+  height: 8px;
+  background-image:
+    linear-gradient(135deg, #C9A24B 25%, transparent 25%, transparent 75%, #C9A24B 75%),
+    linear-gradient(45deg, #C9A24B 25%, transparent 25%, transparent 75%, #C9A24B 75%);
+  background-size: 12px 12px;
+  opacity: 0.7;
+}
+
+/* ─── POST-MEMPHIS 2020s ───────────────────────────────────────── */
+.tile__preview--tile-postmemphis {
+  background: #F5F1E8;
+  padding: 12px 14px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  font-family: "Söhne", "Inter", sans-serif;
+  color: #0F0F0F;
+  position: relative;
+  overflow: hidden;
+}
+.tile__preview--tile-postmemphis .shape {
+  position: absolute;
+  border-radius: 50%;
+}
+.tile__preview--tile-postmemphis .shape.a {
+  background: #F2C94C;
+  width: 80px; height: 80px;
+  top: 8px; right: -16px;
+}
+.tile__preview--tile-postmemphis .shape.b {
+  background: #3A5BFF;
+  width: 50px; height: 50px;
+  top: 56px; right: 36px;
+  border-radius: 8px;
+  transform: rotate(20deg);
+}
+.tile__preview--tile-postmemphis .sq {
+  position: relative; z-index: 2;
+  width: 80px; height: 24px;
+}
+.tile__preview--tile-postmemphis .word {
+  position: relative; z-index: 2;
+  font-family: "Söhne Breit", "GT Walsheim", sans-serif;
+  font-weight: 700; font-size: 36px;
+  letter-spacing: -0.03em;
+  color: #0F0F0F;
+}
+
+/* ─── BRUTALIST-MODERN (Y2K × Brutalist) ───────────────────────── */
+.tile__preview--tile-brutalmod {
+  background: #0A0A0A;
+  padding: 10px 12px;
+  display: flex; flex-direction: column; gap: 4px;
+  font-family: "JetBrains Mono", "Söhne Mono", monospace;
+  color: #F5F5F5;
+  position: relative;
+}
+.tile__preview--tile-brutalmod .word {
+  font-family: "Bebas Neue", "Anton", "Druk Wide", sans-serif;
+  font-weight: 900; font-size: 30px;
+  line-height: 0.9; letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #C0C0E0 0%, #80FFEA 35%, #FFB7E6 65%, #FFD580 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.tile__preview--tile-brutalmod .shape {
+  position: absolute;
+  top: 14px; right: 14px;
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, #C0C0E0 0%, #80FFEA 35%, #FFB7E6 65%, #FFD580 100%);
+  border-radius: 50%;
+  filter: blur(0.3px) contrast(1.1);
+}
+.tile__preview--tile-brutalmod .chunk {
+  margin-top: auto;
+  background: #1A1A1A;
+  border: 1px solid #FFFFFF;
+  padding: 3px 6px;
+  font-size: 9px;
+  color: #00FFD0;
+}
+
+/* ─── LOW-POLY 3D ──────────────────────────────────────────────── */
+.tile__preview--tile-lowpoly {
+  padding: 0;
+  display: flex; flex-direction: column;
+  font-family: "Druk", "Bebas Neue", sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+.tile__preview--tile-lowpoly .sky {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, #1A1430 0%, #4A2A66 35%, #FF7B72 75%, #FFD580 100%);
+}
+.tile__preview--tile-lowpoly .m {
+  position: absolute; bottom: 0; left: 0;
+  width: 100%; height: 55%;
+}
+.tile__preview--tile-lowpoly .word {
+  position: relative; z-index: 2;
+  padding: 10px 12px 0;
+  font-family: "Druk", "Bebas Neue", "Anton", sans-serif;
+  font-weight: 900; font-size: 32px;
+  letter-spacing: 0.08em;
+  color: #F5EBE6;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+/* ─── CINEMA TITLE CARDS ───────────────────────────────────────── */
+.tile__preview--tile-cinema {
+  background: #000000;
+  padding: 0;
+  display: flex; flex-direction: column;
+  font-family: "Caslon", "Bodoni Moda", serif;
+}
+.tile__preview--tile-cinema .bar {
+  background: #000000;
+  flex: 0 0 14px;
+}
+.tile__preview--tile-cinema .frame {
+  flex: 1;
+  background: #0D0B08;
+  display: flex; flex-direction: column; justify-content: center;
+  text-align: center;
+  position: relative;
+  color: #EFE7D8;
+}
+.tile__preview--tile-cinema .title {
+  font-family: "Caslon", "Bodoni Moda", "Cinzel", serif;
+  font-weight: 400; font-size: 22px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.tile__preview--tile-cinema .by {
+  font-style: italic; font-size: 9px;
+  letter-spacing: 0.04em;
+  color: #C9A24B;
+  margin-top: 6px;
+}
+.tile__preview--tile-cinema .tc {
+  position: absolute; bottom: 4px; left: 6px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 8px; letter-spacing: 0.04em;
+  color: #8A8170;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── LEGAL SAAS ───────────────────────────────────────────────── */
+.tile__preview--tile-legalsaas {
+  background: #F7F8FA;
+  padding: 10px 12px;
+  display: flex; flex-direction: column; gap: 4px;
+  font-family: "Söhne", "Inter", sans-serif;
+  color: #0F1E33;
+}
+.tile__preview--tile-legalsaas .tm {
+  background: #FFFFFF;
+  border: 1px solid #D5DAE0;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  color: #0F1E33;
+  font-variant-numeric: tabular-nums;
+  align-self: flex-start;
+}
+.tile__preview--tile-legalsaas .row {
+  display: grid; grid-template-columns: 1fr auto auto;
+  gap: 8px; padding: 4px 0;
+  border-bottom: 1px solid #D5DAE0;
+  font-size: 11px; align-items: center;
+}
+.tile__preview--tile-legalsaas .hr {
+  font-family: "JetBrains Mono", monospace;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+.tile__preview--tile-legalsaas .st {
+  font-size: 9px; padding: 1px 6px; border-radius: 8px; font-weight: 600;
+}
+.tile__preview--tile-legalsaas .st.a { background: #DBEAFE; color: #1F4FD9; }
+.tile__preview--tile-legalsaas .st.b { background: #DEFBE6; color: #1B7A3E; }
+
+/* ─── CONSTRUCTION TECH ────────────────────────────────────────── */
+.tile__preview--tile-construction {
+  background: #F4F5F7;
+  padding: 8px;
+  display: flex; flex-direction: column; gap: 4px;
+  font-family: "Söhne", "Inter", sans-serif;
+  color: #1A1A1A;
+}
+.tile__preview--tile-construction .sht {
+  background: #2A2A2A; color: #FFFFFF;
+  padding: 3px 8px; border-radius: 3px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.04em;
+  align-self: flex-start;
+}
+.tile__preview--tile-construction .row {
+  display: grid; grid-template-columns: 50px 1fr auto;
+  gap: 6px;
+  background: #FFFFFF; border-left: 3px solid #FF5C00;
+  padding: 4px 8px;
+  font-size: 11px; align-items: center;
+}
+.tile__preview--tile-construction .num {
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 600; color: #5F6368; font-size: 9px;
+}
+.tile__preview--tile-construction .pin {
+  width: 20px; height: 20px; border-radius: 50%;
+  background: #FFD600; color: #1A1A1A;
+  display: grid; place-items: center;
+  font-weight: 700; font-size: 10px;
+}
+.tile__preview--tile-construction .day {
+  font-size: 10px; color: #D93025; font-weight: 700;
+}
+.tile__preview--tile-construction .dueOK {
+  font-size: 10px; color: #5F6368;
+}
+
+/* ─── AGTECH ───────────────────────────────────────────────────── */
+.tile__preview--tile-agtech {
+  background: #F5F1E8;
+  padding: 8px;
+  display: flex; flex-direction: column; gap: 4px;
+  font-family: "Söhne", "Inter", sans-serif;
+  color: #2D2417;
+}
+.tile__preview--tile-agtech .field {
+  aspect-ratio: 16/8;
+  position: relative;
+  background: linear-gradient(135deg, #2D7A3F 0%, #6B9A4A 50%, #C99435 100%);
+  border-radius: 5px;
+}
+.tile__preview--tile-agtech .lbl {
+  position: absolute; top: 4px; left: 4px;
+  background: rgba(255,255,255,0.9);
+  color: #2D2417;
+  padding: 1px 6px; border-radius: 3px;
+  font-size: 9px; font-weight: 600;
+}
+.tile__preview--tile-agtech .st {
+  position: absolute; bottom: 4px; left: 4px;
+  color: #FFFFFF;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9px;
+}
+.tile__preview--tile-agtech .weather {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  background: #FFFFFF;
+  border-radius: 5px;
+  padding: 4px;
+  text-align: center;
+}
+.tile__preview--tile-agtech .weather > div {
+  display: flex; flex-direction: column;
+  font-size: 9px;
+}
+.tile__preview--tile-agtech .weather .d {
+  font-size: 8px; color: #6B5F4D;
+  letter-spacing: 0.04em;
+}
+.tile__preview--tile-agtech .weather .t {
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 600; font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.tile__preview--tile-agtech .weather .r {
+  font-size: 8px; color: #4A90C2;
+}
+
+/* ─── AUTOMOTIVE / EV ──────────────────────────────────────────── */
+.tile__preview--tile-automotive {
+  background: #0A0A0A;
+  padding: 0;
+  display: flex; flex-direction: column;
+  font-family: "Söhne", "Inter", sans-serif;
+  color: #FFFFFF;
+  position: relative;
+  overflow: hidden;
+}
+.tile__preview--tile-automotive .film {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, transparent 30%, rgba(10,10,10,0.85) 100%),
+    linear-gradient(135deg, #4A4A52 0%, #1A1A1F 60%, #0A0A0A 100%);
+}
+.tile__preview--tile-automotive .word {
+  position: relative; z-index: 2;
+  margin-top: auto;
+  padding: 4px 14px;
+  font-weight: 300; font-size: 36px;
+  letter-spacing: -0.025em;
+  line-height: 1;
+}
+.tile__preview--tile-automotive .meta {
+  position: relative; z-index: 2;
+  padding: 0 14px 10px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.7);
+}
+
+/* ─── NONPROFIT-GOV HYBRID ─────────────────────────────────────── */
+.tile__preview--tile-nonprofitgov {
+  background: #FBF9F4;
+  padding: 8px;
+  display: flex; flex-direction: column; gap: 5px;
+  font-family: "Söhne", "Inter", sans-serif;
+  color: #1A2A3A;
+}
+.tile__preview--tile-nonprofitgov .rg {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 5px;
+  flex: 1;
+}
+.tile__preview--tile-nonprofitgov .r,
+.tile__preview--tile-nonprofitgov .d {
+  background: #FFFFFF;
+  border: 1px solid #D9D2C0;
+  border-radius: 6px;
+  padding: 6px 8px;
+  display: flex; flex-direction: column;
+  text-align: center;
+  justify-content: center;
+}
+.tile__preview--tile-nonprofitgov .r b { color: #1B5E9C; font-size: 13px; }
+.tile__preview--tile-nonprofitgov .d b { color: #D62828; font-size: 13px; }
+.tile__preview--tile-nonprofitgov .rg span {
+  font-size: 9px; color: #5A6B7F; margin-top: 2px;
+}
+.tile__preview--tile-nonprofitgov .impact {
+  background: #FFFFFF;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 10px;
+  color: #1A2A3A;
+  text-align: center;
+}
+.tile__preview--tile-nonprofitgov .impact strong {
+  color: #D62828; font-weight: 700;
+}
+
+/* ─── BIOTECH / PHARMA ─────────────────────────────────────────── */
+.tile__preview--tile-biotech {
+  background: #FAFAF7;
+  padding: 10px 12px;
+  display: flex; flex-direction: column; gap: 5px;
+  font-family: "Söhne", "Inter", sans-serif;
+  color: #0F2A2A;
+}
+.tile__preview--tile-biotech .hd {
+  font-size: 9px; letter-spacing: 0.12em;
+  color: #5A6B6E; font-weight: 600;
+}
+.tile__preview--tile-biotech .row {
+  display: grid; grid-template-columns: 60px 1fr auto;
+  gap: 6px; align-items: center;
+  padding: 3px 0;
+  border-bottom: 1px solid #D9D6CB;
+}
+.tile__preview--tile-biotech .nm {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9px; font-weight: 600;
+  color: #0F2A2A;
+}
+.tile__preview--tile-biotech .ph {
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  gap: 2px; height: 12px;
+}
+.tile__preview--tile-biotech .ph span {
+  background: #EFEDE5; border-radius: 2px;
+}
+.tile__preview--tile-biotech .ph .d {
+  background: #147060;
+}
+.tile__preview--tile-biotech .ph .c {
+  background: #E8744D;
+}
+.tile__preview--tile-biotech .nct {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 8px; color: #147060;
+}

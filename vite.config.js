@@ -17,6 +17,19 @@ export default defineConfig({
     sourcemap: false,
     target: "es2022",
     cssCodeSplit: true,
+    // Chunk the 100 style preset files + prompt-generator out of the main bundle.
+    // Both are pure data modules — splitting them lets the browser cache them
+    // independently of app-shell changes and parallelises download.
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes("/src/data/styles/")) return "styles";
+          if (id.includes("/src/data/prompts/")) return "prompts";
+        },
+      },
+    },
+    // Raise warning threshold; the styles chunk is intentionally large (100 presets).
+    chunkSizeWarningLimit: 700,
   },
   plugins: [
     VitePWA({
@@ -110,7 +123,7 @@ export default defineConfig({
         globPatterns: ["**/*.{js,css,html,svg,png,ico,woff2,json}"],
         cleanupOutdatedCaches: true,
         clientsClaim: true,
-        skipWaiting: false,
+        skipWaiting: true,
         navigateFallback: "offline.html",
         navigateFallbackDenylist: [/^\/api\//, /^\/_/],
         runtimeCaching: [
