@@ -58,12 +58,32 @@ check("All libraries have license in safe list", () => {
   const safe = new Set(["MIT", "Apache-2.0", "BSD-2", "BSD-3", "ISC"]);
   return LIBRARIES.every((l) => safe.has(l.license));
 });
+check("No library mentions a paid tier in its fields", () => {
+  // Strict policy: zero libraries with commercial-tier complications. Reject any
+  // entry whose desc / caveat / whenToUse / whenNotToUse mention paid features.
+  const forbidden = /\b(paid|enterprise version|pro plan|pro tier|premium tier|commercial license|requires a license|license fee)\b/i;
+  const bad = LIBRARIES.filter((l) => {
+    const blob = [l.desc, l.caveat, l.whenToUse, l.whenNotToUse].filter(Boolean).join(" ");
+    return forbidden.test(blob);
+  });
+  if (bad.length > 0) {
+    console.error("Libraries with paid-tier mentions:", bad.map((l) => l.id));
+    return false;
+  }
+  return true;
+});
+check("All CDN URLs are pinned to a version (no @latest)", () => {
+  return LIBRARIES.every((l) => {
+    const urls = [l.cdn.js, l.cdn.css].filter(Boolean);
+    return urls.every((u) => !u.includes("@latest"));
+  });
+});
 check("chartjs library exists and has CDN url", () => {
   const c = getLibrary("chartjs");
   return c && c.cdn.js?.startsWith("https://");
 });
-check("DOMPurify caveat documented", () => {
-  return getLibrary("dompurify")?.caveat;
+check("DOMPurify is present (required for markdown safety)", () => {
+  return !!getLibrary("dompurify");
 });
 
 // Prompt assembly with libraries

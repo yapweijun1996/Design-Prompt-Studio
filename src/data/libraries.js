@@ -1,12 +1,16 @@
 // Library registry — JS/CSS libraries the LLM can lean on instead of writing from scratch.
-// Every entry is verified MIT / Apache-2.0 / BSD / ISC — safe for commercial use.
-// Curated for taste: only well-maintained, popular libraries with stable CDN URLs.
+// STRICT POLICY: every entry is 100% business-free.
+//   - License MUST be MIT / Apache-2.0 / BSD-2 / BSD-3 / ISC (no exceptions).
+//   - The library's PUBLISHING ORG must NOT sell a paid tier of the same product
+//     (this rules out AG Grid / TipTap / Highcharts / FusionCharts / GSAP).
+//   - No copyleft (GPL / LGPL / MPL / AGPL).
+//   - No "free for non-commercial only" or "free for personal use" restrictions.
 //
 // To add a new library:
-//   1. Verify license (MIT / Apache-2.0 / BSD-2/3 / ISC / Unlicense only)
-//   2. Verify the CDN URL is pinned to a specific version
-//   3. Add `businessOk: true` (or omit, defaults to true) only if confirmed
-//   4. Set `caveat` for any non-obvious limitation
+//   1. Verify license is in the allowed set above.
+//   2. Verify the company doesn't sell a paid Pro/Enterprise version of the SAME library.
+//   3. Pin the CDN URL to an exact version (never @latest).
+//   4. Run `node scripts/smoke-test.mjs` — license + businessOk are enforced.
 //
 // See docs/TECH-STACK.md § Libraries for the policy.
 
@@ -15,14 +19,14 @@
  *   name: string,
  *   category: string,
  *   desc: string,
- *   license: "MIT" | "Apache-2.0" | "BSD-2" | "BSD-3" | "ISC" | "MPL-2.0" | "Custom-Free",
- *   businessOk: boolean,
+ *   license: "MIT" | "Apache-2.0" | "BSD-2" | "BSD-3" | "ISC",
+ *   businessOk: true,
  *   size?: string,
  *   cdn: { js?: string, css?: string },
  *   stacks: ("html" | "react" | "next" | "vue" | "svelte")[],
  *   whenToUse: string,
  *   whenNotToUse?: string,
- *   caveat?: string,
+ *   caveat?: string,       // technical SAFETY notes only — never license caveats
  *   homepage: string,
  *   npm?: string,
  * }} Library
@@ -148,25 +152,6 @@ export const LIBRARIES = [
     homepage: "https://gridjs.io/",
     npm: "gridjs",
   },
-  {
-    id: "ag-grid-community",
-    name: "AG Grid Community",
-    category: "tables",
-    desc: "Enterprise-grade data grid. Community edition is fully MIT-licensed.",
-    license: "MIT",
-    businessOk: true,
-    size: "~700 KB gzip (heavy but powerful)",
-    cdn: {
-      js: "https://cdn.jsdelivr.net/npm/ag-grid-community@32.3.3/dist/ag-grid-community.min.js",
-    },
-    stacks: ["html", "react", "next", "vue", "svelte"],
-    whenToUse: "Heavy data grid (10k+ rows) with column pinning, virtualization.",
-    whenNotToUse: "Small tables — way too heavy.",
-    caveat: "AG Grid Enterprise has paid features; we only use the Community build.",
-    homepage: "https://ag-grid.com/",
-    npm: "ag-grid-community",
-  },
-
   // ─── Markdown & rich text ────────────────────────────────────────────────
   {
     id: "marked",
@@ -212,25 +197,26 @@ export const LIBRARIES = [
       js: "https://cdn.jsdelivr.net/npm/dompurify@3.2.0/dist/purify.min.js",
     },
     stacks: ["html", "react", "next", "vue", "svelte"],
-    whenToUse: "ANY innerHTML / markdown / rich-text output.",
-    caveat: "Dual-licensed Apache-2.0 OR MPL-2.0. Either is business-OK.",
+    whenToUse: "ANY innerHTML / markdown / rich-text output — required for safety.",
     homepage: "https://github.com/cure53/DOMPurify",
     npm: "dompurify",
   },
   {
-    id: "tiptap",
-    name: "TipTap",
+    id: "quill",
+    name: "Quill",
     category: "markdown",
-    desc: "Headless rich-text editor (ProseMirror under the hood). Vue / React / vanilla.",
-    license: "MIT",
+    desc: "Rich-text editor with a simple API. Modular formats, themes, modules.",
+    license: "BSD-3",
     businessOk: true,
-    size: "~120 KB gzip (with starter-kit)",
-    cdn: {},
-    stacks: ["react", "next", "vue", "svelte"],
-    whenToUse: "Need a rich-text editor (e.g. blog post composer).",
-    caveat: "TipTap Pro / Cloud are paid add-ons; core is MIT.",
-    homepage: "https://tiptap.dev/",
-    npm: "@tiptap/core",
+    size: "~45 KB gzip",
+    cdn: {
+      js: "https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js",
+      css: "https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css",
+    },
+    stacks: ["html", "react", "next", "vue", "svelte"],
+    whenToUse: "Self-contained rich-text editor (e.g. blog post composer, comment box).",
+    homepage: "https://quilljs.com/",
+    npm: "quill",
   },
 
   // ─── Icons ──────────────────────────────────────────────────────────────
@@ -376,8 +362,7 @@ export const LIBRARIES = [
       js: "https://cdn.tailwindcss.com",
     },
     stacks: ["html", "react", "next", "vue", "svelte"],
-    whenToUse: "Most modern websites. Especially when designer is comfortable.",
-    caveat: "CDN version (Play CDN) is dev-only; for production use the Vite/postcss plugin.",
+    whenToUse: "Most modern websites. The Play CDN above is fine for prototyping; for production, install the Vite plugin.",
     homepage: "https://tailwindcss.com/",
     npm: "tailwindcss",
   },
