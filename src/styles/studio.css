@@ -1,5 +1,163 @@
 /* Studio (Wizard) layout — sidebar + main + footer. */
 
+/* ─── EXPRESS ───────────────────────────────────────────── */
+.express {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  max-width: var(--container-max);
+  width: 100%;
+  margin: 0 auto;
+}
+.express__header {
+  padding: var(--space-6) var(--space-5) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  border-bottom: var(--border-thin) solid var(--border);
+}
+.express__eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--fg-subtle);
+}
+.express__title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.express__blurb { font-size: 15px; color: var(--fg-muted); max-width: 56ch; }
+.express__exit {
+  align-self: flex-start;
+  margin-top: var(--space-3);
+  padding: 8px var(--space-3);
+  background: var(--bg-elevated);
+  color: var(--fg-muted);
+  border: var(--border-thin) solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  min-height: 36px;
+}
+.express__exit:hover { color: var(--fg); border-color: var(--border-strong); }
+
+.express__layout {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: var(--space-5);
+  padding: var(--space-5);
+}
+.express__controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+.express__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding-bottom: var(--space-5);
+  border-bottom: var(--border-thin) solid var(--border);
+}
+.express__section:last-child { border-bottom: none; padding-bottom: 0; }
+.express__section-title {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-subtle);
+}
+
+.express__preview {
+  position: sticky;
+  top: calc(var(--header-height) + var(--space-3));
+  align-self: flex-start;
+  max-height: calc(100dvh - var(--header-height) - var(--space-5));
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  background: var(--bg);
+  border: var(--border-thin) solid var(--border);
+  padding: var(--space-4);
+}
+.express__preview-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-subtle);
+}
+.express__preview-stats { font-size: 10px; }
+.express__preview-prompt {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.55;
+  background: var(--bg-elevated);
+  color: var(--fg);
+  padding: var(--space-3);
+  border: var(--border-thin) solid var(--border);
+  flex: 1;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.express__preview-actions {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+.express__preview-actions .step__copy-btn { flex-basis: 100%; }
+
+@media (max-width: 980px) {
+  .express__layout {
+    grid-template-columns: 1fr;
+  }
+  .express__preview {
+    position: relative;
+    top: auto;
+    max-height: 70vh;
+  }
+}
+
+.studio__resume-banner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-5);
+  background: var(--bg-elevated);
+  border-bottom: var(--border-thin) solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+.studio__resume-text { flex: 1; }
+.studio__resume-reset, .studio__resume-dismiss {
+  padding: 6px var(--space-3);
+  background: transparent;
+  color: var(--fg-muted);
+  border: var(--border-thin) solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  min-height: 32px;
+}
+.studio__resume-reset:hover, .studio__resume-dismiss:hover {
+  color: var(--fg);
+  border-color: var(--border-strong);
+}
+
+
 .studio {
   flex: 1;
   display: flex;

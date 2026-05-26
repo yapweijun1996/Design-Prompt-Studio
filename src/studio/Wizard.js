@@ -145,6 +145,26 @@ export function renderWizard({ state, onStateChange, onExit, stepRenderers }) {
     footer.append(progress, actions);
   }
 
+  // Keyboard nav: arrow keys move between steps when focus is outside form fields.
+  function keyHandler(e) {
+    const tag = (e.target && e.target.tagName) || "";
+    if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    const i = state.meta.currentStep ?? 0;
+    if (e.key === "ArrowLeft" && i > 0) { e.preventDefault(); go(i - 1); }
+    else if (e.key === "ArrowRight" && i < STEPS.length - 1) { e.preventDefault(); go(i + 1); }
+  }
+  window.addEventListener("keydown", keyHandler);
+
+  // Detach listener when wizard is removed from DOM.
+  const observer = new MutationObserver(() => {
+    if (!document.body.contains(wizard)) {
+      window.removeEventListener("keydown", keyHandler);
+      observer.disconnect();
+    }
+  });
+  observer.observe(document.body, { childList: true, subtree: true });
+
   paint();
   return wizard;
 }

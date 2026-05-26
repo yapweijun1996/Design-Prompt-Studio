@@ -119,6 +119,41 @@ export function renderStudio({ onExit }) {
 
   const root = el("main", { id: "main", class: "studio" });
 
+  // Resume banner if we restored from a previous session (not fresh, not gallery, not share)
+  const fromSavedState = state.meta.enteredFrom !== "gallery"
+    && state.meta.enteredFrom !== "shared-url"
+    && (state.brief?.name || state.meta.currentStep > 0);
+  if (fromSavedState) {
+    const banner = el(
+      "div",
+      { class: "studio__resume-banner", role: "status" },
+      el("span", { class: "studio__resume-text" }, "Continued where you left off."),
+      el(
+        "button",
+        {
+          type: "button",
+          class: "studio__resume-reset",
+          onClick: () => {
+            store.remove(STATE_KEY);
+            location.reload();
+          },
+        },
+        "Start fresh →",
+      ),
+      el(
+        "button",
+        {
+          type: "button",
+          class: "studio__resume-dismiss",
+          "aria-label": "Dismiss banner",
+          onClick: () => banner.remove(),
+        },
+        "✕",
+      ),
+    );
+    root.appendChild(banner);
+  }
+
   const wizard = renderWizard({
     state,
     stepRenderers: {

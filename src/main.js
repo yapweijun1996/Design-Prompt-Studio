@@ -13,6 +13,7 @@ import { el } from "./lib/dom.js";
 import { store } from "./lib/store.js";
 import { renderGallery } from "./gallery/Gallery.js";
 import { renderStudio } from "./studio/Studio.js";
+import { renderExpress } from "./studio/Express.js";
 
 const VERSION = "0.4.0";
 const ROUTES = ["gallery", "studio", "express"];
@@ -56,34 +57,6 @@ function header() {
   );
 }
 
-function placeholder(routeName, blurb) {
-  return el(
-    "main",
-    { id: "main", class: "placeholder" },
-    el(
-      "div",
-      { class: "placeholder__inner" },
-      el("p", { class: "placeholder__eyebrow" }, "Coming in P4–P6"),
-      el("h1", { class: "placeholder__title" }, routeName),
-      el("p", { class: "placeholder__blurb" }, blurb),
-      el(
-        "p",
-        { class: "placeholder__hint" },
-        "Real content lands in P4 (Studio wizard) and P6 (Express). Check ",
-        el("code", { class: "placeholder__code" }, "task.md"),
-        " for the build plan.",
-      ),
-    ),
-  );
-}
-
-function renderExpress() {
-  return placeholder(
-    "Studio · Express",
-    "Single-page composer for power users — every control on one screen. v0.3 layout preserved here. Ported in P6.",
-  );
-}
-
 function handleTune(card) {
   // P4 will fully implement the Studio wizard. For now, route to #studio + remember the card.
   store.setImmediate("last-prompt", card.id);
@@ -103,7 +76,7 @@ function render() {
   } else if (route === "studio") {
     root.appendChild(renderStudio({ onExit: () => { location.hash = "gallery"; } }));
   } else {
-    root.appendChild(renderExpress());
+    root.appendChild(renderExpress({ onExit: () => { location.hash = "gallery"; } }));
   }
 
   root.appendChild(footer());
