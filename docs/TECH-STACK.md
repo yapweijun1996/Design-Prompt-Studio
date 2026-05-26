@@ -99,8 +99,30 @@ export default defineConfig({
 
 ### Source files we still write
 - `index.html` — entry point with `<head>` metas
-- `offline.html` — fallback when navigation fails
-- `icons/` — `icon.svg` + 192/512 PNG (any + maskable)
+- `public/offline.html` — fallback when navigation fails
+- `public/icons/icon.svg` + `icon-maskable.svg` — canonical sources
+- `public/sitemap.xml` — SEO discovery
+- `public/robots.txt` — crawler directives
+
+### Icon build pipeline
+PNG icons are generated from the SVG sources by `scripts/build-icons.mjs` (uses
+`@resvg/resvg-js`, pure Rust WASM, no native deps). The script runs automatically
+via `npm run prebuild` before every `npm run build`, so PNGs in `public/icons/`
+are always in sync with the SVGs.
+
+Generated outputs (committed to repo so dev / CI never has to rasterize):
+- `icon-192.png` / `icon-512.png` — Android Chrome install banner
+- `icon-maskable-192.png` / `icon-maskable-512.png` — adaptive Android icons
+- `apple-touch-icon.png` (180×180) — iOS Safari home-screen
+- `favicon.png` (32×32) — legacy browser fallback
+
+To regenerate manually: `npm run icons`.
+
+### Why both SVG and PNG?
+- **SVG** — preferred by modern browsers, sharper at any size, smaller bytes
+- **PNG** — required for Lighthouse PWA installability score 100, and for
+  Android Chrome's install banner (which prefers raster). iOS Safari is happier
+  with PNG apple-touch-icon than SVG.
 
 ### index.html `<head>` additions (manual, not plugin-generated)
 viewport (viewport-fit=cover), theme-color (light+dark via media queries), color-scheme, apple-touch-icon + apple-mobile-web-app-* metas, OG + Twitter cards, JSON-LD `SoftwareApplication` schema. The plugin handles `<link rel="manifest">` and the SW registration script for us.

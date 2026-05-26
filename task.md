@@ -125,9 +125,11 @@ To publish:
 - [x] Verify `npm run preview` serves dist correctly
 
 **PWA assets**
-- [x] Create `public/icons/` — `icon.svg`, `icon-192.png`, `icon-512.png`, `icon-maskable-512.png`
+- [x] Create `public/icons/` — full set: SVG sources + PNG 192/512/maskable/apple-touch/favicon
+- [x] `scripts/build-icons.mjs` — SVG → PNG via @resvg/resvg-js (runs as `npm prebuild`)
 - [x] Create `public/offline.html`
 - [x] Create `public/robots.txt`
+- [x] Create `public/sitemap.xml`
 - [x] Add PWA `<head>` metas to `index.html` (theme-color, color-scheme, apple-touch-icon, OG, JSON-LD)
 
 **Storage layer**

@@ -14,9 +14,13 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint src --max-warnings 0"
+    "lint": "eslint src --max-warnings 0",
+    "icons": "node scripts/build-icons.mjs",
+    "prebuild": "node scripts/build-icons.mjs",
+    "test": "node scripts/smoke-test.mjs"
   },
   "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2",
     "eslint": "^9.17.0",
     "globals": "^17.6.0",
     "vite": "^6.0.7",
