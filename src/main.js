@@ -7,10 +7,12 @@ import "./styles/tokens.css";
 import "./styles/main.css";
 import "./styles/tiles.css";
 import "./styles/gallery.css";
+import "./styles/studio.css";
 
 import { el } from "./lib/dom.js";
 import { store } from "./lib/store.js";
 import { renderGallery } from "./gallery/Gallery.js";
+import { renderStudio } from "./studio/Studio.js";
 
 const VERSION = "0.4.0";
 const ROUTES = ["gallery", "studio", "express"];
@@ -75,13 +77,6 @@ function placeholder(routeName, blurb) {
   );
 }
 
-function renderStudio() {
-  return placeholder(
-    "Studio · Wizard",
-    "5-step wizard for fine-tuning a prompt: Style → Page → Brief → Tech → Review. Opens with the selected gallery prompt's state pre-loaded. Built in P4.",
-  );
-}
-
 function renderExpress() {
   return placeholder(
     "Studio · Express",
@@ -106,7 +101,7 @@ function render() {
   if (route === "gallery") {
     root.appendChild(renderGallery({ onTune: handleTune }));
   } else if (route === "studio") {
-    root.appendChild(renderStudio());
+    root.appendChild(renderStudio({ onExit: () => { location.hash = "gallery"; } }));
   } else {
     root.appendChild(renderExpress());
   }
