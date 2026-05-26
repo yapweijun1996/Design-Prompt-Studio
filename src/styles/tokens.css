@@ -1,0 +1,104 @@
+/* Design tokens — light by default, dark via prefers-color-scheme or data-theme="dark". */
+:root {
+  /* Type */
+  --font-sans: "Inter Tight", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --font-display: "Inter Tight", system-ui, sans-serif;
+
+  /* Scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --space-10: 128px;
+
+  /* Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+
+  /* Border weight */
+  --border-thin: 1px;
+  --border-medium: 2px;
+  --border-thick: 4px;
+
+  /* Motion */
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-slow: 320ms;
+  --ease-out: cubic-bezier(0.2, 0, 0, 1);
+
+  /* Layout */
+  --container-max: 1400px;
+  --header-height: 64px;
+
+  /* Color — light scheme defaults */
+  --bg: #FFFFFF;
+  --bg-elevated: #FAFAFA;
+  --fg: #0A0A0A;
+  --fg-muted: #525252;
+  --fg-subtle: #8E8E8E;
+  --border: #E5E5E5;
+  --border-strong: #0A0A0A;
+  --accent: #0A0A0A;
+  --accent-fg: #FFFFFF;
+  --focus: #0A0A0A;
+  --danger: #B91C1C;
+  --success: #047857;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #050506;
+    --bg-elevated: #0E0E10;
+    --fg: #EDEDEF;
+    --fg-muted: #A0A0A8;
+    --fg-subtle: #6B6B73;
+    --border: #1F1F22;
+    --border-strong: #EDEDEF;
+    --accent: #EDEDEF;
+    --accent-fg: #050506;
+    --focus: #EDEDEF;
+  }
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+  --bg: #FFFFFF;
+  --bg-elevated: #FAFAFA;
+  --fg: #0A0A0A;
+  --fg-muted: #525252;
+  --fg-subtle: #8E8E8E;
+  --border: #E5E5E5;
+  --border-strong: #0A0A0A;
+  --accent: #0A0A0A;
+  --accent-fg: #FFFFFF;
+  --focus: #0A0A0A;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #050506;
+  --bg-elevated: #0E0E10;
+  --fg: #EDEDEF;
+  --fg-muted: #A0A0A8;
+  --fg-subtle: #6B6B73;
+  --border: #1F1F22;
+  --border-strong: #EDEDEF;
+  --accent: #EDEDEF;
+  --accent-fg: #050506;
+  --focus: #EDEDEF;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 1ms;
+    --duration-base: 1ms;
+    --duration-slow: 1ms;
+  }
+}

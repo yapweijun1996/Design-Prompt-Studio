@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Design Prompt Studio">
+  <title>Design Prompt Studio</title>
+  <rect width="512" height="512" fill="#FFFFFF"/>
+  <!-- Border frame — visible against subtle backgrounds -->
+  <rect x="8" y="8" width="496" height="496" fill="none" stroke="#000000" stroke-width="8"/>
+  <!-- Display serif D / monospace P — split-typography wordmark scaled to icon -->
+  <g fill="#000000">
+    <!-- Left letter: heavy display D shape made from two strokes + bowl -->
+    <path d="M104 96 L104 416 L232 416 C312 416 360 360 360 256 C360 152 312 96 232 96 L104 96 Z M168 152 L224 152 C272 152 296 184 296 256 C296 328 272 360 224 360 L168 360 L168 152 Z"/>
+    <!-- Right letter: a mono-style slash + small block evoking the prompt cursor -->
+    <path d="M408 96 L408 152 L408 96 Z"/>
+    <rect x="384" y="384" width="48" height="48"/>
+  </g>
+  <!-- Italic slash separator (display) -->
+  <path d="M256 96 L208 416" fill="none" stroke="#000000" stroke-width="12" stroke-linecap="square"/>
+</svg>

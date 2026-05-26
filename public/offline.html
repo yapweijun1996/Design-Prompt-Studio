@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Offline · Design Prompt Studio</title>
+  <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100%;
+      background: #FFFFFF;
+      color: #0A0A0A;
+      font-family: "Inter Tight", system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    @media (prefers-color-scheme: dark) {
+      html, body { background: #050506; color: #EDEDEF; }
+    }
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .wrap {
+      max-width: 480px;
+      text-align: left;
+    }
+    .eyebrow {
+      font-family: ui-monospace, "JetBrains Mono", monospace;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #8E8E8E;
+      margin-bottom: 16px;
+    }
+    h1 {
+      font-size: clamp(40px, 7vw, 64px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 24px;
+    }
+    p {
+      font-size: 17px;
+      line-height: 1.6;
+      color: #525252;
+      margin-bottom: 16px;
+    }
+    @media (prefers-color-scheme: dark) {
+      p { color: #A0A0A8; }
+      .eyebrow { color: #6B6B73; }
+    }
+    button, a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 16px;
+      padding: 12px 24px;
+      font-family: ui-monospace, "JetBrains Mono", monospace;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: #0A0A0A;
+      color: #FFFFFF;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      min-height: 44px;
+    }
+    @media (prefers-color-scheme: dark) {
+      button, a { background: #EDEDEF; color: #050506; }
+    }
+    button:hover, a:hover { opacity: 0.8; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <p class="eyebrow">Offline</p>
+    <h1>You're not connected.</h1>
+    <p>Design Prompt Studio is mostly an offline tool — your previously-visited prompts and presets are still on this device.</p>
+    <p>This page only shows when something in the app hasn't been cached yet. Reconnect and refresh to pull it in.</p>
+    <button onclick="location.reload()">Try again</button>
+  </div>
+</body>
+</html>

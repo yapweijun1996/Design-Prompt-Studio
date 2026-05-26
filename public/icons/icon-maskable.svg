@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Design Prompt Studio">
+  <title>Design Prompt Studio</title>
+  <!-- Safe zone for maskable: 80% center, 10% padding all sides. -->
+  <rect width="512" height="512" fill="#000000"/>
+  <!-- Inner content within 80% safe zone (51.2-460.8 on each axis) -->
+  <g transform="translate(102.4, 102.4) scale(0.6)">
+    <rect x="0" y="0" width="512" height="512" fill="#FFFFFF"/>
+    <g fill="#000000">
+      <path d="M104 96 L104 416 L232 416 C312 416 360 360 360 256 C360 152 312 96 232 96 L104 96 Z M168 152 L224 152 C272 152 296 184 296 256 C296 328 272 360 224 360 L168 360 L168 152 Z"/>
+      <rect x="384" y="384" width="48" height="48"/>
+    </g>
+    <path d="M256 96 L208 416" fill="none" stroke="#000000" stroke-width="12" stroke-linecap="square"/>
+  </g>
+</svg>

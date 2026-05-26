@@ -1,0 +1,210 @@
+/* App shell, header, footer, boot screen, placeholder routes. */
+
+html, body { background: var(--bg); color: var(--fg); }
+body {
+  font-family: var(--font-sans);
+  display: flex;
+  flex-direction: column;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+/* Accessibility skip link */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: var(--space-4);
+  padding: var(--space-2) var(--space-4);
+  background: var(--accent);
+  color: var(--accent-fg);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  z-index: 1000;
+  transition: top var(--duration-fast) var(--ease-out);
+}
+.skip-link:focus-visible { top: var(--space-4); }
+
+/* Boot screen — visible briefly before main.js renders */
+.boot-screen {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+}
+.boot-screen__inner { text-align: center; }
+.boot-screen__logo {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--fg);
+}
+.boot-screen__slash {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--fg-muted);
+  padding: 0 4px;
+}
+.boot-screen__tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  margin-top: var(--space-3);
+}
+
+/* Header */
+.appbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  height: var(--header-height);
+  padding: 0 var(--space-5);
+  border-bottom: var(--border-thin) solid var(--border);
+  background: var(--bg);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  flex-wrap: wrap;
+}
+.appbar__logo {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+.appbar__slash {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--fg-muted);
+  padding: 0 4px;
+}
+.appbar__ver {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--fg-subtle);
+  vertical-align: super;
+  margin-left: 6px;
+  font-weight: 400;
+}
+.appbar__nav { display: flex; gap: var(--space-2); }
+.appbar__link {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-2) var(--space-3);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  border: var(--border-thin) solid transparent;
+  min-height: 44px;
+  transition: color var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out),
+              background var(--duration-fast) var(--ease-out);
+}
+.appbar__link:hover {
+  color: var(--fg);
+  background: var(--bg-elevated);
+}
+.appbar__link.is-active {
+  color: var(--fg);
+  border-color: var(--border-strong);
+}
+
+/* Placeholder route content */
+.placeholder {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8) var(--space-5);
+}
+.placeholder__inner {
+  max-width: 640px;
+  text-align: left;
+}
+.placeholder__eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-subtle);
+  margin-bottom: var(--space-4);
+}
+.placeholder__title {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 6vw, 72px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: var(--space-5);
+  text-wrap: balance;
+}
+.placeholder__blurb {
+  font-size: 18px;
+  line-height: 1.55;
+  color: var(--fg-muted);
+  margin-bottom: var(--space-5);
+  text-wrap: pretty;
+}
+.placeholder__hint {
+  font-size: 14px;
+  color: var(--fg-subtle);
+  padding-top: var(--space-4);
+  border-top: var(--border-thin) solid var(--border);
+}
+.placeholder__code {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  background: var(--bg-elevated);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  color: var(--fg);
+}
+
+/* Footer */
+.appfoot {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  border-top: var(--border-thin) solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-subtle);
+  flex-wrap: wrap;
+}
+.appfoot__dot { opacity: 0.5; }
+.appfoot a { color: var(--fg-muted); }
+.appfoot a:hover { color: var(--fg); }
+
+/* No-script fallback */
+.noscript {
+  padding: var(--space-7) var(--space-5);
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+}
+.noscript h1 {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: var(--space-4);
+}
+
+/* Reduced motion already handled in tokens.css */

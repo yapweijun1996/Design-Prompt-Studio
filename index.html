@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="auto">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Design Prompt Studio — Copy-paste prompts to design any webpage</title>
+
+  <!-- SEO -->
+  <meta name="description" content="Copy-paste prompts to design any webpage with any LLM. Pick a style, hit Copy, paste into Claude or ChatGPT." />
+  <meta name="application-name" content="Design Prompt Studio" />
+  <meta name="author" content="Yap Wei Jun" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+
+  <!-- Apple PWA -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="DPS" />
+  <link rel="apple-touch-icon" href="/Design-Prompt-Studio/icons/icon.svg" />
+  <link rel="mask-icon" href="/Design-Prompt-Studio/icons/icon.svg" color="#000000" />
+  <link rel="icon" type="image/svg+xml" href="/Design-Prompt-Studio/icons/icon.svg" />
+
+  <!-- Open Graph / social -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Design Prompt Studio" />
+  <meta property="og:description" content="Copy-paste prompts to design any webpage with any LLM." />
+  <meta property="og:image" content="/Design-Prompt-Studio/icons/icon.svg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Design Prompt Studio" />
+  <meta name="twitter:description" content="Copy-paste prompts to design any webpage with any LLM." />
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Design Prompt Studio",
+      "applicationCategory": "DesignApplication",
+      "operatingSystem": "Web",
+      "description": "Copy-paste prompts to design any webpage with any LLM. Pick a style, hit Copy, paste into Claude or ChatGPT.",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "author": { "@type": "Person", "name": "Yap Wei Jun" }
+    }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" />
+
+  <script type="module" src="/src/main.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div id="app" aria-live="polite" aria-busy="true">
+    <!-- App boots into here. Initial paint: minimal skeleton so first contentful paint is instant. -->
+    <main id="main" class="boot-screen">
+      <div class="boot-screen__inner">
+        <div class="boot-screen__logo" aria-hidden="true">DESIGN<span class="boot-screen__slash">/</span>md</div>
+        <p class="boot-screen__tag">Loading the gallery…</p>
+      </div>
+    </main>
+  </div>
+
+  <noscript>
+    <div class="noscript">
+      <h1>Design Prompt Studio</h1>
+      <p>This app needs JavaScript. The pre-baked prompts and copy-to-clipboard flow won't work without it.</p>
+    </div>
+  </noscript>
+</body>
+</html>
