@@ -26,8 +26,15 @@ const DEFAULT_STATE = () => ({
   stack: "html",
   outputMode: "single-file",
   promptMode: "one-shot",
+  libraries: new Set(),
   brief: { name: "", industry: "", audience: "", tone: "", references: "", context: "", avoid: "" },
 });
+
+function toSet(value) {
+  if (value instanceof Set) return value;
+  if (Array.isArray(value)) return new Set(value);
+  return new Set();
+}
 
 function loadState() {
   // Express + Wizard share studio-state. If gallery handoff is pending, use that.
@@ -48,6 +55,7 @@ function loadState() {
         stack: card.stack ?? "html",
         outputMode: card.outputMode ?? "single-file",
         promptMode: card.promptMode ?? "one-shot",
+        libraries: toSet(card.libraries),
         brief: { ...(card.brief || {}) },
       };
     }
@@ -55,7 +63,8 @@ function loadState() {
 
   const saved = store.get(STATE_KEY, null);
   if (saved) {
-    saved.sections = new Set(saved.sections || []);
+    saved.sections = toSet(saved.sections);
+    saved.libraries = toSet(saved.libraries);
     return saved;
   }
   return DEFAULT_STATE();
@@ -65,6 +74,7 @@ function persist(state) {
   const serializable = {
     ...state,
     sections: state.sections instanceof Set ? Array.from(state.sections) : (state.sections || []),
+    libraries: state.libraries instanceof Set ? Array.from(state.libraries) : (state.libraries || []),
   };
   store.set(STATE_KEY, serializable);
 }

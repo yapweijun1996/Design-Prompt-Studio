@@ -128,7 +128,7 @@ function downloadPrompt(state, prompt) {
 }
 
 function buildShareUrl(state) {
-  // Encode a minimal state subset into URL hash. Sections as comma-joined.
+  // Encode a minimal state subset into URL hash. Sets are flattened to arrays.
   const payload = {
     s: state.style,
     p: state.pageType,
@@ -139,6 +139,7 @@ function buildShareUrl(state) {
     o: state.outputMode,
     M: state.promptMode,
     se: state.sections instanceof Set ? Array.from(state.sections) : (state.sections || []),
+    l: state.libraries instanceof Set ? Array.from(state.libraries) : (state.libraries || []),
     b: state.brief || {},
   };
   const json = JSON.stringify(payload);

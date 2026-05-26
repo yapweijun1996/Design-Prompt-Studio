@@ -31,8 +31,16 @@ const DEFAULT_STATE = () => ({
   stack: "html",
   outputMode: "single-file",
   promptMode: "one-shot",
+  libraries: new Set(),
   brief: { name: "", industry: "", audience: "", tone: "", references: "", context: "", avoid: "" },
 });
+
+// Helper: coerce an arbitrary value into a Set<string>. Handles Set, Array, undefined, plain {}.
+function toSet(value) {
+  if (value instanceof Set) return value;
+  if (Array.isArray(value)) return new Set(value);
+  return new Set();
+}
 
 function stateFromCard(card) {
   const base = DEFAULT_STATE();
@@ -49,6 +57,7 @@ function stateFromCard(card) {
     stack: card.stack ?? base.stack,
     outputMode: card.outputMode ?? base.outputMode,
     promptMode: card.promptMode ?? base.promptMode,
+    libraries: toSet(card.libraries),
     brief: { ...(card.brief || {}) },
   };
 }
@@ -73,6 +82,7 @@ function stateFromHashShare(hash) {
       outputMode: p.o ?? base.outputMode,
       promptMode: p.M ?? base.promptMode,
       sections: new Set(p.se || base.sections),
+      libraries: toSet(p.l),
       brief: p.b || base.brief,
     };
   } catch {
@@ -98,7 +108,8 @@ function resumeOrFresh() {
   // 3. Last-saved studio state
   const saved = store.get(STATE_KEY, null);
   if (saved) {
-    saved.sections = new Set(saved.sections || []);
+    saved.sections = toSet(saved.sections);
+    saved.libraries = toSet(saved.libraries);
     return saved;
   }
 
@@ -110,6 +121,7 @@ function persist(state) {
   const serializable = {
     ...state,
     sections: state.sections instanceof Set ? Array.from(state.sections) : (state.sections || []),
+    libraries: state.libraries instanceof Set ? Array.from(state.libraries) : (state.libraries || []),
   };
   store.set(STATE_KEY, serializable);
 }

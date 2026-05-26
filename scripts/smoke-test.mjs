@@ -111,6 +111,70 @@ check("library block omitted when no libraries selected", () => {
   return !prompt.includes("<libraries>");
 });
 
+// End-to-end: libraries selected as Set survive a JSON.stringify/parse cycle
+// (simulates the localStorage persist→load round-trip the UI does).
+check("libraries survive persist→load round-trip", () => {
+  // 1. State as Step 4 builds it (Set)
+  const stateOut = {
+    style: "monochrome", pageType: "landing",
+    density: "default", drama: "confident", motion: "default",
+    sections: new Set(["hero"]), stack: "html",
+    promptMode: "one-shot",
+    libraries: new Set(["chartjs", "marked", "dompurify"]),
+    brief: { name: "Test" },
+  };
+
+  // 2. Persist: Studio.js converts Set→Array before store.set
+  const serializable = {
+    ...stateOut,
+    sections: Array.from(stateOut.sections),
+    libraries: Array.from(stateOut.libraries),
+  };
+  const raw = JSON.stringify(serializable);
+
+  // 3. Load: store.get returns parsed object; Studio.js rehydrates Array→Set
+  const loaded = JSON.parse(raw);
+  loaded.sections = new Set(loaded.sections);
+  loaded.libraries = new Set(loaded.libraries);
+
+  // 4. Verify rehydration
+  if (!(loaded.libraries instanceof Set)) return false;
+  if (loaded.libraries.size !== 3) return false;
+  if (!loaded.libraries.has("chartjs")) return false;
+
+  // 5. Verify assemblePrompt downstream gets the libraries
+  const prompt = assemblePrompt(loaded);
+  return prompt.includes("Chart.js") && prompt.includes("marked.js") && prompt.includes("DOMPurify");
+});
+
+// End-to-end: share URL encoding survives the round-trip
+check("libraries survive share-URL encode→decode round-trip", () => {
+  const stateOut = {
+    style: "y2k", pageType: "landing",
+    density: "balanced", drama: "loud", motion: "playful",
+    sections: new Set(["hero", "features"]), stack: "html",
+    promptMode: "one-shot",
+    libraries: new Set(["chartjs", "tabulator"]),
+    brief: { name: "Demo" },
+  };
+
+  // Mirror 5-review.js buildShareUrl payload shape
+  const payload = {
+    s: stateOut.style, p: stateOut.pageType,
+    d: stateOut.density, r: stateOut.drama, m: stateOut.motion,
+    k: stateOut.stack, o: "single-file", M: stateOut.promptMode,
+    se: Array.from(stateOut.sections),
+    l: Array.from(stateOut.libraries),
+    b: stateOut.brief,
+  };
+  const json = JSON.stringify(payload);
+
+  // Decode (mirror Studio.js stateFromHashShare)
+  const p = JSON.parse(json);
+  if (!Array.isArray(p.l) || p.l.length !== 2) return false;
+  return p.l.includes("chartjs") && p.l.includes("tabulator");
+});
+
 // ─── Assemble each curated ────────────────────────────────────────────────
 for (const card of CURATED_PROMPTS) {
   check(`assemble curated: ${card.id}`, () => {
