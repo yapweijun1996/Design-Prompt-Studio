@@ -3,6 +3,7 @@
 // must-include, must-avoid. Inputs debounce-save via store wrapper.
 
 import { el } from "../../lib/dom.js";
+import { suggestIndustries } from "../../data/industries.js";
 
 const FIELDS = [
   { key: "name",       label: "Product / company name", placeholder: "e.g. HORLOGE",       required: true,  type: "input" },

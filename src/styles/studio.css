@@ -943,6 +943,18 @@
 
 .step__copy-btn.is-blocked { border-color: var(--danger); }
 
+/* ─── Industry quick-pick chips (Step 3) ─────────────────────────────────── */
+.step__industry-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+.chip--sm {
+  font-size: 0.78rem;
+  padding: calc(var(--space-1) + 1px) var(--space-2);
+}
+
 /* Mobile */
 @media (max-width: 760px) {
   .wizard {
