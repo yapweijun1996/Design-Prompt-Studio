@@ -6,11 +6,13 @@ import roughhouse from "./curated/roughhouse.json" with { type: "json" };
 import stilllife from "./curated/stilllife.json" with { type: "json" };
 import nova from "./curated/nova.json" with { type: "json" };
 import hush from "./curated/hush.json" with { type: "json" };
+import lumina from "./curated/lumina.json" with { type: "json" };
+import meridian from "./curated/meridian.json" with { type: "json" };
 
 import { generateStandardPrompts } from "./generate.js";
 
 // ─── Curated (tier 1) ───────────────────────────────────────────────────────
-export const CURATED_PROMPTS = [horloge, roughhouse, stilllife, nova, hush];
+export const CURATED_PROMPTS = [horloge, roughhouse, stilllife, nova, hush, lumina, meridian];
 
 // ─── Standard (tier 2) ──────────────────────────────────────────────────────
 const STANDARD_PROMPTS = generateStandardPrompts();
