@@ -5,8 +5,11 @@
 
 import { ALL_PROMPTS, CURATED_PROMPTS, promptStats, pickFeaturedPrompt, searchPrompts } from "../src/data/prompts/index.js";
 import { STYLE_PRESETS, STYLE_IDS } from "../src/data/styles/index.js";
-import { PAGE_TYPES, pageTypeCount } from "../src/data/taxonomy.js";
+import { PAGE_TYPES, PURPOSE_BUCKETS, PAGE_TYPES_BY_PURPOSE, pageTypeCount } from "../src/data/taxonomy.js";
 import { assemblePrompt, assembleFromCard, promptStats as charStats } from "../src/lib/assemblePrompt.js";
+import { scoreQuality } from "../src/lib/qualityScore.js";
+import { suggestIndustries, industryLabel } from "../src/data/industries.js";
+import { getComponentsForContext } from "../src/data/components.js";
 import { STYLE_VARIANTS, getVariant, findVariantForState } from "../src/data/style-variants.js";
 import { MOOD_PRESETS } from "../src/data/moods.js";
 import { LIBRARIES, LIBRARY_CATEGORIES, libraryCount, getLibrary } from "../src/data/libraries.js";
@@ -22,12 +25,12 @@ function check(label, fn) {
 }
 
 // ─── Counts ────────────────────────────────────────────────────────────────
-check("style count = 20 (5 original + 15 compact)", () => STYLE_IDS.length === 20);
+check("style count = 100", () => STYLE_IDS.length === 100);
 check("page-type count ≥ 30", () => pageTypeCount() >= 30);
-check("curated prompts = 5", () => CURATED_PROMPTS.length === 5);
+check("curated prompts = 7", () => CURATED_PROMPTS.length === 7);
 check("ALL_PROMPTS ≥ 600", () => ALL_PROMPTS.length >= 600);
 check("MOOD_PRESETS = 9", () => MOOD_PRESETS.length === 9);
-check("STYLE_VARIANTS = 180 (20×9)", () => STYLE_VARIANTS.length === 180);
+check("STYLE_VARIANTS = 900 (100×9)", () => STYLE_VARIANTS.length === 900);
 
 // Verify a variant resolves back to its base + modifiers
 check("variant linear--whisper resolves correctly", () => {
@@ -205,6 +208,85 @@ for (const styleId of STYLE_IDS.slice(0, 2)) {
     });
   }
 }
+
+// ─── Prompt quality scorer ─────────────────────────────────────────────────
+check("empty state scores low and gate=block", () => {
+  const q = scoreQuality({});
+  return q.score < 50 && q.gate === "block" && q.criticalMissing >= 2;
+});
+check("score is bounded 0..100", () => {
+  const q = scoreQuality({});
+  const full = scoreQuality({
+    stack: "html",
+    sections: new Set(["hero", "features", "cta"]),
+    brief: { name: "TraceForge", industry: "developer tools", audience: "software engineers evaluating tools during work hours", tone: "clear, technical, credible, concise", context: "hero must show a real metric", avoid: "purple gradients, fake testimonials" },
+  });
+  return q.score >= 0 && full.score <= 100;
+});
+check("fully-specified state scores high and gate=ready", () => {
+  const q = scoreQuality({
+    stack: "react",
+    sections: new Set(["hero", "features", "pricing", "cta", "footer"]),
+    brief: {
+      name: "TraceForge",
+      industry: "developer tools",
+      audience: "software engineers and engineering managers evaluating observability tools",
+      tone: "clear, practical, technical, credible, concise",
+      context: "hero must include a believable metric; show GitHub integration",
+      avoid: "generic AI claims, purple gradient hero, stock photos",
+    },
+  });
+  return q.score >= 80 && q.gate === "ready" && q.criticalMissing === 0 && q.fixes.length === 0;
+});
+check("partial state gate=warn with fixes", () => {
+  const q = scoreQuality({
+    stack: "html",
+    sections: new Set(["hero", "features", "cta"]),
+    brief: { name: "Acme", audience: "small business owners who want a simple site fast", tone: "friendly, clear, warm" },
+  });
+  return q.gate === "warn" && q.fixes.length > 0;
+});
+check("placeholder brief values do not count as filled", () => {
+  const q = scoreQuality({ stack: "html", sections: new Set(["hero"]), brief: { name: "[YOUR PRODUCT]", audience: "  ", tone: "TBD" } });
+  // name/audience/tone all effectively empty → all 3 criticals missing → block
+  return q.criticalMissing >= 2 && q.gate === "block";
+});
+
+// ─── Experience bucket (immersive/interactive page types) ───────────────────
+check("PURPOSE_BUCKETS includes experience", () => !!PURPOSE_BUCKETS.experience);
+check("experience bucket has 5 page types", () => (PAGE_TYPES_BY_PURPOSE.experience || []).length === 5);
+check("experience page types assemble > 2000 chars", () => {
+  return (PAGE_TYPES_BY_PURPOSE.experience || []).every((t) => {
+    const p = assemblePrompt({
+      style: "cyberpunk", pageType: t.id,
+      density: "default", drama: "loud", motion: "playful",
+      sections: t.sections, stack: "html", outputMode: "single-file", promptMode: "one-shot",
+      brief: { name: "Test" },
+    });
+    return p.length > 2000;
+  });
+});
+
+// ─── Industry axis (industries.js) ──────────────────────────────────────────
+check("industryLabel maps known id", () => industryLabel("saas") === "SaaS");
+check("industryLabel falls back for unknown id", () => industryLabel("real-estate") === "Real estate");
+check("suggestIndustries returns non-empty, deduped, no 'any'", () => {
+  const out = suggestIndustries("immersive");
+  const ids = out.map((x) => x.id);
+  return out.length > 0 && !ids.includes("any") && new Set(ids).size === ids.length;
+});
+
+// ─── Experience sections now map to components (gap fix) ─────────────────────
+check("experience page types each match ≥1 component via sections", () => {
+  return (PAGE_TYPES_BY_PURPOSE.experience || []).every((t) => {
+    const hits = getComponentsForContext([...t.sections, t.id, t.purpose]);
+    return hits.length >= 1;
+  });
+});
+check("immersive sections imply videoplayer + carousel + tooltip", () => {
+  const ids = getComponentsForContext(PAGE_TYPES.immersive.sections).map((c) => c.id);
+  return ids.includes("videoplayer") && ids.includes("carousel") && ids.includes("tooltip");
+});
 
 // ─── Block-structure check ─────────────────────────────────────────────────
 check("prompt contains <role> block", () => {

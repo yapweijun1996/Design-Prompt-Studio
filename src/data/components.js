@@ -269,7 +269,7 @@ export const UI_COMPONENTS = {
     a11y: "role=tooltip with aria-describedby from the target; appears on hover AND keyboard focus (not click); Esc dismisses; never traps focus; never contains interactive elements.",
     pairsWithLibraries: ["tippy"],
     pairsWithStyles: ["devtool", "analytics", "admin", "darkboard", "saas", "internal", "construction"],
-    impliesBy: ["icon-button", "toolbar", "header"],
+    impliesBy: ["icon-button", "toolbar", "header", "interactive-moments", "hotspot-annotations", "orbit-controls"],
   },
 
   menu: {
@@ -563,7 +563,7 @@ export const UI_COMPONENTS = {
     a11y: "Use <ol> for the timeline; each event is <li> with a clear datetime; visually decorative dots are aria-hidden; provide a 'jump to date' control for long timelines.",
     pairsWithLibraries: [],
     pairsWithStyles: ["delivery", "rideshare", "bto", "construction", "podcast", "blog", "academic", "museum", "legalsaas"],
-    impliesBy: ["activity", "history", "tracking", "milestones", "audit", "order-status", "timeline", "activity-feed", "audit-log", "version-list", "changelog"],
+    impliesBy: ["activity", "history", "tracking", "milestones", "audit", "order-status", "timeline", "activity-feed", "audit-log", "version-list", "changelog", "sticky-chapters", "scroll-scenes"],
   },
 
   treeview: {
@@ -591,7 +591,7 @@ export const UI_COMPONENTS = {
     a11y: "Number announced as labeled value: aria-label='Revenue, $2.4 million, up 12 percent vs last month'; tabular-nums for numeric alignment; delta arrows are decorative (aria-hidden) — color isn't the only signal (use ▲/▼ glyph).",
     pairsWithLibraries: [],
     pairsWithStyles: ["analytics", "darkboard", "admin", "fintech", "bank", "consulting", "corporate", "nonprofit"],
-    impliesBy: ["dashboard", "stats-bar", "metrics", "overview", "summary", "kpi-cards", "results-stats", "primary-chart"],
+    impliesBy: ["dashboard", "stats-bar", "metrics", "overview", "summary", "kpi-cards", "results-stats", "primary-chart", "data-reveals", "spec-highlights", "spec-panel"],
   },
 
   sparkline: {
@@ -634,7 +634,7 @@ export const UI_COMPONENTS = {
     a11y: "Real <table> with <thead>; ✓/✗ marks have screen-reader text ('Included' / 'Not included' — not just the icon); sticky first column for context on horizontal scroll.",
     pairsWithLibraries: [],
     pairsWithStyles: ["saas", "fintech", "insurance", "telehealth", "lms", "corporate", "consulting", "utility"],
-    impliesBy: ["pricing", "comparison", "plans", "tiers", "vs-competitor", "comparison-table", "feature-comparison", "compare-page", "tier-cards"],
+    impliesBy: ["pricing", "comparison", "plans", "tiers", "vs-competitor", "comparison-table", "feature-comparison", "compare-page", "tier-cards", "spec-panel", "spec-highlights"],
   },
 
   diffview: {
@@ -693,7 +693,7 @@ export const UI_COMPONENTS = {
     a11y: "Pause autoplay on hover/focus + provide visible pause button; arrows are real <button>s with aria-label; current slide announced via live region; never hide slide content from screen readers (off-screen text is still discoverable); respects prefers-reduced-motion.",
     pairsWithLibraries: ["swiper", "splide"],
     pairsWithStyles: ["marketplace", "hotel", "boutique", "story", "music", "video", "museum"],
-    impliesBy: ["product-gallery", "testimonials", "hero", "rail", "gallery", "screenshots", "related", "recommendations"],
+    impliesBy: ["product-gallery", "testimonials", "hero", "rail", "gallery", "screenshots", "related", "recommendations", "scroll-scenes", "parallax-layers", "scroll-triggered-visuals", "feature-deep-dives", "interactive-feature", "pull-quotes"],
   },
 
   lightbox: {
@@ -707,7 +707,7 @@ export const UI_COMPONENTS = {
     a11y: "Same modal a11y rules (focus trap, Esc, restore focus); arrow keys move siblings; current image announced ('Image 3 of 12'); zoom-on-click also accessible via keyboard.",
     pairsWithLibraries: [],
     pairsWithStyles: ["gallery", "boutique", "hotel", "museum", "story", "marketplace", "portfolio", "realestate"],
-    impliesBy: ["gallery", "product-images", "photos", "screenshots", "portfolio", "project-grid"],
+    impliesBy: ["gallery", "product-images", "photos", "screenshots", "portfolio", "project-grid", "hotspot-annotations", "interactive-moments"],
   },
 
   videoplayer: {
@@ -721,7 +721,7 @@ export const UI_COMPONENTS = {
     a11y: "All controls are real <button>s with aria-label; captions toggle exposed; keyboard shortcuts (space=play/pause, M=mute, arrows=seek) documented; provide a transcript for serious content (course, talk).",
     pairsWithLibraries: ["plyr", "videojs"],
     pairsWithStyles: ["lms", "podcast", "video", "agency", "music", "creator", "telehealth", "automotive"],
-    impliesBy: ["video", "lesson", "demo", "media-player", "hero", "step-content"],
+    impliesBy: ["video", "lesson", "demo", "media-player", "hero", "step-content", "full-bleed-hero", "cinematic-hero", "themed-hero", "canvas-stage"],
   },
 
   // ─── IDENTITY (1) ──────────────────────────────────────────────────────────
@@ -753,7 +753,7 @@ export const UI_COMPONENTS = {
     a11y: "Color is NEVER the only signal — pair status pill with icon or distinct text; count badge is wrapped with parent context ('Inbox, 3 unread'); removable chip's × is a real <button> with aria-label.",
     pairsWithLibraries: [],
     pairsWithStyles: ["admin", "enterprise", "chat", "crm", "hr", "marketplace", "saas", "darkboard"],
-    impliesBy: ["status", "count", "tag", "filter", "table-row", "notification", "notifications", "tier-cards", "category-tabs", "filter-tabs"],
+    impliesBy: ["status", "count", "tag", "filter", "table-row", "notification", "notifications", "tier-cards", "category-tabs", "filter-tabs", "social-proof"],
   },
 
   // ─── COMMERCE (7) ──────────────────────────────────────────────────────────
@@ -769,7 +769,7 @@ export const UI_COMPONENTS = {
     a11y: "Each swatch/size is a real <button> with aria-pressed; color name in aria-label ('Color: Navy blue' — color alone fails for low-vision); out-of-stock has aria-disabled='true' + visible 'Out of stock' text; size guide link adjacent.",
     pairsWithLibraries: [],
     pairsWithStyles: ["marketplace", "boutique", "utility", "story"],
-    impliesBy: ["product-detail", "checkout", "variant", "configure", "product", "product-grid"],
+    impliesBy: ["product-detail", "checkout", "variant", "configure", "product", "product-grid", "config-options"],
   },
 
   minicart: {
@@ -812,7 +812,7 @@ export const UI_COMPONENTS = {
     a11y: "Tabular numbers; aria-label='Now $9.90, was $29, save 65%' (one coherent string); strikethrough has aria-label='Was $29' or <s> semantics; never use color alone to signal sale.",
     pairsWithLibraries: [],
     pairsWithStyles: ["marketplace", "flash", "utility", "boutique", "delivery", "korean"],
-    impliesBy: ["product-card", "sale", "checkout", "pricing", "tier-cards", "product-grid", "product"],
+    impliesBy: ["product-card", "sale", "checkout", "pricing", "tier-cards", "product-grid", "product", "pre-order-cta", "countdown-or-reveal"],
   },
 
   checkoutstepper: {

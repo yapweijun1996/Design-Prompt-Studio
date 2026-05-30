@@ -3,6 +3,7 @@
 // must-include, must-avoid. Inputs debounce-save via store wrapper.
 
 import { el } from "../../lib/dom.js";
+import { suggestIndustries } from "../../data/industries.js";
 
 const FIELDS = [
   { key: "name",       label: "Product / company name", placeholder: "e.g. HORLOGE",       required: true,  type: "input" },
@@ -55,11 +56,49 @@ export function renderStep3({ state, onStateChange }) {
         placeholder: field.placeholder,
       });
       input.value = state.brief[field.key] || "";
+
+      // Assigned only for the industry field; declared here so the input listener
+      // can call it (block-scoped function decls would not be visible to it).
+      let refreshIndustryChips = null;
+
       input.addEventListener("input", (e) => {
         state.brief[field.key] = e.target.value;
+        refreshIndustryChips?.();
         onStateChange?.();
       });
       wrap.appendChild(input);
+
+      // Industry is the second taxonomy axis: offer quick-pick chips sourced from the
+      // selected page type's commonIndustries (docs/RESEARCH-REVIEW.md § 3a).
+      if (field.key === "industry") {
+        const chipRow = el("div", { class: "step__industry-chips", role: "group", "aria-label": "Suggested industries" });
+        wrap.appendChild(chipRow);
+        refreshIndustryChips = () => {
+          chipRow.replaceChildren();
+          const current = (state.brief.industry || "").trim().toLowerCase();
+          for (const s of suggestIndustries(state.pageType)) {
+            const isActive = current === s.label.toLowerCase();
+            chipRow.appendChild(
+              el(
+                "button",
+                {
+                  type: "button",
+                  class: "chip chip--sm" + (isActive ? " is-active" : ""),
+                  "aria-pressed": isActive ? "true" : "false",
+                  onClick: () => {
+                    state.brief.industry = s.label;
+                    input.value = s.label;
+                    refreshIndustryChips();
+                    onStateChange?.();
+                  },
+                },
+                s.label,
+              ),
+            );
+          }
+        };
+        refreshIndustryChips();
+      }
     }
     grid.appendChild(wrap);
   }

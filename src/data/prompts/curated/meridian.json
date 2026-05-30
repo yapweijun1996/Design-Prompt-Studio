@@ -1,0 +1,28 @@
+{
+  "id": "meridian",
+  "tier": "curated",
+  "name": "MERIDIAN",
+  "tagline": "Scroll-driven climate data story",
+  "style": "editorial",
+  "purpose": "experience",
+  "pageType": "scrollytelling",
+  "density": "default",
+  "drama": "confident",
+  "motion": "default",
+  "promptMode": "one-shot",
+  "sections": ["intro-hook", "sticky-chapters", "scroll-triggered-visuals", "data-reveals", "pull-quotes", "conclusion-cta"],
+  "stack": "react",
+  "outputMode": "page-component",
+  "industryTags": ["nonprofit", "climate", "editorial", "data-story", "advocacy"],
+  "brief": {
+    "name": "MERIDIAN",
+    "industry": "Nonprofit climate-research org publishing a scroll-driven data story on ocean warming",
+    "audience": "Educated general public, journalists, and policy staffers who skim first and read deeply only if hooked. They distrust alarmism and respond to credible, well-sourced data. Most read on mobile during commutes.",
+    "tone": "literate, measured, urgent-but-credible, evidence-led, humane, unhurried",
+    "references": "NYT/The Pudding scrollytelling features, Reuters graphics, Our World in Data charts, Edward Tufte sparklines, Kurzgesagt restraint (without the cartoon)",
+    "context": "Open with a one-line intro hook over a single striking visual. Three sticky chapters each pin a chart while narrative text scrolls beside it: (1) sea-surface temperature since 1900, (2) coral bleaching events, (3) projected 2050 scenarios. Data reveals animate in as each chapter enters view. Include 2 pull-quotes from named scientists with affiliation. End with a clear conclusion CTA: 'Read the methodology' + 'Share this story'. Every chart needs an accessible text alternative and a visible data source. On reduced-motion or no-JS, the charts must render statically in order with no pinning.",
+    "avoid": "Apocalyptic stock imagery. Motion for its own sake. Unsourced numbers. Decorative charts that don't answer a question. Hijacking the scrollbar so users can't control pace. Auto-playing video. SaaS-style feature-grid sections."
+  },
+  "featured": false,
+  "createdAt": "2026-05-30"
+}

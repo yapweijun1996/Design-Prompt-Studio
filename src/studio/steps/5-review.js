@@ -4,6 +4,7 @@
 import { el } from "../../lib/dom.js";
 import { copyText } from "../../lib/clipboard.js";
 import { assemblePrompt, promptStats } from "../../lib/assemblePrompt.js";
+import { renderQualityPanel } from "../qualityPanel.js";
 import { store } from "../../lib/store.js";
 
 export function renderStep5({ state }) {
@@ -23,6 +24,10 @@ export function renderStep5({ state }) {
   }
   const stats = promptStats(prompt);
 
+  // Quality score + export gating (see docs/RESEARCH-REVIEW.md § 3a).
+  const { node: qualityNode, quality } = renderQualityPanel(carrier);
+  root.appendChild(qualityNode);
+
   root.append(sectionLabel("Your assembled prompt", `${stats.chars.toLocaleString()} chars · ~${stats.tokens.toLocaleString()} tokens · ${stats.lines} lines`));
 
   const promptBox = el(
@@ -33,11 +38,15 @@ export function renderStep5({ state }) {
   root.appendChild(promptBox);
 
   // ─── Actions ─────────────────────────────────────────────────────────────
+  // When the prompt is under-specified, copy is still allowed (free tool) but the
+  // button visibly signals it: label becomes "Copy anyway" and turns danger-styled.
+  const isBlocked = quality.gate === "block";
+  const defaultLabel = isBlocked ? "Copy anyway" : "Copy prompt";
   const copyBtn = el(
     "button",
-    { type: "button", class: "step__copy-btn" },
+    { type: "button", class: "step__copy-btn" + (isBlocked ? " is-blocked" : "") },
     el("span", { class: "step__copy-icon", "aria-hidden": "true" }, "📋"),
-    el("span", { class: "step__copy-label" }, "Copy prompt"),
+    el("span", { class: "step__copy-label" }, defaultLabel),
   );
   copyBtn.addEventListener("click", async () => {
     const ok = await copyText(prompt);
@@ -45,14 +54,14 @@ export function renderStep5({ state }) {
     if (ok) {
       copyBtn.classList.add("is-copied");
       label.textContent = "Copied ✓";
-      setTimeout(() => { copyBtn.classList.remove("is-copied"); label.textContent = "Copy prompt"; }, 1800);
+      setTimeout(() => { copyBtn.classList.remove("is-copied"); label.textContent = defaultLabel; }, 1800);
       // Telemetry
       const copies = store.get("copies", {});
       copies["studio-assembled"] = (copies["studio-assembled"] || 0) + 1;
       store.set("copies", copies);
     } else {
       label.textContent = "Copy failed — select & ⌘C";
-      setTimeout(() => { label.textContent = "Copy prompt"; }, 2200);
+      setTimeout(() => { label.textContent = defaultLabel; }, 2200);
     }
   });
 
@@ -114,6 +123,7 @@ function sectionLabel(title, hint) {
     el("span", { class: "step__section-hint" }, hint),
   );
 }
+
 
 function downloadPrompt(state, prompt) {
   const blob = new Blob([prompt], { type: "text/markdown;charset=utf-8" });
