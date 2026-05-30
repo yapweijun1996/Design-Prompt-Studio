@@ -9,6 +9,7 @@ import { PAGE_TYPES, PURPOSE_BUCKETS, PAGE_TYPES_BY_PURPOSE, pageTypeCount } fro
 import { assemblePrompt, assembleFromCard, promptStats as charStats } from "../src/lib/assemblePrompt.js";
 import { scoreQuality } from "../src/lib/qualityScore.js";
 import { suggestIndustries, industryLabel } from "../src/data/industries.js";
+import { getComponentsForContext } from "../src/data/components.js";
 import { STYLE_VARIANTS, getVariant, findVariantForState } from "../src/data/style-variants.js";
 import { MOOD_PRESETS } from "../src/data/moods.js";
 import { LIBRARIES, LIBRARY_CATEGORIES, libraryCount, getLibrary } from "../src/data/libraries.js";
@@ -26,7 +27,7 @@ function check(label, fn) {
 // ─── Counts ────────────────────────────────────────────────────────────────
 check("style count = 100", () => STYLE_IDS.length === 100);
 check("page-type count ≥ 30", () => pageTypeCount() >= 30);
-check("curated prompts = 5", () => CURATED_PROMPTS.length === 5);
+check("curated prompts = 7", () => CURATED_PROMPTS.length === 7);
 check("ALL_PROMPTS ≥ 600", () => ALL_PROMPTS.length >= 600);
 check("MOOD_PRESETS = 9", () => MOOD_PRESETS.length === 9);
 check("STYLE_VARIANTS = 900 (100×9)", () => STYLE_VARIANTS.length === 900);
@@ -273,6 +274,18 @@ check("suggestIndustries returns non-empty, deduped, no 'any'", () => {
   const out = suggestIndustries("immersive");
   const ids = out.map((x) => x.id);
   return out.length > 0 && !ids.includes("any") && new Set(ids).size === ids.length;
+});
+
+// ─── Experience sections now map to components (gap fix) ─────────────────────
+check("experience page types each match ≥1 component via sections", () => {
+  return (PAGE_TYPES_BY_PURPOSE.experience || []).every((t) => {
+    const hits = getComponentsForContext([...t.sections, t.id, t.purpose]);
+    return hits.length >= 1;
+  });
+});
+check("immersive sections imply videoplayer + carousel + tooltip", () => {
+  const ids = getComponentsForContext(PAGE_TYPES.immersive.sections).map((c) => c.id);
+  return ids.includes("videoplayer") && ids.includes("carousel") && ids.includes("tooltip");
 });
 
 // ─── Block-structure check ─────────────────────────────────────────────────
