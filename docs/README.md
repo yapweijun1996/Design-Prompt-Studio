@@ -9,6 +9,7 @@ Living design documents for the Studio.
 | **[PROMPT-PATTERNS.md](PROMPT-PATTERNS.md)** | Living pattern library — lessons extracted from studying external design prompts. Each sample analyzed for adopt/reject patterns, with diffs against our system | When studying a new prompt or rewriting our template |
 | **[COMPONENTS.md](COMPONENTS.md)** | UI component vocabulary (70 primitives × 14 categories × 3 tiers) the prompt generator emits as a `<components>` block. Schema, scoring algorithm, cross-refs to libraries & styles, integration handoffs (Studio toggle + pin-from-page). | When tuning component schema, adding new primitives, or debugging which widget the LLM picked |
 | **[TECH-STACK.md](TECH-STACK.md)** | Tech-stack decisions: PWA, localStorage (IndexedDB deferred to v0.5), GitHub Pages + Actions, zero-build vanilla ES modules | When making infra / deploy / storage choices |
+| **[RESEARCH-REVIEW.md](RESEARCH-REVIEW.md)** | Decision record reviewing the ChatGPT deep-research report against what DPS already ships: adopt / defer / reject calls (e.g. add prompt quality scoring; do NOT rewrite to React) | When weighing external strategy advice against current architecture |
 | **[../task.md](../task.md)** | Current state, done list, in-progress, todo, open decisions, file map, next-step paths | Every session start |
 
 ---
