@@ -37,7 +37,9 @@ See `PROMPT-PATTERNS.md` for the full table.
 
 ---
 
-## 🚀 v0.4.0 production state (2026-05-26)
+## 🚀 v0.4.0 production state (2026-05-26) — historical
+
+> Superseded by **v0.5.0** (see below) for current numbers. Kept as a release-history snapshot.
 
 - **Live**: https://yapweijun1996.github.io/Design-Prompt-Studio/
 - 20 base styles × 9 moods = **180 style variants**
@@ -48,12 +50,18 @@ See `PROMPT-PATTERNS.md` for the full table.
 - localStorage state persistence (gallery handoff + studio + express + URL share)
 - Auto light/dark theme + keyboard nav + skip link + focus-visible everywhere
 
-## 🚀 v0.5.0 in-progress state (2026-05-26 — late session)
+## 🚀 v0.5.0 state (2026-05-26 → 2026-05-30)
 
-Adds vocabulary expansion (styles + components) on top of v0.4.0. Not yet versioned/shipped, but committed on `main`.
+Vocabulary expansion (styles + components) on top of v0.4.0, plus the deep-research
+follow-ups (see [RESEARCH-REVIEW.md](RESEARCH-REVIEW.md)). `package.json` / `src/main.js`
+now at **0.5.0**.
 
 - **100 base styles** × 9 moods = **900 style variants** (was 180)
-- ~3,000 generated prompts (was 685)
+- ~3,900 generated prompts (was 685)
+- **7 purpose buckets / 39 page types** — added the `experience` bucket (immersive,
+  scrollytelling, 3d-showcase, product-launch, microsite)
+- **Prompt quality score + export gating** in Studio Review *and* Express (shared panel)
+- **Industry** promoted to a selectable second taxonomy axis (quick-pick chips in the brief)
 - **6 style categories** (creative/business/commerce/content/institutional/regional) with cascade chip UX — flat 100-chip list was unusable
 - **70 UI component primitives** (input/disclosure/feedback/progress/search/navigation/data/media/identity/misc/commerce/chat/auth/advanced) in 3 tiers; new `<components>` block in assembled prompts gives the LLM a shared widget vocabulary so it stops reinventing combobox-vs-select / modal-vs-drawer every time
 - New **#components** route with browse + filter + expandable cards + "📌 Use in Studio" pin-to-prompt handoff

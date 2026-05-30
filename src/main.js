@@ -26,7 +26,7 @@ import { renderStudio } from "./studio/Studio.js";
 import { renderExpress } from "./studio/Express.js";
 import { renderComponentsPage } from "./components-page/ComponentsPage.js";
 
-const VERSION = "0.4.0";
+const VERSION = "0.5.0";
 const ROUTES = ["gallery", "studio", "express", "components"];
 const DEFAULT_ROUTE = "gallery";
 
