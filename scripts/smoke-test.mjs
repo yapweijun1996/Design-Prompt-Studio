@@ -7,6 +7,7 @@ import { ALL_PROMPTS, CURATED_PROMPTS, promptStats, pickFeaturedPrompt, searchPr
 import { STYLE_PRESETS, STYLE_IDS } from "../src/data/styles/index.js";
 import { PAGE_TYPES, pageTypeCount } from "../src/data/taxonomy.js";
 import { assemblePrompt, assembleFromCard, promptStats as charStats } from "../src/lib/assemblePrompt.js";
+import { scoreQuality } from "../src/lib/qualityScore.js";
 import { STYLE_VARIANTS, getVariant, findVariantForState } from "../src/data/style-variants.js";
 import { MOOD_PRESETS } from "../src/data/moods.js";
 import { LIBRARIES, LIBRARY_CATEGORIES, libraryCount, getLibrary } from "../src/data/libraries.js";
@@ -205,6 +206,49 @@ for (const styleId of STYLE_IDS.slice(0, 2)) {
     });
   }
 }
+
+// ─── Prompt quality scorer ─────────────────────────────────────────────────
+check("empty state scores low and gate=block", () => {
+  const q = scoreQuality({});
+  return q.score < 50 && q.gate === "block" && q.criticalMissing >= 2;
+});
+check("score is bounded 0..100", () => {
+  const q = scoreQuality({});
+  const full = scoreQuality({
+    stack: "html",
+    sections: new Set(["hero", "features", "cta"]),
+    brief: { name: "TraceForge", industry: "developer tools", audience: "software engineers evaluating tools during work hours", tone: "clear, technical, credible, concise", context: "hero must show a real metric", avoid: "purple gradients, fake testimonials" },
+  });
+  return q.score >= 0 && full.score <= 100;
+});
+check("fully-specified state scores high and gate=ready", () => {
+  const q = scoreQuality({
+    stack: "react",
+    sections: new Set(["hero", "features", "pricing", "cta", "footer"]),
+    brief: {
+      name: "TraceForge",
+      industry: "developer tools",
+      audience: "software engineers and engineering managers evaluating observability tools",
+      tone: "clear, practical, technical, credible, concise",
+      context: "hero must include a believable metric; show GitHub integration",
+      avoid: "generic AI claims, purple gradient hero, stock photos",
+    },
+  });
+  return q.score >= 80 && q.gate === "ready" && q.criticalMissing === 0 && q.fixes.length === 0;
+});
+check("partial state gate=warn with fixes", () => {
+  const q = scoreQuality({
+    stack: "html",
+    sections: new Set(["hero", "features", "cta"]),
+    brief: { name: "Acme", audience: "small business owners who want a simple site fast", tone: "friendly, clear, warm" },
+  });
+  return q.gate === "warn" && q.fixes.length > 0;
+});
+check("placeholder brief values do not count as filled", () => {
+  const q = scoreQuality({ stack: "html", sections: new Set(["hero"]), brief: { name: "[YOUR PRODUCT]", audience: "  ", tone: "TBD" } });
+  // name/audience/tone all effectively empty → all 3 criticals missing → block
+  return q.criticalMissing >= 2 && q.gate === "block";
+});
 
 // ─── Block-structure check ─────────────────────────────────────────────────
 check("prompt contains <role> block", () => {

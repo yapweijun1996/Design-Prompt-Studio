@@ -4,6 +4,7 @@
 import { el } from "../../lib/dom.js";
 import { copyText } from "../../lib/clipboard.js";
 import { assemblePrompt, promptStats } from "../../lib/assemblePrompt.js";
+import { scoreQuality, GATE_LABEL } from "../../lib/qualityScore.js";
 import { store } from "../../lib/store.js";
 
 export function renderStep5({ state }) {
@@ -23,6 +24,10 @@ export function renderStep5({ state }) {
   }
   const stats = promptStats(prompt);
 
+  // Quality score + export gating (see docs/RESEARCH-REVIEW.md § 3a).
+  const quality = scoreQuality(carrier);
+  root.appendChild(renderQualityPanel(quality));
+
   root.append(sectionLabel("Your assembled prompt", `${stats.chars.toLocaleString()} chars · ~${stats.tokens.toLocaleString()} tokens · ${stats.lines} lines`));
 
   const promptBox = el(
@@ -33,11 +38,15 @@ export function renderStep5({ state }) {
   root.appendChild(promptBox);
 
   // ─── Actions ─────────────────────────────────────────────────────────────
+  // When the prompt is under-specified, copy is still allowed (free tool) but the
+  // button visibly signals it: label becomes "Copy anyway" and turns danger-styled.
+  const isBlocked = quality.gate === "block";
+  const defaultLabel = isBlocked ? "Copy anyway" : "Copy prompt";
   const copyBtn = el(
     "button",
-    { type: "button", class: "step__copy-btn" },
+    { type: "button", class: "step__copy-btn" + (isBlocked ? " is-blocked" : "") },
     el("span", { class: "step__copy-icon", "aria-hidden": "true" }, "📋"),
-    el("span", { class: "step__copy-label" }, "Copy prompt"),
+    el("span", { class: "step__copy-label" }, defaultLabel),
   );
   copyBtn.addEventListener("click", async () => {
     const ok = await copyText(prompt);
@@ -45,14 +54,14 @@ export function renderStep5({ state }) {
     if (ok) {
       copyBtn.classList.add("is-copied");
       label.textContent = "Copied ✓";
-      setTimeout(() => { copyBtn.classList.remove("is-copied"); label.textContent = "Copy prompt"; }, 1800);
+      setTimeout(() => { copyBtn.classList.remove("is-copied"); label.textContent = defaultLabel; }, 1800);
       // Telemetry
       const copies = store.get("copies", {});
       copies["studio-assembled"] = (copies["studio-assembled"] || 0) + 1;
       store.set("copies", copies);
     } else {
       label.textContent = "Copy failed — select & ⌘C";
-      setTimeout(() => { label.textContent = "Copy prompt"; }, 2200);
+      setTimeout(() => { label.textContent = defaultLabel; }, 2200);
     }
   });
 
@@ -113,6 +122,57 @@ function sectionLabel(title, hint) {
     el("span", null, title),
     el("span", { class: "step__section-hint" }, hint),
   );
+}
+
+function renderQualityPanel(q) {
+  const panel = el(
+    "div",
+    { class: `step__quality step__quality--${q.gate}`, role: "status", "aria-live": "polite" },
+  );
+
+  panel.appendChild(
+    el(
+      "div",
+      { class: "step__quality-head" },
+      el("span", { class: "step__quality-score" }, String(q.score)),
+      el(
+        "span",
+        { class: "step__quality-meta" },
+        el("span", { class: "step__quality-label" }, GATE_LABEL[q.gate]),
+        el("span", { class: "step__quality-sub" }, `Prompt quality · ${q.score}/100`),
+      ),
+    ),
+  );
+
+  const list = el("ul", { class: "step__quality-list" });
+  for (const d of q.dimensions) {
+    const okFull = d.earned === d.weight;
+    const partial = !okFull && d.earned > 0;
+    const stateClass = okFull ? " is-ok" : partial ? " is-partial" : " is-miss";
+    list.appendChild(
+      el(
+        "li",
+        { class: "step__quality-item" + stateClass },
+        el("span", { class: "step__quality-tick", "aria-hidden": "true" }, okFull ? "✓" : partial ? "◐" : "✗"),
+        el("span", { class: "step__quality-name" }, d.label),
+        el("span", { class: "step__quality-pts" }, `${d.earned}/${d.weight}`),
+      ),
+    );
+  }
+  panel.appendChild(list);
+
+  if (q.fixes.length) {
+    panel.appendChild(
+      el(
+        "details",
+        { class: "step__quality-fixes" },
+        el("summary", null, `Improve this prompt (${q.fixes.length})`),
+        el("ul", null, ...q.fixes.map((f) => el("li", null, f))),
+      ),
+    );
+  }
+
+  return panel;
 }
 
 function downloadPrompt(state, prompt) {

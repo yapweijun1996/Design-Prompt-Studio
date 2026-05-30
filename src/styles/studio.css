@@ -892,6 +892,57 @@
 }
 .step__action-btn:hover { color: var(--fg); border-color: var(--border-strong); }
 
+/* ─── Prompt quality panel (Step 5) ──────────────────────────────────────── */
+.step__quality {
+  border: var(--border-thin) solid var(--border);
+  border-left-width: 3px;
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-4);
+  background: var(--bg-elevated);
+}
+.step__quality--ready { border-left-color: var(--success); }
+.step__quality--warn  { border-left-color: var(--accent); }
+.step__quality--block { border-left-color: var(--danger); }
+
+.step__quality-head { display: flex; align-items: center; gap: var(--space-3); }
+.step__quality-score {
+  font: 700 1.7rem/1 var(--font-display, var(--font-sans));
+  font-variant-numeric: tabular-nums;
+  min-width: 2.4ch;
+  text-align: center;
+}
+.step__quality--ready .step__quality-score { color: var(--success); }
+.step__quality--warn  .step__quality-score { color: var(--accent); }
+.step__quality--block .step__quality-score { color: var(--danger); }
+.step__quality-meta { display: flex; flex-direction: column; }
+.step__quality-label { font-weight: 600; }
+.step__quality-sub { color: var(--fg-muted); font-size: 0.8rem; }
+
+.step__quality-list {
+  list-style: none;
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: var(--space-1) var(--space-4);
+}
+.step__quality-item { display: flex; align-items: center; gap: var(--space-2); font-size: 0.85rem; }
+.step__quality-tick { width: 1.2em; text-align: center; }
+.step__quality-item.is-ok .step__quality-tick { color: var(--success); }
+.step__quality-item.is-partial .step__quality-tick { color: var(--accent); }
+.step__quality-item.is-miss .step__quality-tick { color: var(--danger); }
+.step__quality-item.is-miss .step__quality-name { color: var(--fg-muted); }
+.step__quality-name { flex: 1; }
+.step__quality-pts { color: var(--fg-subtle); font-variant-numeric: tabular-nums; font-size: 0.78rem; }
+
+.step__quality-fixes { margin-top: var(--space-3); font-size: 0.85rem; }
+.step__quality-fixes summary { cursor: pointer; color: var(--fg-muted); }
+.step__quality-fixes ul { margin: var(--space-2) 0 0; padding-left: var(--space-5); color: var(--fg-muted); }
+.step__quality-fixes li { margin: var(--space-1) 0; }
+
+.step__copy-btn.is-blocked { border-color: var(--danger); }
+
 /* Mobile */
 @media (max-width: 760px) {
   .wizard {
