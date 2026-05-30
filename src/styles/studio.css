@@ -955,6 +955,8 @@
   padding: calc(var(--space-1) + 1px) var(--space-2);
 }
 
+/* Express reuses .step__quality (self-spacing) and .step__copy-btn.is-blocked. */
+
 /* Mobile */
 @media (max-width: 760px) {
   .wizard {

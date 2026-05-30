@@ -5,9 +5,10 @@
 
 import { ALL_PROMPTS, CURATED_PROMPTS, promptStats, pickFeaturedPrompt, searchPrompts } from "../src/data/prompts/index.js";
 import { STYLE_PRESETS, STYLE_IDS } from "../src/data/styles/index.js";
-import { PAGE_TYPES, pageTypeCount } from "../src/data/taxonomy.js";
+import { PAGE_TYPES, PURPOSE_BUCKETS, PAGE_TYPES_BY_PURPOSE, pageTypeCount } from "../src/data/taxonomy.js";
 import { assemblePrompt, assembleFromCard, promptStats as charStats } from "../src/lib/assemblePrompt.js";
 import { scoreQuality } from "../src/lib/qualityScore.js";
+import { suggestIndustries, industryLabel } from "../src/data/industries.js";
 import { STYLE_VARIANTS, getVariant, findVariantForState } from "../src/data/style-variants.js";
 import { MOOD_PRESETS } from "../src/data/moods.js";
 import { LIBRARIES, LIBRARY_CATEGORIES, libraryCount, getLibrary } from "../src/data/libraries.js";
@@ -248,6 +249,30 @@ check("placeholder brief values do not count as filled", () => {
   const q = scoreQuality({ stack: "html", sections: new Set(["hero"]), brief: { name: "[YOUR PRODUCT]", audience: "  ", tone: "TBD" } });
   // name/audience/tone all effectively empty → all 3 criticals missing → block
   return q.criticalMissing >= 2 && q.gate === "block";
+});
+
+// ─── Experience bucket (immersive/interactive page types) ───────────────────
+check("PURPOSE_BUCKETS includes experience", () => !!PURPOSE_BUCKETS.experience);
+check("experience bucket has 5 page types", () => (PAGE_TYPES_BY_PURPOSE.experience || []).length === 5);
+check("experience page types assemble > 2000 chars", () => {
+  return (PAGE_TYPES_BY_PURPOSE.experience || []).every((t) => {
+    const p = assemblePrompt({
+      style: "cyberpunk", pageType: t.id,
+      density: "default", drama: "loud", motion: "playful",
+      sections: t.sections, stack: "html", outputMode: "single-file", promptMode: "one-shot",
+      brief: { name: "Test" },
+    });
+    return p.length > 2000;
+  });
+});
+
+// ─── Industry axis (industries.js) ──────────────────────────────────────────
+check("industryLabel maps known id", () => industryLabel("saas") === "SaaS");
+check("industryLabel falls back for unknown id", () => industryLabel("real-estate") === "Real estate");
+check("suggestIndustries returns non-empty, deduped, no 'any'", () => {
+  const out = suggestIndustries("immersive");
+  const ids = out.map((x) => x.id);
+  return out.length > 0 && !ids.includes("any") && new Set(ids).size === ids.length;
 });
 
 // ─── Block-structure check ─────────────────────────────────────────────────

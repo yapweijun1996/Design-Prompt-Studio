@@ -4,7 +4,7 @@
 import { el } from "../../lib/dom.js";
 import { copyText } from "../../lib/clipboard.js";
 import { assemblePrompt, promptStats } from "../../lib/assemblePrompt.js";
-import { scoreQuality, GATE_LABEL } from "../../lib/qualityScore.js";
+import { renderQualityPanel } from "../qualityPanel.js";
 import { store } from "../../lib/store.js";
 
 export function renderStep5({ state }) {
@@ -25,8 +25,8 @@ export function renderStep5({ state }) {
   const stats = promptStats(prompt);
 
   // Quality score + export gating (see docs/RESEARCH-REVIEW.md § 3a).
-  const quality = scoreQuality(carrier);
-  root.appendChild(renderQualityPanel(quality));
+  const { node: qualityNode, quality } = renderQualityPanel(carrier);
+  root.appendChild(qualityNode);
 
   root.append(sectionLabel("Your assembled prompt", `${stats.chars.toLocaleString()} chars · ~${stats.tokens.toLocaleString()} tokens · ${stats.lines} lines`));
 
@@ -124,56 +124,6 @@ function sectionLabel(title, hint) {
   );
 }
 
-function renderQualityPanel(q) {
-  const panel = el(
-    "div",
-    { class: `step__quality step__quality--${q.gate}`, role: "status", "aria-live": "polite" },
-  );
-
-  panel.appendChild(
-    el(
-      "div",
-      { class: "step__quality-head" },
-      el("span", { class: "step__quality-score" }, String(q.score)),
-      el(
-        "span",
-        { class: "step__quality-meta" },
-        el("span", { class: "step__quality-label" }, GATE_LABEL[q.gate]),
-        el("span", { class: "step__quality-sub" }, `Prompt quality · ${q.score}/100`),
-      ),
-    ),
-  );
-
-  const list = el("ul", { class: "step__quality-list" });
-  for (const d of q.dimensions) {
-    const okFull = d.earned === d.weight;
-    const partial = !okFull && d.earned > 0;
-    const stateClass = okFull ? " is-ok" : partial ? " is-partial" : " is-miss";
-    list.appendChild(
-      el(
-        "li",
-        { class: "step__quality-item" + stateClass },
-        el("span", { class: "step__quality-tick", "aria-hidden": "true" }, okFull ? "✓" : partial ? "◐" : "✗"),
-        el("span", { class: "step__quality-name" }, d.label),
-        el("span", { class: "step__quality-pts" }, `${d.earned}/${d.weight}`),
-      ),
-    );
-  }
-  panel.appendChild(list);
-
-  if (q.fixes.length) {
-    panel.appendChild(
-      el(
-        "details",
-        { class: "step__quality-fixes" },
-        el("summary", null, `Improve this prompt (${q.fixes.length})`),
-        el("ul", null, ...q.fixes.map((f) => el("li", null, f))),
-      ),
-    );
-  }
-
-  return panel;
-}
 
 function downloadPrompt(state, prompt) {
   const blob = new Blob([prompt], { type: "text/markdown;charset=utf-8" });

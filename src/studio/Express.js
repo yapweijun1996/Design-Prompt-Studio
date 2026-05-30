@@ -7,6 +7,7 @@ import { store } from "../lib/store.js";
 import { copyText } from "../lib/clipboard.js";
 import { getPromptById } from "../data/prompts/index.js";
 import { assemblePrompt, promptStats } from "../lib/assemblePrompt.js";
+import { renderQualityPanel } from "./qualityPanel.js";
 import { renderStep1 } from "./steps/1-style.js";
 import { renderStep2 } from "./steps/2-page.js";
 import { renderStep3 } from "./steps/3-brief.js";
@@ -143,6 +144,9 @@ export function renderExpress({ onExit }) {
     catch (e) { prompt = "[assemble failed: " + (e?.message || e) + "]"; }
     const stats = promptStats(prompt);
 
+    // Quality score + export gating — same shared panel as the Studio wizard.
+    const { node: qualityNode, quality } = renderQualityPanel(carrier);
+
     preview.replaceChildren(
       el(
         "div",
@@ -150,6 +154,7 @@ export function renderExpress({ onExit }) {
         el("span", null, "05 Review"),
         el("span", { class: "express__preview-stats" }, `${stats.chars.toLocaleString()} chars · ~${stats.tokens.toLocaleString()} tokens`),
       ),
+      qualityNode,
       el(
         "pre",
         { class: "express__preview-prompt", tabindex: "0", "aria-label": "Assembled prompt" },
@@ -158,7 +163,7 @@ export function renderExpress({ onExit }) {
       el(
         "div",
         { class: "express__preview-actions" },
-        buildCopyBtn(prompt),
+        buildCopyBtn(prompt, quality.gate === "block"),
         el(
           "button",
           {
@@ -182,12 +187,13 @@ export function renderExpress({ onExit }) {
     );
   }
 
-  function buildCopyBtn(prompt) {
+  function buildCopyBtn(prompt, blocked = false) {
+    const defaultLabel = blocked ? "Copy anyway" : "Copy prompt";
     const btn = el(
       "button",
-      { type: "button", class: "step__copy-btn" },
+      { type: "button", class: "step__copy-btn" + (blocked ? " is-blocked" : "") },
       el("span", { class: "step__copy-icon", "aria-hidden": "true" }, "📋"),
-      el("span", { class: "step__copy-label" }, "Copy prompt"),
+      el("span", { class: "step__copy-label" }, defaultLabel),
     );
     btn.addEventListener("click", async () => {
       const ok = await copyText(prompt);
@@ -195,10 +201,10 @@ export function renderExpress({ onExit }) {
       if (ok) {
         btn.classList.add("is-copied");
         label.textContent = "Copied ✓";
-        setTimeout(() => { btn.classList.remove("is-copied"); label.textContent = "Copy prompt"; }, 1800);
+        setTimeout(() => { btn.classList.remove("is-copied"); label.textContent = defaultLabel; }, 1800);
       } else {
         label.textContent = "Copy failed — select & ⌘C";
-        setTimeout(() => { label.textContent = "Copy prompt"; }, 2200);
+        setTimeout(() => { label.textContent = defaultLabel; }, 2200);
       }
     });
     return btn;
