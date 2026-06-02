@@ -563,6 +563,21 @@ const STYLE_BRIEF_DEFAULTS = {
     references: "claymorphism UI trend, Spline soft-3D, Headspace, friendly playful SaaS",
     avoid: "flat shadowless cards, sharp corners, stark white-on-white, harsh single drop-shadows",
   },
+  devdark: {
+    tone: "precise, technical, confident, fast, build-by-engineers",
+    references: "supabase.com, railway.app, fly.io, neon.tech, planetscale.com",
+    avoid: "stock/blob illustration hero, neon overload, fluffy enterprise copy, generic dark SaaS template",
+  },
+  luxe: {
+    tone: "hushed, refined, unhurried, invitational, expensive-through-restraint",
+    references: "The Row, Loro Piana, Aman, Cartier, Bottega Veneta, Hermès",
+    avoid: "bright e-commerce gold everywhere, crowded grids, bold sans headlines, 'limited time' urgency",
+  },
+  warmtech: {
+    tone: "calm, intelligent, warm, considered, human",
+    references: "anthropic.com, Stripe Press, Linear, Readwise, Things",
+    avoid: "cold SaaS-blue on stark white, neon accents, cramped feature grids, clinical enterprise tone",
+  },
 };
 
 /**
