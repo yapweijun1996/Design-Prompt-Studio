@@ -6,6 +6,8 @@
   "style": "fintech",
   "locale": "korean-modern",
   "market": "kr",
+  "tile": "tile-premium",
+  "tileHTML": "<div style='height:150px;background:#fff;display:flex;flex-direction:column;justify-content:space-between;padding:16px;font-family:Inter,sans-serif;color:#191F28'><div style='font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#3182F6'>Seoul · money app</div><div style='font-size:27px;font-weight:700;letter-spacing:-.02em;line-height:1'>둘 <span style='color:#3182F6'>Dul Pay</span></div><div style='align-self:flex-start;background:#3182F6;color:#fff;font-size:12px;font-weight:600;padding:7px 14px;border-radius:12px'>Send ₩</div></div>",
   "purpose": "marketing",
   "pageType": "landing",
   "density": "balanced",

@@ -6,6 +6,8 @@
   "style": "delivery",
   "locale": "indonesia",
   "market": "id",
+  "tile": "tile-premium",
+  "tileHTML": "<div style='height:150px;background:#00AA13;display:flex;flex-direction:column;justify-content:space-between;padding:16px;font-family:Inter,sans-serif;color:#fff'><div style='font-size:10px;letter-spacing:.12em;text-transform:uppercase;opacity:.9'>Jakarta · super-app</div><div style='font-size:30px;font-weight:800;letter-spacing:-.02em;line-height:1'>Antar</div><div style='display:flex;gap:5px;font-size:11px'><span style='background:rgba(255,255,255,.2);padding:3px 10px;border-radius:999px'>Ride</span><span style='background:rgba(255,255,255,.2);padding:3px 10px;border-radius:999px'>Food</span><span style='background:#fff;color:#00AA13;padding:3px 10px;border-radius:999px'>Pay</span></div></div>",
   "purpose": "marketing",
   "pageType": "landing",
   "density": "balanced",

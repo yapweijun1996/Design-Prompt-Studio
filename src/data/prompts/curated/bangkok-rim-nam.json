@@ -6,6 +6,8 @@
   "style": "restaurant",
   "locale": "thai",
   "market": "th",
+  "tile": "tile-premium",
+  "tileHTML": "<div style='height:150px;background:#15110C;display:flex;flex-direction:column;justify-content:space-between;padding:16px;font-family:Inter,sans-serif;color:#F3E9D2'><div style='font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#C8A04A'>Bangkok · riverside</div><div style='font-size:26px;font-weight:600;line-height:1'>ริมน้ำ <span style='font-size:17px;color:#C8A04A'>Rim Nam</span></div><div style='font-size:11px;color:#B8A88A'>Thai kitchen · cocktails</div></div>",
   "purpose": "marketing",
   "pageType": "landing",
   "density": "balanced",

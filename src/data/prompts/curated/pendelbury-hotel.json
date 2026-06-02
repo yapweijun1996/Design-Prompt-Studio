@@ -6,6 +6,8 @@
   "style": "hotel",
   "locale": "english-trad",
   "market": "uk",
+  "tile": "tile-premium",
+  "tileHTML": "<div style='height:150px;background:#F3F0E7;display:flex;flex-direction:column;justify-content:space-between;padding:16px;font-family:Georgia,serif;color:#14352A'><div style='font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#8A6D3B;font-family:Inter,sans-serif'>Cotswolds · est. 1887</div><div style='font-size:26px;font-weight:500;letter-spacing:-.01em;line-height:1.05'>The <em>Pendelbury</em></div><div style='font-size:11px;color:#5A6B5F;font-family:Inter,sans-serif'>By arrangement →</div></div>",
   "purpose": "marketing",
   "pageType": "landing",
   "density": "sparse",

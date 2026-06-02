@@ -6,6 +6,8 @@
   "style": "bto",
   "locale": "singapore",
   "market": "sg",
+  "tile": "tile-premium",
+  "tileHTML": "<div style='height:150px;background:#F5F6F8;display:flex;flex-direction:column;justify-content:space-between;padding:16px;font-family:Inter,sans-serif;color:#1A2A3A'><div style='font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#D0021B'>HDB · BTO Launch</div><div style='font-size:23px;font-weight:700;letter-spacing:-.02em;line-height:1.05'>Tampines Verge</div><div style='display:flex;gap:5px;font-size:11px'><span style='background:#1A2A3A;color:#fff;padding:3px 8px;border-radius:6px'>EN</span><span style='background:#E6E9EE;padding:3px 8px;border-radius:6px'>中文</span><span style='background:#E6E9EE;padding:3px 8px;border-radius:6px'>Melayu</span><span style='background:#E6E9EE;padding:3px 8px;border-radius:6px'>தமிழ்</span></div></div>",
   "purpose": "identity",
   "pageType": "landing",
   "density": "balanced",

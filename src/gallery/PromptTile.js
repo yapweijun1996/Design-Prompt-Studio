@@ -20,10 +20,14 @@ export function renderPromptTile({ card, isActive = false, onSelect, onQuickCopy
     "aria-label": `${card.name} — ${style?.name || card.style} ${pageType?.name || card.pageType}`,
   });
 
-  // Live preview region — uses the style's own .tile-X class + HTML snippet from v0.3
+  // Live preview region — a card may carry its OWN preview (curated culture cards do,
+  // so they show a culture-specific thumbnail instead of the generic base-style tile);
+  // otherwise fall back to the style's tile + HTML snippet.
+  const tileClass = card.tile || style?.tile || "tile-mono";
+  const tileHTML = card.tileHTML || style?.tileHTML || "";
   const preview = el(
     "div",
-    { class: "tile__preview tile__preview--" + (style?.tile || "tile-mono"), "aria-hidden": "true", html: style?.tileHTML || "" },
+    { class: "tile__preview tile__preview--" + tileClass, "aria-hidden": "true", html: tileHTML },
   );
 
   // Quick-copy floats on hover/focus

@@ -6,6 +6,8 @@
   "style": "marketplace",
   "locale": "tamil",
   "market": "sg",
+  "tile": "tile-premium",
+  "tileHTML": "<div style='height:150px;background:linear-gradient(135deg,#7A1466,#C0392B 58%,#F4A300);display:flex;flex-direction:column;justify-content:space-between;padding:16px;font-family:Inter,sans-serif;color:#fff'><div style='font-size:10px;letter-spacing:.14em;text-transform:uppercase;opacity:.9'>Little India</div><div style='font-size:24px;font-weight:700;line-height:1'>தீபாவளி<br/><span style='font-size:17px;font-weight:600'>Bazaar</span></div><div style='font-size:11px;opacity:.92'>Sarees · sweets · garlands</div></div>",
   "purpose": "commerce",
   "pageType": "category",
   "density": "balanced",

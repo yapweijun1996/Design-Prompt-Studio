@@ -6,6 +6,8 @@
   "style": "government",
   "locale": "malay",
   "market": "my",
+  "tile": "tile-premium",
+  "tileHTML": "<div style='height:150px;background:#0E3B36;display:flex;flex-direction:column;justify-content:space-between;padding:16px;font-family:Inter,sans-serif;color:#F4ECD8'><div style='font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#C9A227'>Kerajaan Malaysia</div><div style='font-size:24px;font-weight:700;letter-spacing:-.01em;line-height:1.05'>Portal Rakyat</div><div style='display:flex;gap:6px;font-size:11px'><span style='background:#C9A227;color:#0E3B36;padding:3px 9px;border-radius:6px'>FPX</span><span style='background:rgba(244,236,216,.14);padding:3px 9px;border-radius:6px'>Selamat Datang</span></div></div>",
   "purpose": "identity",
   "pageType": "landing",
   "density": "dense",
