@@ -548,6 +548,21 @@ const STYLE_BRIEF_DEFAULTS = {
     references: "Apple keynote bento slides, Raycast, Linear features, Vercel, Cron",
     avoid: "uniform same-size card grids, sharp corners, text-only cards, empty blocks",
   },
+  monzo: {
+    tone: "bold, friendly, confident, direct, optimistic",
+    references: "monzo.com, Revolut, Cash App, N26, Wise, Starling",
+    avoid: "muted corporate bank-blue, tiny timid headlines, sharp grey enterprise cards",
+  },
+  editoriallux: {
+    tone: "assured, restrained, luxurious, editorial, severe",
+    references: "ssense.com, The Row, Vogue Runway, Phaidon, Acne Studios",
+    avoid: "busy card grids, sans-serif headlines, multiple bright colors, stocky e-commerce templates",
+  },
+  claymorphism: {
+    tone: "playful, friendly, optimistic, tactile, soft",
+    references: "claymorphism UI trend, Spline soft-3D, Headspace, friendly playful SaaS",
+    avoid: "flat shadowless cards, sharp corners, stark white-on-white, harsh single drop-shadows",
+  },
 };
 
 /**

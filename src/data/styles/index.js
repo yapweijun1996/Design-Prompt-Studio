@@ -8,6 +8,9 @@ import { apple } from "./apple.js";
 import { notion } from "./notion.js";
 import { aesop } from "./aesop.js";
 import { bento } from "./bento.js";
+import { monzo } from "./monzo.js";
+import { editoriallux } from "./editoriallux.js";
+import { claymorphism } from "./claymorphism.js";
 
 import { monochrome } from "./monochrome.js";
 import { brutalist } from "./brutalist.js";
@@ -145,6 +148,9 @@ export const STYLE_PRESETS = {
   notion,
   aesop,
   bento,
+  monzo,
+  editoriallux,
+  claymorphism,
   // Tier 1 — original 5 with hand-written ~250-line md
   monochrome,
   brutalist,

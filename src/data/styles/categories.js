@@ -3,14 +3,14 @@
 // the secondary base-style chip group (or hide that group entirely).
 //
 // Category buckets:
-//   creative      — polished aesthetic-driven (editorial / era / modern)      24
+//   creative      — polished aesthetic-driven (editorial / era / modern)      27
 //   business      — B2B SaaS, corporate, professional services, verticals    23
 //   commerce      — shopping, retail, marketplaces, consumer transaction     12
 //   content       — media, publishing, personal, library, entertainment      15
 //   institutional — civic, healthcare, education, nonprofit, hospitality     16
 //   regional      — culture-specific visual languages                         4
 //   experimental  — loud / niche / retro — hidden from default browse        12
-//   Total:                                                                  106
+//   Total:                                                                  109
 
 export const STYLE_CATEGORIES = {
   creative: {
@@ -66,7 +66,8 @@ export const STYLE_CATEGORY_MAP = {
   artdeco: "creative", cinema: "creative",
   // creative — premium modern additions (v0.5)
   vercel: "creative", stripe: "creative", apple: "creative", notion: "creative",
-  aesop: "creative", bento: "creative",
+  aesop: "creative", bento: "creative", monzo: "creative", editoriallux: "creative",
+  claymorphism: "creative",
 
   // experimental / retro (12) — loud, niche, deliberately-dated; hidden from default browse
   y2k: "experimental", memphis: "experimental", vaporwave: "experimental", pixel: "experimental",
