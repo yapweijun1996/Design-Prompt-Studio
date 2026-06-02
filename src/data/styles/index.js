@@ -1,5 +1,14 @@
 // Style registry — single import surface for all style presets.
 
+// Tier 0 — premium modern (v0.5) — surfaced first so the default browse leads
+// with polished, broadly-usable looks (answers "good options too few / too ugly").
+import { vercel } from "./vercel.js";
+import { stripe } from "./stripe.js";
+import { apple } from "./apple.js";
+import { notion } from "./notion.js";
+import { aesop } from "./aesop.js";
+import { bento } from "./bento.js";
+
 import { monochrome } from "./monochrome.js";
 import { brutalist } from "./brutalist.js";
 import { editorial } from "./editorial.js";
@@ -129,6 +138,13 @@ import { gallery } from "./gallery.js";
 import { bookstore } from "./bookstore.js";
 
 export const STYLE_PRESETS = {
+  // Tier 0 — premium modern (v0.5) — lead the default browse
+  vercel,
+  stripe,
+  apple,
+  notion,
+  aesop,
+  bento,
   // Tier 1 — original 5 with hand-written ~250-line md
   monochrome,
   brutalist,

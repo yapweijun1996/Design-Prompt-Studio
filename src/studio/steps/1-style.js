@@ -10,7 +10,7 @@ import { DENSITY_LEVELS, DRAMA_LEVELS, MOTION_LEVELS } from "../../data/modifier
 import { LOCALE_PRESETS } from "../../data/locales.js";
 import { MARKET_PRESETS, getMarket } from "../../data/markets.js";
 import { MOOD_PRESETS } from "../../data/moods.js";
-import { STYLE_CATEGORIES, STYLE_CATEGORY_MAP, categoryCount } from "../../data/styles/categories.js";
+import { STYLE_CATEGORIES, STYLE_CATEGORY_MAP, categoryCount, DEFAULT_HIDDEN_CATEGORY } from "../../data/styles/categories.js";
 
 export function renderStep1({ state, onStateChange }) {
   const root = el("section", { class: "step step--style" });
@@ -77,7 +77,9 @@ export function renderStep1({ state, onStateChange }) {
   // Helper: build base-style chips filtered by current category.
   // Returns array of chip elements (with leading "All bases" chip).
   function basesForCategory(catId, selected) {
-    const stylesInCat = STYLE_LIST.filter((s) => !catId || STYLE_CATEGORY_MAP[s.id] === catId);
+    // No category picked → show every base EXCEPT the experimental/retro ones.
+    const stylesInCat = STYLE_LIST.filter((s) =>
+      catId ? STYLE_CATEGORY_MAP[s.id] === catId : STYLE_CATEGORY_MAP[s.id] !== DEFAULT_HIDDEN_CATEGORY);
     return [
       chip("All bases", null, () => { ui.baseFilter = null; rebuildAll(); }, selected === null),
       ...stylesInCat.map((s) =>
@@ -103,6 +105,8 @@ export function renderStep1({ state, onStateChange }) {
     const q = ui.query.trim().toLowerCase();
     const visible = STYLE_VARIANTS.filter((v) => {
       if (ui.categoryFilter && STYLE_CATEGORY_MAP[v.baseStyle] !== ui.categoryFilter) return false;
+      // Hide experimental/retro from the default (no-category) view.
+      if (!ui.categoryFilter && STYLE_CATEGORY_MAP[v.baseStyle] === DEFAULT_HIDDEN_CATEGORY) return false;
       if (ui.baseFilter && v.baseStyle !== ui.baseFilter) return false;
       if (ui.moodFilter && v.moodId !== ui.moodFilter) return false;
       if (q) {

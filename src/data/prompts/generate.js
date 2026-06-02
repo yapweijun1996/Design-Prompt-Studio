@@ -517,6 +517,37 @@ const STYLE_BRIEF_DEFAULTS = {
     references: "mcnallyjackson.com, strandbooks.com, powells.com, citylights.com, shakespeareandcompany.com, daunt-books.co.uk, 蔦屋書店",
     avoid: "Amazon utility UI, sans body, stock smiling-reader photo, algorithmic recs, hidden events",
   },
+  // Premium modern (v0.5)
+  vercel: {
+    tone: "precise, confident, technical, understated, fast",
+    references: "vercel.com, Geist design system, Resend, Railway, Linear, turbo.build",
+    avoid: "gradients, blob/3D-character illustrations, generic Bootstrap SaaS, multiple accent colors",
+  },
+  stripe: {
+    tone: "polished, trustworthy, modern, premium, composed",
+    references: "stripe.com, Mercury, Ramp, Linear, Arc browser, Framer",
+    avoid: "harsh rainbow gradients, flat shadowless cards, clip-art finance icons, urgency banners",
+  },
+  apple: {
+    tone: "calm, premium, confident, cinematic, minimal",
+    references: "apple.com, Nothing, Sonos, Teenage Engineering, Leica",
+    avoid: "cramped feature grids, tiny product images, bright CTAs, busy multi-idea sections",
+  },
+  notion: {
+    tone: "friendly, warm, clear, approachable, calm",
+    references: "notion.so, Linear docs, Height, Loom, Cron / Notion Calendar",
+    avoid: "cold enterprise grey, sharp corners, harsh drop-shadows, clinical stark white",
+  },
+  aesop: {
+    tone: "understated, literate, sensorial, unhurried, refined",
+    references: "aesop.com, Le Labo, Cereal magazine, Kinfolk, Byredo",
+    avoid: "bright saturated color, sans-serif body copy, urgency banners, countdown timers",
+  },
+  bento: {
+    tone: "modern, confident, modular, playful-premium, scannable",
+    references: "Apple keynote bento slides, Raycast, Linear features, Vercel, Cron",
+    avoid: "uniform same-size card grids, sharp corners, text-only cards, empty blocks",
+  },
 };
 
 /**
@@ -527,7 +558,13 @@ export function generateStandardPrompts() {
   const out = [];
   for (const styleId of STYLE_IDS) {
     const style = STYLE_PRESETS[styleId];
-    const styleDefaults = STYLE_BRIEF_DEFAULTS[styleId];
+    // Fallback so a newly-added style never crashes generation if its brief
+    // defaults haven't been written yet.
+    const styleDefaults = STYLE_BRIEF_DEFAULTS[styleId] || {
+      tone: "clear, modern, considered",
+      references: style?.references || "",
+      avoid: "generic templates, lorem ipsum, AI-slop tropes",
+    };
     for (const typeId of Object.keys(PAGE_TYPES)) {
       const type = PAGE_TYPES[typeId];
       out.push({

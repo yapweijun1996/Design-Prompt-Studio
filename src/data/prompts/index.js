@@ -21,7 +21,7 @@ import tokyoStudio from "./curated/tokyo-studio.json" with { type: "json" };
 import seoulToss from "./curated/seoul-toss.json" with { type: "json" };
 
 import { generateStandardPrompts } from "./generate.js";
-import { STYLE_CATEGORY_MAP } from "../styles/categories.js";
+import { STYLE_CATEGORY_MAP, DEFAULT_HIDDEN_CATEGORY } from "../styles/categories.js";
 
 // ─── Curated (tier 1) ───────────────────────────────────────────────────────
 export const CURATED_PROMPTS = [
@@ -101,6 +101,9 @@ export function searchPrompts({ query = "", purpose = null, category = null, sty
     if (purpose && p.purpose !== purpose) return false;
     if (category && STYLE_CATEGORY_MAP[p.style] !== category) return false;
     if (style && p.style !== style) return false;
+    // Default browse hides experimental/retro styles (only shown when the user
+    // explicitly picks that category or a specific experimental style).
+    if (!category && !style && STYLE_CATEGORY_MAP[p.style] === DEFAULT_HIDDEN_CATEGORY) return false;
     if (pageType && p.pageType !== pageType) return false;
     if (industry && !(p.industryTags || []).includes(industry)) return false;
     // Locale = the Region/Culture axis. Standard prompts carry no locale (treated

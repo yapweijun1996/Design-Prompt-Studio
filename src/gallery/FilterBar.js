@@ -5,7 +5,7 @@
 import { el } from "../lib/dom.js";
 import { PURPOSE_BUCKETS } from "../data/taxonomy.js";
 import { STYLE_PRESETS } from "../data/styles/index.js";
-import { STYLE_CATEGORIES, STYLE_CATEGORY_MAP, categoryCount } from "../data/styles/categories.js";
+import { STYLE_CATEGORIES, STYLE_CATEGORY_MAP, categoryCount, DEFAULT_HIDDEN_CATEGORY } from "../data/styles/categories.js";
 
 export function renderFilterBar({ initial = {}, onChange, locales = [], markets = [] }) {
   const state = {
@@ -46,7 +46,10 @@ export function renderFilterBar({ initial = {}, onChange, locales = [], markets 
   // no category is picked, so power-users keep their flat browse.
   function stylesForCategory(catId) {
     const all = Object.values(STYLE_PRESETS);
-    const filtered = catId ? all.filter((s) => STYLE_CATEGORY_MAP[s.id] === catId) : all;
+    // No category → all EXCEPT experimental/retro (those surface only via that category).
+    const filtered = catId
+      ? all.filter((s) => STYLE_CATEGORY_MAP[s.id] === catId)
+      : all.filter((s) => STYLE_CATEGORY_MAP[s.id] !== DEFAULT_HIDDEN_CATEGORY);
     return [
       { id: null, name: "All" },
       ...filtered.map((s) => ({ id: s.id, name: s.name })),

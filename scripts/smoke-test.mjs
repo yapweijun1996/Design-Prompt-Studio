@@ -25,6 +25,15 @@ function check(label, fn) {
 
 // ─── Counts ────────────────────────────────────────────────────────────────
 check("style count ≥ 20", () => STYLE_IDS.length >= 20);
+check("premium modern styles present (vercel/stripe/apple/notion/aesop/bento)", () => {
+  return ["vercel", "stripe", "apple", "notion", "aesop", "bento"].every((id) => STYLE_PRESETS[id]?.md?.length > 500);
+});
+check("curation: default browse hides experimental, category reveals them", () => {
+  const all = searchPrompts({});
+  const exp = searchPrompts({ category: "experimental" });
+  const noExpInDefault = all.every((p) => !["y2k", "geocities", "vaporwave", "antidesign"].includes(p.style));
+  return exp.length > 0 && noExpInDefault && exp.some((p) => p.style === "y2k");
+});
 check("page-type count ≥ 30", () => pageTypeCount() >= 30);
 check("curated prompts ≥ 15 (5 original + 10 culture cards)", () => CURATED_PROMPTS.length >= 15);
 check("culture card 'saigon-cafe' assembles with Vietnamese cultural block", () => {

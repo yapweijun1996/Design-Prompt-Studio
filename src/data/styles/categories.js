@@ -3,13 +3,14 @@
 // the secondary base-style chip group (or hide that group entirely).
 //
 // Category buckets:
-//   creative      — aesthetic-driven (editorial / era / experimental)        30
+//   creative      — polished aesthetic-driven (editorial / era / modern)      24
 //   business      — B2B SaaS, corporate, professional services, verticals    23
 //   commerce      — shopping, retail, marketplaces, consumer transaction     12
 //   content       — media, publishing, personal, library, entertainment      15
 //   institutional — civic, healthcare, education, nonprofit, hospitality     16
 //   regional      — culture-specific visual languages                         4
-//   Total:                                                                  100
+//   experimental  — loud / niche / retro — hidden from default browse        12
+//   Total:                                                                  106
 
 export const STYLE_CATEGORIES = {
   creative: {
@@ -42,20 +43,35 @@ export const STYLE_CATEGORIES = {
     name: "Regional",
     desc: "Culture-specific visual languages",
   },
+  experimental: {
+    id: "experimental",
+    name: "Experimental / Retro",
+    desc: "Loud, niche, or deliberately-retro looks — hidden from the default browse",
+  },
 };
+
+// Styles in the "experimental" category are EXCLUDED from the default (no-category)
+// browse so the loud/retro looks don't bury the polished ones. They surface only
+// when the user explicitly picks the Experimental category.
+export const DEFAULT_HIDDEN_CATEGORY = "experimental";
 
 export const CATEGORY_IDS = Object.keys(STYLE_CATEGORIES);
 
 export const STYLE_CATEGORY_MAP = {
-  // creative (30)
-  monochrome: "creative", brutalist: "creative", editorial: "creative", y2k: "creative",
-  glass: "creative", linear: "creative", swiss: "creative", cyberpunk: "creative",
-  newspaper: "creative", memphis: "creative", sketch: "creative", vaporwave: "creative",
-  cottagecore: "creative", solarpunk: "creative", bauhaus: "creative", industrial: "creative",
-  pixel: "creative", tropical: "creative", constructivist: "creative", zine: "creative",
-  riso: "creative", antidesign: "creative", maximalist: "creative", geocities: "creative",
-  swisslate: "creative", artdeco: "creative", postmemphis: "creative", brutalmod: "creative",
-  lowpoly: "creative", cinema: "creative",
+  // creative (24) — polished / aesthetic-driven (the loud-retro ones moved to experimental)
+  monochrome: "creative", brutalist: "creative", editorial: "creative", glass: "creative",
+  linear: "creative", swiss: "creative", cyberpunk: "creative", newspaper: "creative",
+  sketch: "creative", cottagecore: "creative", solarpunk: "creative", bauhaus: "creative",
+  industrial: "creative", tropical: "creative", constructivist: "creative", swisslate: "creative",
+  artdeco: "creative", cinema: "creative",
+  // creative — premium modern additions (v0.5)
+  vercel: "creative", stripe: "creative", apple: "creative", notion: "creative",
+  aesop: "creative", bento: "creative",
+
+  // experimental / retro (12) — loud, niche, deliberately-dated; hidden from default browse
+  y2k: "experimental", memphis: "experimental", vaporwave: "experimental", pixel: "experimental",
+  zine: "experimental", riso: "experimental", antidesign: "experimental", maximalist: "experimental",
+  geocities: "experimental", postmemphis: "experimental", brutalmod: "experimental", lowpoly: "experimental",
 
   // business (23)
   corporate: "business", saas: "business", enterprise: "business", consulting: "business",
