@@ -578,6 +578,26 @@ const STYLE_BRIEF_DEFAULTS = {
     references: "anthropic.com, Stripe Press, Linear, Readwise, Things",
     avoid: "cold SaaS-blue on stark white, neon accents, cramped feature grids, clinical enterprise tone",
   },
+  aurora: {
+    tone: "confident, modern, luminous, technical, restrained",
+    references: "Linear (aurora hero), Vercel Ship, Resend, Framer, Perplexity, Cursor",
+    avoid: "flat pure-black template, neon rainbow gradients everywhere, heavy drop-shadows, serif/rounded display type",
+  },
+  spatial: {
+    tone: "calm, premium, futuristic, tactile, uncluttered",
+    references: "Apple visionOS, Apple Music, macOS Big Sur, Arc browser, Family app",
+    avoid: "opaque cards on flat grey, sharp corners, hard dark drop-shadows, no gradient backdrop for the glass",
+  },
+  playful: {
+    tone: "friendly, optimistic, warm, confident, approachable",
+    references: "Duolingo, Headspace, Slack brand, Mailchimp, Webflow brand, Notion brand",
+    avoid: "muted grey corporate palette, sharp corners, harsh grey shadows, comic-sans/emoji-spam childishness",
+  },
+  trust: {
+    tone: "confident, credible, disciplined, calm, enterprise-grade",
+    references: "Linear, Ramp, Mercury, Vanta, WorkOS, Stripe (corporate), Notion enterprise",
+    avoid: "rainbow multi-accent palette, blob illustrations & stock business photos, flat clinical grey, cramped hero tables",
+  },
 };
 
 /**

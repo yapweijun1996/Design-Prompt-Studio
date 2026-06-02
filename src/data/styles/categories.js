@@ -3,14 +3,14 @@
 // the secondary base-style chip group (or hide that group entirely).
 //
 // Category buckets:
-//   creative      — polished aesthetic-driven (editorial / era / modern)      30
-//   business      — B2B SaaS, corporate, professional services, verticals    23
+//   creative      — polished aesthetic-driven (editorial / era / modern)      33
+//   business      — B2B SaaS, corporate, professional services, verticals    24
 //   commerce      — shopping, retail, marketplaces, consumer transaction     12
 //   content       — media, publishing, personal, library, entertainment      15
 //   institutional — civic, healthcare, education, nonprofit, hospitality     16
 //   regional      — culture-specific visual languages                         4
 //   experimental  — loud / niche / retro — hidden from default browse        12
-//   Total:                                                                  112
+//   Total:                                                                  116
 
 export const STYLE_CATEGORIES = {
   creative: {
@@ -58,7 +58,7 @@ export const DEFAULT_HIDDEN_CATEGORY = "experimental";
 export const CATEGORY_IDS = Object.keys(STYLE_CATEGORIES);
 
 export const STYLE_CATEGORY_MAP = {
-  // creative (24) — polished / aesthetic-driven (the loud-retro ones moved to experimental)
+  // creative (33) — polished / aesthetic-driven (the loud-retro ones moved to experimental)
   monochrome: "creative", brutalist: "creative", editorial: "creative", glass: "creative",
   linear: "creative", swiss: "creative", cyberpunk: "creative", newspaper: "creative",
   sketch: "creative", cottagecore: "creative", solarpunk: "creative", bauhaus: "creative",
@@ -68,19 +68,21 @@ export const STYLE_CATEGORY_MAP = {
   vercel: "creative", stripe: "creative", apple: "creative", notion: "creative",
   aesop: "creative", bento: "creative", monzo: "creative", editoriallux: "creative",
   claymorphism: "creative", devdark: "creative", luxe: "creative", warmtech: "creative",
+  aurora: "creative", spatial: "creative", playful: "creative",
 
   // experimental / retro (12) — loud, niche, deliberately-dated; hidden from default browse
   y2k: "experimental", memphis: "experimental", vaporwave: "experimental", pixel: "experimental",
   zine: "experimental", riso: "experimental", antidesign: "experimental", maximalist: "experimental",
   geocities: "experimental", postmemphis: "experimental", brutalmod: "experimental", lowpoly: "experimental",
 
-  // business (23)
+  // business (24)
   corporate: "business", saas: "business", enterprise: "business", consulting: "business",
   fintech: "business", admin: "business", darkboard: "business", crm: "business",
   devtool: "business", internal: "business", hr: "business", cms: "business",
   analytics: "business", email: "business", chat: "business", bizcard: "business",
   jobs: "business", legal: "business", legalsaas: "business", construction: "business",
   agtech: "business", automotive: "business", biotech: "business",
+  trust: "business",
 
   // commerce (12)
   marketplace: "commerce", utility: "commerce", boutique: "commerce", flash: "commerce",

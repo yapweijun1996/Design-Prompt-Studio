@@ -14,6 +14,10 @@ import { claymorphism } from "./claymorphism.js";
 import { devdark } from "./devdark.js";
 import { luxe } from "./luxe.js";
 import { warmtech } from "./warmtech.js";
+import { aurora } from "./aurora.js";
+import { spatial } from "./spatial.js";
+import { playful } from "./playful.js";
+import { trust } from "./trust.js";
 
 import { monochrome } from "./monochrome.js";
 import { brutalist } from "./brutalist.js";
@@ -157,6 +161,10 @@ export const STYLE_PRESETS = {
   devdark,
   luxe,
   warmtech,
+  aurora,
+  spatial,
+  playful,
+  trust,
   // Tier 1 — original 5 with hand-written ~250-line md
   monochrome,
   brutalist,
