@@ -286,9 +286,15 @@ function buildRequest(brief) {
     parts.push(`**Real-world references** (use as inspiration, do not copy): ${brief.references}`);
   if (brief.context) parts.push(`**Must include**:\n${brief.context}`);
   if (brief.avoid) parts.push(`**Must avoid**: ${brief.avoid}`);
+
+  // An empty/sparse brief is the #1 cause of generic output: with nothing concrete
+  // to design for, the model defaults to placeholders. Force it to commit to specifics
+  // (this is independent of style — it lifts the floor across the whole catalog).
+  const inventLine = "**Invent the specifics — do not leave placeholders.** Wherever this brief is silent, commit to a concrete, believable brand: a real name, a specific product/offering, and real section copy, prices, and stats that fit the design system and page type above. Never emit \"[Product Name]\", \"Lorem ipsum\", \"Your tagline here\", \"#\", or empty numbers. A specific, real-feeling page always beats a generic template — that specificity is what makes the style read as designed rather than scaffolded.";
+
   return parts.length
-    ? parts.join("\n\n")
-    : "[REPLACE WITH YOUR PROJECT BRIEF — fill in the structured fields in Studio for best results.]";
+    ? `${parts.join("\n\n")}\n\n${inventLine}`
+    : `No structured brief was provided — that is fine, you have full creative latitude.\n\n${inventLine}`;
 }
 
 // ─── Main assembler ─────────────────────────────────────────────────────────
