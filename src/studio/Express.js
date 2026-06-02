@@ -5,6 +5,7 @@
 import { el } from "../lib/dom.js";
 import { store } from "../lib/store.js";
 import { copyText } from "../lib/clipboard.js";
+import { buildOpenInLinks } from "../lib/providers.js";
 import { getPromptById } from "../data/prompts/index.js";
 import { assemblePrompt, promptStats } from "../lib/assemblePrompt.js";
 import { renderStep1 } from "./steps/1-style.js";
@@ -184,16 +185,7 @@ export function renderExpress({ onExit }) {
           },
           "Download .md",
         ),
-        el(
-          "a",
-          {
-            class: "step__action-btn",
-            href: "https://claude.ai/new",
-            target: "_blank",
-            rel: "noopener",
-          },
-          "Open Claude →",
-        ),
+        buildOpenInLinks(prompt, { btnClass: "step__action-btn" }),
       ),
       el(
         "p",

@@ -241,6 +241,22 @@ body {
 }
 .model-tip b { color: var(--fg-muted); font-weight: 600; }
 
+/* "Open in" provider cluster — Claude / ChatGPT / Google AI Studio.
+   Each link copies the prompt then opens that site in a new tab. */
+.open-in {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.open-in__label {
+  font-size: 12px;
+  color: var(--fg-subtle);
+  letter-spacing: 0.02em;
+  margin-right: 1px;
+}
+.open-in__link.is-flash { color: var(--accent); }
+
 /* No-script fallback */
 .noscript {
   padding: var(--space-7) var(--space-5);

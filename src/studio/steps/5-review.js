@@ -4,6 +4,7 @@
 import { el } from "../../lib/dom.js";
 import { copyText } from "../../lib/clipboard.js";
 import { assemblePrompt, promptStats } from "../../lib/assemblePrompt.js";
+import { buildOpenInLinks } from "../../lib/providers.js";
 import { store } from "../../lib/store.js";
 
 export function renderStep5({ state }) {
@@ -66,16 +67,7 @@ export function renderStep5({ state }) {
     "Download .md",
   );
 
-  const openClaudeBtn = el(
-    "a",
-    {
-      class: "step__action-btn",
-      href: "https://claude.ai/new",
-      target: "_blank",
-      rel: "noopener",
-    },
-    "Open Claude →",
-  );
+  const openIn = buildOpenInLinks(prompt, { btnClass: "step__action-btn" });
 
   const shareBtn = el(
     "button",
@@ -98,7 +90,7 @@ export function renderStep5({ state }) {
       { class: "step__actions" },
       copyBtn,
       downloadBtn,
-      openClaudeBtn,
+      openIn,
       shareBtn,
     ),
   );

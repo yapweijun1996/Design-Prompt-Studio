@@ -10,6 +10,7 @@
 import { el } from "../lib/dom.js";
 import { copyText } from "../lib/clipboard.js";
 import { assembleFromCard, promptStats } from "../lib/assemblePrompt.js";
+import { buildOpenInLinks } from "../lib/providers.js";
 import { STYLE_PRESETS } from "../data/styles/index.js";
 import { PAGE_TYPES } from "../data/taxonomy.js";
 
@@ -116,23 +117,14 @@ export function renderHeroStrip({ card, onTune, onRandom, onCopy }) {
     "Download .md",
   );
 
-  const openClaudeBtn = el(
-    "a",
-    {
-      class: "hero-strip__action-btn",
-      href: "https://claude.ai/new",
-      target: "_blank",
-      rel: "noopener",
-    },
-    "Open Claude →",
-  );
+  const openIn = buildOpenInLinks(prompt, { btnClass: "hero-strip__action-btn" });
 
   const actions = el(
     "div",
     { class: "hero-strip__actions" },
     copyBtn,
     downloadBtn,
-    openClaudeBtn,
+    openIn,
   );
 
   const statsRow = el(

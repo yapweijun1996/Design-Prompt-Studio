@@ -69,7 +69,7 @@ export function renderGallery({ initialPromptId = null, onTune }) {
           el("strong", null, "Design Prompt Studio"),
           " — copy-paste prompts that make any LLM design a webpage. Pick one below, hit ",
           el("strong", null, "Copy"),
-          ", paste into Claude or ChatGPT. Or ",
+          ", paste into Claude, ChatGPT, or Google AI Studio. Or ",
           el("a", { class: "gallery__intro-link", href: "#studio" }, "build your own in Studio"),
           ".",
         ),
