@@ -7,12 +7,13 @@ import { PURPOSE_BUCKETS } from "../data/taxonomy.js";
 import { STYLE_PRESETS } from "../data/styles/index.js";
 import { STYLE_CATEGORIES, STYLE_CATEGORY_MAP, categoryCount } from "../data/styles/categories.js";
 
-export function renderFilterBar({ initial = {}, onChange }) {
+export function renderFilterBar({ initial = {}, onChange, locales = [] }) {
   const state = {
     query: initial.query || "",
     purpose: initial.purpose || null,
     category: initial.category || null,
     style: initial.style || null,
+    locale: initial.locale || null,
     tier: initial.tier || null,
   };
 
@@ -56,6 +57,7 @@ export function renderFilterBar({ initial = {}, onChange }) {
   const purposeGroup = el("div");
   const categoryGroup = el("div");
   const styleGroup = el("div");
+  const localeGroup = el("div"); // Region/Culture axis — only painted if locales exist
   const tierGroup = el("div");
 
   // U2: the flat style list is ~100 chips. By default (no category, no style
@@ -99,6 +101,17 @@ export function renderFilterBar({ initial = {}, onChange }) {
       onToggle: collapsible ? () => { styleExpanded = !styleExpanded; paint(); } : null,
     });
 
+    // Culture (Region/Culture axis) — only shown when the catalog has localized
+    // cards, so the chip never yields zero results. "All" = no locale filter.
+    if (locales.length) {
+      fillChipGroup(localeGroup, {
+        label: "Culture",
+        options: [{ id: null, name: "All" }, ...locales],
+        selected: state.locale,
+        onSelect: (id) => { state.locale = id; onChange?.({ ...state }); paint(); },
+      });
+    }
+
     fillChipGroup(tierGroup, {
       label: "Tier",
       options: [
@@ -115,7 +128,7 @@ export function renderFilterBar({ initial = {}, onChange }) {
 
   root.append(
     searchWrap,
-    el("div", { class: "filter-bar__chips" }, purposeGroup, categoryGroup, styleGroup, tierGroup),
+    el("div", { class: "filter-bar__chips" }, purposeGroup, categoryGroup, styleGroup, localeGroup, tierGroup),
   );
 
   return root;

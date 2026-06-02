@@ -9,7 +9,8 @@
 
 import { el, mount } from "../lib/dom.js";
 import { store } from "../lib/store.js";
-import { ALL_PROMPTS, searchPrompts, pickFeaturedPrompt, getPromptById, getFeaturedPrompts } from "../data/prompts/index.js";
+import { ALL_PROMPTS, searchPrompts, pickFeaturedPrompt, getPromptById, getFeaturedPrompts, getAvailableLocales } from "../data/prompts/index.js";
+import { getLocale } from "../data/locales.js";
 import { renderHeroStrip } from "./HeroStrip.js";
 import { renderFilterBar } from "./FilterBar.js";
 import { renderPromptTile } from "./PromptTile.js";
@@ -31,9 +32,13 @@ export function renderGallery({ initialPromptId = null, onTune }) {
 
   const state = {
     selectedId: initial.id,
-    filter: { query: "", purpose: null, category: null, style: null, tier: null },
+    filter: { query: "", purpose: null, category: null, style: null, locale: null, tier: null },
     visibleCount: TILE_PAGE_SIZE,
   };
+
+  // Region/Culture chips — only the locales that actually tag a card, with their
+  // display names. Passed to FilterBar so it stays decoupled from the catalog.
+  const localeOptions = getAvailableLocales().map((id) => ({ id, name: getLocale(id).name }));
 
   // ─── Containers ───────────────────────────────────────────────────────────
   const root = el("main", { id: "main", class: "gallery" });
@@ -130,6 +135,7 @@ export function renderGallery({ initialPromptId = null, onTune }) {
       filterSlot,
       renderFilterBar({
         initial: state.filter,
+        locales: localeOptions,
         onChange: (f) => {
           state.filter = f;
           state.visibleCount = TILE_PAGE_SIZE;
@@ -161,7 +167,7 @@ export function renderGallery({ initialPromptId = null, onTune }) {
           el("p", null, "No prompts match those filters."),
           el(
             "button",
-            { type: "button", class: "gallery__empty-cta", onClick: () => { state.filter = { query: "", purpose: null, category: null, style: null, tier: null }; renderFilters(); renderGrid(); } },
+            { type: "button", class: "gallery__empty-cta", onClick: () => { state.filter = { query: "", purpose: null, category: null, style: null, locale: null, tier: null }; renderFilters(); renderGrid(); } },
             "Clear filters",
           ),
         ),

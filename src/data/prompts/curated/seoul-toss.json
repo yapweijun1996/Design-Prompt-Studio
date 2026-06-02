@@ -1,0 +1,29 @@
+{
+  "id": "seoul-toss",
+  "tier": "curated",
+  "name": "둘 DUL PAY",
+  "tagline": "A Seoul money app that feels effortless",
+  "style": "fintech",
+  "locale": "korean-modern",
+  "purpose": "marketing",
+  "pageType": "landing",
+  "density": "balanced",
+  "drama": "confident",
+  "motion": "playful",
+  "promptMode": "one-shot",
+  "sections": ["hero", "features", "pricing", "cta", "footer"],
+  "stack": "html",
+  "outputMode": "single-file",
+  "industryTags": ["fintech", "payments", "korea", "seoul", "money-app", "mobile"],
+  "brief": {
+    "name": "Dul Pay",
+    "industry": "A Korean consumer money app — transfers, splitting bills, spending insights, and a debit card — bright, friendly, and effortless",
+    "audience": "Koreans 20-39 who expect best-in-class mobile UX; students splitting meals, young professionals, first-jobbers. Korean (Hangul) first, English secondary.",
+    "tone": "clean, confident, friendly, effortless, trustworthy",
+    "references": "Toss (토스), KakaoPay, Naver Pay, Baemin (배민) playfulness, Musinsa polish",
+    "context": "Hangul-first copy using Pretendard (load via jsDelivr) or Noto Sans KR (Google Fonts), with generous line-height. High-contrast white/ink base + one confident accent (Toss-blue / Baemin-mint feel). Hero with a phone mockup + one-line promise, feature cards with smooth micro-interactions, a card/fees section, and app-store CTA. Tidy hierarchy, rounded modern UI, subtle spring motion.",
+    "avoid": "K-pop neon or palace/hanbok motifs as the theme. Cluttered layouts. Hangul in a fallback font with bad spacing. Cold enterprise tone. English-only."
+  },
+  "featured": false,
+  "createdAt": "2026-06-02"
+}

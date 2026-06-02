@@ -1,0 +1,29 @@
+{
+  "id": "peranakan-boutique",
+  "tier": "curated",
+  "name": "RUMAH NYONYA",
+  "tagline": "Fourth-generation kebaya & beadwork atelier, Penang",
+  "style": "boutique",
+  "locale": "peranakan",
+  "purpose": "marketing",
+  "pageType": "landing",
+  "density": "sparse",
+  "drama": "subtle",
+  "motion": "minimal",
+  "promptMode": "one-shot",
+  "sections": ["hero", "features", "gallery", "testimonials", "cta", "footer"],
+  "stack": "html",
+  "outputMode": "single-file",
+  "industryTags": ["boutique", "heritage", "fashion", "peranakan", "craft", "penang"],
+  "brief": {
+    "name": "Rumah Nyonya",
+    "industry": "Heritage Peranakan (Straits-Chinese) atelier — hand-embroidered kebaya, beaded kasut manek slippers, and Nyonya porcelain",
+    "audience": "Women 30-60 in Malaysia & Singapore who value heritage craft for weddings and Hari Raya/CNY occasions; collectors of Straits-Chinese culture; diaspora buying meaningful gifts.",
+    "tone": "warm, heritage, unhurried, fourth-generation, quietly proud, family-recipe",
+    "references": "The Blue Mansion (Cheong Fatt Tze), Kim Choo Kueh Chang, kebaya ateliers of Penang & Melaka, Baba House Singapore",
+    "context": "Hero: tagline over a single large photograph of beadwork in progress. Sections: Atelier story (since 1948, four generations), The Collection (kebaya, kasut manek, porcelain), Craft (how a single kasut manek pair takes 3 weeks), Made-to-measure appointment booking, Visit (Armenian Street, Penang). Use Peranakan tile patterns ONLY as slim section dividers and a footer band.",
+    "avoid": "Full-bleed tile wallpaper. Primary red/green 'generic Asian' color. Marketing exclamation CTAs. Stock fashion photography. Treating heritage as a costume gimmick."
+  },
+  "featured": true,
+  "createdAt": "2026-06-02"
+}

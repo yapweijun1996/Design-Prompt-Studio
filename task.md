@@ -219,6 +219,15 @@ To publish:
 - [ ] Versioning by snapshot (per Sample #2 lesson — copy not edit)
 - [ ] Verifier subagent (render the LLM output, check it loads)
 - [ ] Multi-language prompt templates (中/EN switcher)
+- [x] **Locale / Culture axis** (design-locale, distinct from UI i18n) — shipped 2026-06-02.
+  `src/data/locales.js` = 12 cultures (default/english-trad/malay/peranakan/chinese/vietnam/
+  singapore/tamil/indonesia/thai/japanese-modern/korean-modern), composable on ANY base style
+  via a `<cultural-context>` block + font `overrideGlobalRules` (assemblePrompt.js). Studio Step 1
+  "Region / Culture" picker; Gallery "Culture" filter + 6 showcase cards (peranakan-boutique,
+  saigon-cafe, merdeka-portal, pendelbury-hotel, deepavali-bazaar, hdb-heartland). Quality bar:
+  fonts-first + anti-stereotype + real local brands. **Next**: per-locale gallery cards for
+  indonesia/thai/jp/kr (presets exist, no card yet); optional two-axis Country×Heritage;
+  locale-aware font `<link>` hints in the emitted prompt.
 - [ ] Telemetry-driven "Trending" sort
 - [ ] CLAUDE.md analog — per-project default brief/style/avoids
 - [ ] Expand curated prompts from 5 to 30+ (per docs/PROMPT-GALLERY.md § 3)

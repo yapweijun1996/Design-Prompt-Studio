@@ -1,0 +1,29 @@
+{
+  "id": "bangkok-rim-nam",
+  "tier": "curated",
+  "name": "ริมน้ำ RIM NAM",
+  "tagline": "A riverside Thai kitchen in Bangkok — modern, not a postcard",
+  "style": "restaurant",
+  "locale": "thai",
+  "purpose": "marketing",
+  "pageType": "landing",
+  "density": "balanced",
+  "drama": "confident",
+  "motion": "default",
+  "promptMode": "one-shot",
+  "sections": ["hero", "menu", "gallery", "features", "cta", "footer"],
+  "stack": "html",
+  "outputMode": "single-file",
+  "industryTags": ["restaurant", "thai", "bangkok", "f&b", "fine-casual", "riverside"],
+  "brief": {
+    "name": "Rim Nam",
+    "industry": "A modern riverside Thai restaurant in Bangkok (Chao Phraya) — regional Thai cooking, a cocktail bar, and reservations",
+    "audience": "Bangkok diners 25-45 and visiting food travellers seeking contemporary Thai with a real sense of place; date nights, special occasions, weekend lunches. Thai + English.",
+    "tone": "contemporary, warm, premium-but-relaxed, confident, sensory",
+    "references": "Modern Bangkok dining (Bo.lan, Err, Sorn), Central/EmQuartier hospitality polish, SCB-clean UI",
+    "context": "Bilingual Thai + English using a proper Thai webfont (Noto Sans Thai / IBM Plex Sans Thai) — Thai text must render correctly with tone/vowel marks. Hero with the riverside setting, a signature menu (with ฿ prices), chef's story, gallery, reservation CTA, and a find-us/hours footer. Calm modern base with restrained gold accents; a slim lai-thai/kranok line as a divider only.",
+    "avoid": "Temples + elephants + tuk-tuk clichés. Gilded ornament as wallpaper. Thai rendered in a fallback font that breaks tone marks. Festival-poster loudness. English-only."
+  },
+  "featured": false,
+  "createdAt": "2026-06-02"
+}

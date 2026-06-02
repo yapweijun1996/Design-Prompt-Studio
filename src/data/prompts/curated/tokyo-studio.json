@@ -1,0 +1,29 @@
+{
+  "id": "tokyo-studio",
+  "tier": "curated",
+  "name": "STUDIO MA 間",
+  "tagline": "A Tokyo product-design studio portfolio — restraint as the work",
+  "style": "portfolio",
+  "locale": "japanese-modern",
+  "purpose": "identity",
+  "pageType": "landing",
+  "density": "sparse",
+  "drama": "subtle",
+  "motion": "minimal",
+  "promptMode": "one-shot",
+  "sections": ["hero", "gallery", "features", "cta", "footer"],
+  "stack": "html",
+  "outputMode": "single-file",
+  "industryTags": ["portfolio", "design-studio", "japan", "tokyo", "product-design", "minimal"],
+  "brief": {
+    "name": "Studio Ma",
+    "industry": "A Tokyo industrial/product-design studio portfolio — household objects, electronics, and exhibition work, plus a short studio philosophy",
+    "audience": "Design directors, manufacturers, and press in Japan and abroad evaluating the studio for product commissions; design-literate, detail-sensitive. Japanese + English.",
+    "tone": "quiet, exact, considered, understated, confident-through-restraint",
+    "references": "MUJI, Naoto Fukasawa, nendo, note.com, Kinokuniya; ma (間) negative space",
+    "context": "Bilingual Japanese + English using Noto Sans JP paired with a clean Latin grotesque. Generous ma (negative space), exact alignment, fine hairlines, near-monochrome with one restrained accent. Sections: a spare hero (studio name + one line), selected works (large quiet images, minimal captions), the studio philosophy, clients/press, and a plain contact. A single hanko-style mark is the only ornament.",
+    "avoid": "Cherry-blossom / torii / neon-Tokyo clichés. Kawaii defaults. Busy layouts. Drop-shadow card slop. Sakura pink as a theme. Loud motion."
+  },
+  "featured": false,
+  "createdAt": "2026-06-02"
+}

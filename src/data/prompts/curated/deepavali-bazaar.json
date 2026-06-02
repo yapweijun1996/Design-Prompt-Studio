@@ -1,0 +1,29 @@
+{
+  "id": "deepavali-bazaar",
+  "tier": "curated",
+  "name": "தீபாவளி BAZAAR",
+  "tagline": "Festival of Lights pop-up market — sarees, sweets & garlands",
+  "style": "marketplace",
+  "locale": "tamil",
+  "purpose": "commerce",
+  "pageType": "category",
+  "density": "balanced",
+  "drama": "confident",
+  "motion": "default",
+  "promptMode": "one-shot",
+  "sections": ["hero", "category", "features", "cta", "footer"],
+  "stack": "html",
+  "outputMode": "single-file",
+  "industryTags": ["marketplace", "retail", "tamil", "indian", "deepavali", "festival"],
+  "brief": {
+    "name": "Deepavali Bazaar",
+    "industry": "Seasonal online marketplace for a Little India Deepavali bazaar — sarees & textiles, sweets (mithai), oil lamps, flower garlands, and gold-look jewellery from local vendors",
+    "audience": "Tamil & Indian families in Singapore and Malaysia shopping for Deepavali; gift-buyers; foodies seeking authentic mithai. Bilingual Tamil + English.",
+    "tone": "warm, festive, hospitable, abundant-but-composed, family",
+    "references": "Pothys, Saravana Stores, Little India (Singapore) Deepavali light-up, Mustafa Centre energy",
+    "context": "Bilingual Tamil + English using Noto Sans/Serif Tamil (full glyph coverage). Category-led market: shop-by-category tiles (Sarees, Sweets, Lamps, Garlands, Jewellery), featured vendors, a Deepavali countdown, and delivery-by-festival messaging. Kolam / rangoli line work as slim dividers and a header band; marigold/magenta/deep-red + gold jewel palette, composed not clashing.",
+    "avoid": "Deity imagery used as decoration. Kolam as chaotic full-bleed noise. A clashing rainbow with no hierarchy. Tamil rendered in a fallback font that drops glyphs. English-only."
+  },
+  "featured": false,
+  "createdAt": "2026-06-02"
+}

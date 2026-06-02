@@ -328,8 +328,13 @@ export function assemblePrompt(state) {
   const designSystemBlock = buildDesignSystem(state);
   // Dedicated, prominent block — NOT buried in cross-cutting overrides — placed right
   // after the design system so the LLM reads the base style, then how to localize it.
+  // The FONT LOADING line ships the exact Google-Fonts <link> so the locale's font
+  // (its #1 authenticity lever) actually loads instead of silently falling back.
+  const fontLoadLine = locale.fonts
+    ? `\n\n**FONT LOADING — the named fonts MUST actually load (no silent system fallback):**\nAdd to \`<head>\`: \`<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="${locale.fonts}" rel="stylesheet">\`\nFor React/Next, load the same families via next/font or a document \`<link>\`.`
+    : "";
   const culturalBlock = locale.override
-    ? `<cultural-context>\nApply this cultural layer ON TOP of the design system above. Fonts, palette, and motifs named here are mandatory; the anti-stereotype rules override decorative defaults.\n\n${locale.override}\n</cultural-context>`
+    ? `<cultural-context>\nApply this cultural layer ON TOP of the design system above. Fonts, palette, and motifs named here are mandatory; the anti-stereotype rules override decorative defaults.\n\n${locale.override}${fontLoadLine}\n</cultural-context>`
     : null;
   const librariesBlock = buildLibrariesBlock(libraryIds, stack);
   const componentsBlock = buildComponentsBlock(state, sections, pageType);

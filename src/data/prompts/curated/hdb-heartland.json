@@ -1,0 +1,29 @@
+{
+  "id": "hdb-heartland",
+  "tier": "curated",
+  "name": "HEARTLAND",
+  "tagline": "A BTO launch microsite for a new Singapore housing estate",
+  "style": "bto",
+  "locale": "singapore",
+  "purpose": "identity",
+  "pageType": "landing",
+  "density": "balanced",
+  "drama": "subtle",
+  "motion": "minimal",
+  "promptMode": "one-shot",
+  "sections": ["hero", "features", "gallery", "faq", "cta", "footer"],
+  "stack": "html",
+  "outputMode": "single-file",
+  "industryTags": ["housing", "government", "singapore", "bto", "civic", "property"],
+  "brief": {
+    "name": "Tampines Verge",
+    "industry": "Singapore HDB Build-To-Order (BTO) launch microsite — flat types, pricing, amenities, balloting timeline, and an eligibility checker",
+    "audience": "Singaporean first-time couples and families across Chinese, Malay, Indian and Eurasian communities; practical, mobile-first, time-pressed during a launch window.",
+    "tone": "clear, reassuring, civic, modern, inclusive, no-nonsense",
+    "references": "HDB / GovTech / Singpass design system, gov.sg, DBS and Singtel for clean trust",
+    "context": "Clean multicultural Singapore register — neutral modern base, an optional language toggle (EN / 中文 / Melayu / தமிழ்), balanced imagery that reflects CMIO without favouring one community. Sections: estate overview, flat types & indicative pricing (S$), amenities & connectivity (MRT), an eligibility checker, balloting timeline, and FAQ. PayNow-era clarity; WCAG AA; mobile-first.",
+    "avoid": "Picking one community's ornament to represent 'Singapore'. Hype or marketing tone for a civic service. Cluttered layouts. English-only when the audience is multilingual. Tiny touch targets."
+  },
+  "featured": false,
+  "createdAt": "2026-06-02"
+}

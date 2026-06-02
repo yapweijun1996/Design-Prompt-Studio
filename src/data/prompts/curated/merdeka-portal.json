@@ -1,0 +1,29 @@
+{
+  "id": "merdeka-portal",
+  "tier": "curated",
+  "name": "PORTAL RAKYAT",
+  "tagline": "A Malaysian government services portal that citizens trust",
+  "style": "government",
+  "locale": "malay",
+  "purpose": "identity",
+  "pageType": "landing",
+  "density": "dense",
+  "drama": "subtle",
+  "motion": "minimal",
+  "promptMode": "one-shot",
+  "sections": ["hero", "features", "faq", "cta", "footer"],
+  "stack": "html",
+  "outputMode": "single-file",
+  "industryTags": ["government", "public-sector", "malaysia", "civic", "e-services"],
+  "brief": {
+    "name": "Portal Rakyat",
+    "industry": "Malaysian federal government digital-services portal — renew licences, pay assessment (cukai), book appointments, check applications",
+    "audience": "Malaysian citizens of all ages and digital literacy levels; must work for an uncle on an old Android as well as a student on a laptop. Bilingual BM + English.",
+    "tone": "trustworthy, calm, official-but-human, clear, respectful, accessible",
+    "references": "MyGov / MySejahtera, GovTech-style civic design, PETRONAS and Maybank for institutional trust",
+    "context": "Bilingual: Bahasa Melayu primary with an EN toggle. 'Selamat Datang' hero with a prominent service search and the top 6 e-services as large tiles. Clear status-check flow, FAQ, and a contact/help footer with official seals. Islamic geometric pattern as a slim, restrained header band only. WCAG AA, large touch targets, works on low-end devices.",
+    "avoid": "Figurative or religious imagery as decoration. Songket as full-bleed wallpaper. Marketing tone or hype. Tiny touch targets. English-only. Trend-driven design that undercuts institutional trust."
+  },
+  "featured": false,
+  "createdAt": "2026-06-02"
+}

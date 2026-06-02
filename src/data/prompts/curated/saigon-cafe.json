@@ -1,0 +1,29 @@
+{
+  "id": "saigon-cafe",
+  "tier": "curated",
+  "name": "CÀ PHÊ SỚM",
+  "tagline": "Specialty Vietnamese coffee, roasted in District 3",
+  "style": "cafe",
+  "locale": "vietnam",
+  "purpose": "marketing",
+  "pageType": "landing",
+  "density": "balanced",
+  "drama": "confident",
+  "motion": "default",
+  "promptMode": "one-shot",
+  "sections": ["hero", "menu", "features", "gallery", "cta", "footer"],
+  "stack": "html",
+  "outputMode": "single-file",
+  "industryTags": ["cafe", "coffee", "vietnam", "saigon", "f&b", "roastery"],
+  "brief": {
+    "name": "Cà Phê Sớm",
+    "industry": "Specialty coffee house & roastery in Ho Chi Minh City — cà phê sữa đá, robusta single-origin, and a slow weekend brew bar",
+    "audience": "Young urban Saigonese 20-35 and visitors who want modern specialty coffee with real Vietnamese identity; remote workers; weekend brunch crowd.",
+    "tone": "modern, warm, confident, neighbourhood, unfussy, proud-local",
+    "references": "The Coffee House, Highlands Coffee, Phúc Long, modern HCMC roasteries; Momo for clean app-era UI",
+    "context": "Hero with the Vietnamese tagline rendered in Be Vietnam Pro — diacritics must be flawless (Cà Phê Sớm, sữa đá). Sections: signature menu (cà phê sữa đá, bạc xỉu, cold brew) with prices in ₫, the roastery story, brew bar booking, gallery, find-us map (Quận 3). Lacquer-red + gold + lotus accents, modern not folkloric.",
+    "avoid": "Broken or missing diacritics. Latin-only text. Conical-hat / rice-paddy tourist imagery. Festival-poster loudness. Western café template with Vietnamese words pasted in."
+  },
+  "featured": true,
+  "createdAt": "2026-06-02"
+}

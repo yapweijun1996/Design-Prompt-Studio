@@ -1,0 +1,29 @@
+{
+  "id": "jakarta-antar",
+  "tier": "curated",
+  "name": "ANTAR",
+  "tagline": "An everyday super-app for Jakarta — ride, food, pay",
+  "style": "delivery",
+  "locale": "indonesia",
+  "purpose": "marketing",
+  "pageType": "landing",
+  "density": "balanced",
+  "drama": "confident",
+  "motion": "playful",
+  "promptMode": "one-shot",
+  "sections": ["hero", "features", "gallery", "cta", "footer"],
+  "stack": "html",
+  "outputMode": "single-file",
+  "industryTags": ["super-app", "delivery", "fintech", "indonesia", "jakarta", "mobility"],
+  "brief": {
+    "name": "Antar",
+    "industry": "Indonesian everyday super-app — motorbike ride-hailing (ojek), food & grocery delivery, and a built-in e-wallet, serving Greater Jakarta and beyond",
+    "audience": "Urban Indonesians 18-40 on mid-range Android phones; busy commuters, students, warung owners, and the unbanked using the wallet for the first time. Bahasa Indonesia first.",
+    "tone": "friendly, energetic, inclusive, trustworthy, big-and-readable",
+    "references": "Gojek, Grab Indonesia, Tokopedia, Dana, ShopeePay; warung-economy energy",
+    "context": "Bahasa Indonesia copy ('Selamat datang', 'Pesan sekarang', 'Gratis ongkir'). Hero with the app value prop + dual app-store badges + a phone mockup. Service tiles (Ride, Food, Mart, Pay), a 'how it works' strip, driver/merchant earnings CTA, and a trust/footer band. Warm modern palette (Gojek-green energy or a batik-derived indigo); Javanese batik (parang/kawung) ONLY as a slim divider. Large friendly type, big touch targets for low-end devices.",
+    "avoid": "Full-bleed batik wallpaper. English-only. Tiny tap targets. Cold corporate fintech tone. Generic Western app-landing template with Indonesian words pasted in."
+  },
+  "featured": false,
+  "createdAt": "2026-06-02"
+}

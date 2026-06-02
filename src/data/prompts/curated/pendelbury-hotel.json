@@ -1,0 +1,29 @@
+{
+  "id": "pendelbury-hotel",
+  "tier": "curated",
+  "name": "THE PENDELBURY",
+  "tagline": "A country house hotel in the Cotswolds, est. 1887",
+  "style": "hotel",
+  "locale": "english-trad",
+  "purpose": "marketing",
+  "pageType": "landing",
+  "density": "sparse",
+  "drama": "subtle",
+  "motion": "minimal",
+  "promptMode": "one-shot",
+  "sections": ["hero", "features", "gallery", "pricing", "cta", "footer"],
+  "stack": "html",
+  "outputMode": "single-file",
+  "industryTags": ["hotel", "hospitality", "heritage", "english", "luxury", "countryside"],
+  "brief": {
+    "name": "The Pendelbury",
+    "industry": "Independent country-house hotel & dining room in the Cotswolds — 18 rooms, a walled garden, an open fire, and a kitchen led by produce",
+    "audience": "UK and international guests 35-70 seeking understated heritage luxury for anniversaries, long weekends, and country weddings; readers of Country Life and The Gentlewoman.",
+    "tone": "understated, assured, established, warm, literate, never loud",
+    "references": "Fortnum & Mason, The Newt in Somerset, Country Life, Penguin Classics typography, Wimbledon's restraint",
+    "context": "Hero with the house set in a classic English serif (Caslon/Baskerville), 'est. 1887'. Sections: the house & its history, the rooms (with seasonal rates in £), the dining room, the garden & grounds, and a 'Book your stay / By arrangement' enquiry. Racing-green / oxblood / brass on cream. Fine hairline rules and an engraved feel.",
+    "avoid": "Silicon-Valley sans (Inter/Helvetica) as the voice. Union-Jack bunting or 'keep calm' parody. Neon or gradients. Exclamation-mark marketing. Stocky 'luxury hotel' clichés that read as a chain."
+  },
+  "featured": true,
+  "createdAt": "2026-06-02"
+}

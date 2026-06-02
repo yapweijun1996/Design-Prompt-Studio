@@ -164,7 +164,107 @@ ANTI-STEREOTYPE: no deity imagery as decoration; kolam is a measured ACCENT, not
       `"Noto Sans Tamil" / "Noto Serif Tamil" is REQUIRED for full Tamil glyph coverage — overrides the global "avoid common sans" rule.`,
     ],
   },
+
+  {
+    id: "indonesia",
+    name: "Indonesian · Modern",
+    region: "SE Asia",
+    tag: "Bahasa · batik Jawa · friendly",
+    desc: "Modern Indonesia — Bahasa Indonesia, Javanese batik as accent, warm & approachable.",
+    override: `**CULTURAL CONTEXT — INDONESIAN (modern)**
+Modern Indonesian brand, friendly and approachable (super-app register), not folkloric:
+- TYPE: a clean, warm humanist sans with full Bahasa Indonesia support; large, friendly, readable.
+- Palette: warm modern tones — Gojek green / Tokopedia or a batik-derived indigo + brown + cream; confident, not garish.
+- Motif as texture only: Javanese batik (parang, kawung) or songket as a subtle border / divider / header band — never full-bleed wallpaper.
+- Copy register: Bahasa Indonesia — "Selamat Datang", warm and inclusive; "Gratis Ongkir"-style consumer clarity where relevant.
+- Real references: Gojek, Tokopedia, Traveloka, BCA, Ruangguru; festive: Lebaran / Idul Fitri.
+ANTI-STEREOTYPE: batik is an ACCENT, not a full background; warm modern restraint over tourist motifs.`,
+    overrideGlobalRules: [
+      `A warm humanist sans with full Bahasa Indonesia coverage IS the register — overrides the global "avoid common sans" rule.`,
+    ],
+  },
+
+  {
+    id: "thai",
+    name: "Thai · Modern",
+    region: "SE Asia",
+    tag: "ไทย · gold + modern · Sarabun",
+    desc: "Modern Thailand — correct Thai font is rule #1; restrained gold accents, clean layout.",
+    override: `**CULTURAL CONTEXT — THAI (modern)**
+Modern Thai brand, clean and contemporary, not a temple postcard:
+- TYPE IS RULE #1: use a proper Thai webfont — "Noto Sans Thai" / "Sarabun" / "IBM Plex Sans Thai". Latin-only fonts cannot render Thai; loop-less display Thai faces read as modern.
+- Palette: a clean modern base with restrained gold or jewel accents; calm, premium, not loud festival color.
+- Motif as texture only: fine Thai pattern (lai thai / kranok) line work as a slim divider or header band — never gilded temple imagery as wallpaper.
+- Copy register: natural Thai with correct tone/vowel marks; polite, warm.
+- Real references: SCB / SCB Easy, AIS, Central, Bangkok Bank, LINE TH; festive: Songkran.
+ANTI-STEREOTYPE: not temples + elephants + tuk-tuks clichés; modern restraint with a proper Thai typeface is the whole game.`,
+    overrideGlobalRules: [
+      `A proper Thai webfont ("Noto Sans Thai" / "Sarabun" / "IBM Plex Sans Thai") is REQUIRED — Latin fonts cannot render Thai; overrides the global "avoid common sans" rule.`,
+    ],
+  },
+
+  {
+    id: "japanese-modern",
+    name: "Japanese · Modern",
+    region: "East Asia",
+    tag: "和 · 余白 · MUJI restraint",
+    desc: "Light modern-Japanese overlay (Noto Sans JP + ma/negative space) onto ANY base style.",
+    override: `**CULTURAL CONTEXT — JAPANESE (modern overlay)**
+A light modern-Japanese register on top of the chosen base style (distinct from the standalone "Japanese" base style — this one composes onto saas / shop / cafe / etc.):
+- TYPE: "Noto Sans JP" / "Hiragino Kaku Gothic" for Japanese, paired with a clean Latin grotesque; precise, small, calm.
+- Palette: near-monochrome + paper white with one restrained accent; quiet and premium.
+- Layout: ma (間) — generous negative space, exact alignment, fine hairlines; MUJI/Kinokuniya calm.
+- Motif as texture only: a single hanko-style mark or a thin rule; never cherry-blossom / torii clip-art.
+- Copy register: concise, polite Japanese with correct kana/kanji; understated.
+- Real references: MUJI, Uniqlo, Kinokuniya, Sony, cookpad, note.com.
+ANTI-STEREOTYPE: not "kawaii + sakura + neon Tokyo" by default; restraint and negative space are the signal.`,
+    overrideGlobalRules: [
+      `"Noto Sans JP" / "Hiragino Kaku Gothic" paired with a clean Latin grotesque IS the register — overrides the global "avoid common sans" rule.`,
+    ],
+  },
+
+  {
+    id: "korean-modern",
+    name: "Korean · Modern",
+    region: "East Asia",
+    tag: "한국 · Pretendard · clean fintech",
+    desc: "Light modern-Korean overlay (Pretendard / Noto Sans KR, crisp fintech feel) onto ANY base style.",
+    override: `**CULTURAL CONTEXT — KOREAN (modern overlay)**
+A light modern-Korean register on top of the chosen base style (distinct from the standalone "Korean" base style — composes onto saas / shop / fintech / etc.):
+- TYPE: "Pretendard" or "Noto Sans KR" for Hangul, paired with a clean Latin sans; crisp, high-contrast, generous line-height for Hangul.
+- Palette: clean white/ink base with one confident accent (Toss-blue / Baemin-mint feel); bright, modern, trustworthy.
+- Layout: tidy cards, clear hierarchy, smooth micro-interactions — the polished Korean fintech/commerce feel.
+- Motif as texture only: minimal geometric accents; never hanbok / palace clip-art.
+- Copy register: natural Korean (Hangul) with correct spacing; friendly, confident.
+- Real references: Toss, Naver, Kakao, Baemin (배민), Coupang, Musinsa.
+ANTI-STEREOTYPE: not K-pop neon or palace motifs by default; the signal is clean, confident modern UI with proper Hangul type.`,
+    overrideGlobalRules: [
+      `"Pretendard" / "Noto Sans KR" for Hangul IS the register — overrides the global "avoid common sans" rule.`,
+    ],
+  },
 ];
+
+// Google-Fonts <link> hrefs per locale so the EMITTED PROMPT can tell the LLM
+// exactly which webfonts to load — otherwise "use Be Vietnam Pro" silently falls
+// back to a system font and the locale's #1 lever is lost. All are real Google
+// Fonts families EXCEPT Pretendard (Korean), which ships via jsDelivr — Noto Sans
+// KR is the Google-Fonts-loadable stand-in noted here; the override prose names
+// Pretendard for those who add the jsDelivr link.
+const FONT_LINKS = {
+  "english-trad": "https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap",
+  malay:          "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Noto+Naskh+Arabic:wght@400;700&display=swap",
+  peranakan:      "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Noto+Serif+SC:wght@400;700&display=swap",
+  chinese:        "https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;700&display=swap",
+  vietnam:        "https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap",
+  singapore:      "https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&family=Noto+Sans+Tamil:wght@400;700&display=swap",
+  tamil:          "https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;500;700&family=Noto+Serif+Tamil:wght@400;700&display=swap",
+  indonesia:      "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700&display=swap",
+  thai:           "https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;700&family=Sarabun:wght@400;700&display=swap",
+  "japanese-modern": "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap",
+  "korean-modern":   "https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap",
+};
+// Attach at load so each preset owns its `fonts` href (null for default/Western).
+for (const l of LOCALE_PRESETS) l.fonts = FONT_LINKS[l.id] || null;
 
 export const LOCALE_IDS = LOCALE_PRESETS.map((l) => l.id);
 

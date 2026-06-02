@@ -25,7 +25,17 @@ function check(label, fn) {
 // ─── Counts ────────────────────────────────────────────────────────────────
 check("style count ≥ 20", () => STYLE_IDS.length >= 20);
 check("page-type count ≥ 30", () => pageTypeCount() >= 30);
-check("curated prompts = 5", () => CURATED_PROMPTS.length === 5);
+check("curated prompts ≥ 15 (5 original + 10 culture cards)", () => CURATED_PROMPTS.length >= 15);
+check("culture card 'saigon-cafe' assembles with Vietnamese cultural block", () => {
+  const card = CURATED_PROMPTS.find((c) => c.id === "saigon-cafe");
+  if (!card || card.locale !== "vietnam") return false;
+  const p = assembleFromCard(card);
+  return p.includes("CULTURAL CONTEXT — VIETNAMESE") && p.includes("Be Vietnam Pro");
+});
+check("culture cards cover ≥ 5 distinct locales", () => {
+  const locales = new Set(CURATED_PROMPTS.map((c) => c.locale).filter(Boolean));
+  return locales.size >= 5;
+});
 check("ALL_PROMPTS ≥ 600", () => ALL_PROMPTS.length >= 600);
 check("MOOD_PRESETS = 9", () => MOOD_PRESETS.length === 9);
 check("STYLE_VARIANTS = bases × moods", () => STYLE_VARIANTS.length === STYLE_IDS.length * MOOD_PRESETS.length);
@@ -73,6 +83,19 @@ check("locale 'vietnam' injects <cultural-context> + Be Vietnam Pro font", () =>
     promptMode: "one-shot", brief: { name: "Cà Phê" },
   });
   return p.includes("<cultural-context>") && p.includes("Be Vietnam Pro") && p.includes("CULTURAL CONTEXT — VIETNAMESE");
+});
+check("locale 'vietnam' emits a Google-Fonts <link> for Be Vietnam Pro", () => {
+  if (!getLocale("vietnam").fonts) return false;
+  const p = assemblePrompt({
+    style: "cafe", pageType: "landing",
+    density: "default", drama: "confident", motion: "default",
+    locale: "vietnam", sections: ["hero"], stack: "html",
+    promptMode: "one-shot", brief: { name: "Cà Phê" },
+  });
+  return p.includes("FONT LOADING") && p.includes("fonts.googleapis.com/css2?family=Be+Vietnam+Pro") && p.includes("rel=\"stylesheet\"");
+});
+check("locale 'default' emits NO font link (no fonts field)", () => {
+  return getLocale("default").fonts === null;
 });
 check("locale 'vietnam' font rule reaches STYLE-LEVEL OVERRIDES (beats avoid-Inter)", () => {
   const p = assemblePrompt({
