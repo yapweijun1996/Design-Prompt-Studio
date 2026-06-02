@@ -845,6 +845,21 @@
   outline-offset: -1px;
 }
 .step__textarea { min-height: 80px; }
+
+/* Required-field validation (B3) */
+.step__field--error .step__input,
+.step__field--error .step__textarea {
+  border-color: var(--danger);
+}
+.step__field--error .step__input:focus,
+.step__field--error .step__textarea:focus {
+  outline-color: var(--danger);
+}
+.step__field-err {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: var(--danger);
+}
 .step__tip {
   padding: var(--space-3);
   background: var(--bg-elevated);

@@ -20,6 +20,7 @@ const DEFAULT_STATE = () => ({
   density: "default",
   drama: "confident",
   motion: "default",
+  locale: "default",
   purpose: "marketing",
   pageType: "landing",
   sections: new Set(["hero", "features", "cta", "footer"]),
@@ -49,6 +50,7 @@ function loadState() {
         density: card.density ?? "default",
         drama: card.drama ?? "confident",
         motion: card.motion ?? "default",
+        locale: card.locale ?? "default",
         purpose: card.purpose,
         pageType: card.pageType,
         sections: new Set(card.sections || []),
@@ -111,15 +113,27 @@ export function renderExpress({ onExit }) {
   );
   root.appendChild(layout);
 
+  // Edits from a step. Text inputs pass { repaint: false } → update only the live
+  // preview, leaving the control DOM (and focus) intact. Structural changes
+  // (chips, cards, checkboxes) rebuild the controls so cascades re-render.
+  function onEdit(opts) {
+    persist(state);
+    if (opts && opts.repaint === false) {
+      updatePreview();
+    } else {
+      rerender();
+    }
+  }
+
   function rerender() {
     persist(state);
     // Rebuild controls (cheap — reuses step renderers)
     controls.replaceChildren();
     controls.append(
-      sectionWrap("01 Style & feel",    renderStep1({ state, onStateChange: rerender })),
-      sectionWrap("02 Page basics",     renderStep2({ state, onStateChange: rerender })),
-      sectionWrap("03 Brief",           renderStep3({ state, onStateChange: rerender })),
-      sectionWrap("04 Tech",            renderStep4({ state, onStateChange: rerender })),
+      sectionWrap("01 Style & feel",    renderStep1({ state, onStateChange: onEdit })),
+      sectionWrap("02 Page basics",     renderStep2({ state, onStateChange: onEdit })),
+      sectionWrap("03 Brief",           renderStep3({ state, onStateChange: onEdit })),
+      sectionWrap("04 Tech",            renderStep4({ state, onStateChange: onEdit })),
     );
     updatePreview();
   }

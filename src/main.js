@@ -35,6 +35,33 @@ const BUILD_SHA = typeof __BUILD_SHA__ !== "undefined" ? __BUILD_SHA__ : "dev";
 const ROUTES = ["gallery", "studio", "express", "components"];
 const DEFAULT_ROUTE = "gallery";
 
+// ─── Theme (M2) ──────────────────────────────────────────────────────────────
+// Three states cycled by the header toggle. "auto" follows the OS via
+// prefers-color-scheme (no data-theme attribute); light/dark force a scheme.
+const THEMES = ["auto", "light", "dark"];
+const THEME_META = {
+  auto: { icon: "◐", label: "Auto" },
+  light: { icon: "☀", label: "Light" },
+  dark: { icon: "☾", label: "Dark" },
+};
+
+function currentTheme() {
+  const t = store.get("prefs", {})?.theme;
+  return THEMES.includes(t) ? t : "auto";
+}
+
+function applyTheme(theme) {
+  if (theme === "auto") document.documentElement.removeAttribute("data-theme");
+  else document.documentElement.setAttribute("data-theme", theme);
+}
+
+function setTheme(theme) {
+  const prefs = store.get("prefs", {}) || {};
+  prefs.theme = theme;
+  store.setImmediate("prefs", prefs);
+  applyTheme(theme);
+}
+
 // ─── Router ─────────────────────────────────────────────────────────────────
 function currentRoute() {
   const hash = location.hash.replace(/^#/, "").split("?")[0].split("/")[0];
@@ -69,8 +96,34 @@ function header() {
           r.charAt(0).toUpperCase() + r.slice(1),
         ),
       ),
+      themeToggle(),
     ),
   );
+}
+
+function themeToggle() {
+  const render = (theme) => {
+    const m = THEME_META[theme];
+    btn.replaceChildren(
+      el("span", { class: "appbar__theme-icon", "aria-hidden": "true" }, m.icon),
+      el("span", { class: "appbar__theme-label" }, m.label),
+    );
+    btn.setAttribute("aria-label", `Theme: ${m.label}. Click to change.`);
+    btn.title = `Theme: ${m.label}`;
+  };
+  const btn = el("button", {
+    type: "button",
+    class: "appbar__theme",
+    onClick: () => {
+      // Read current at click time — the header (and this closure) is rebuilt on
+      // every route change, so don't capture a stale value.
+      const next = THEMES[(THEMES.indexOf(currentTheme()) + 1) % THEMES.length];
+      setTheme(next);
+      render(next);
+    },
+  });
+  render(currentTheme());
+  return btn;
 }
 
 function handleTune(card) {
@@ -123,8 +176,7 @@ function footer() {
 
 // ─── Boot ───────────────────────────────────────────────────────────────────
 function boot() {
-  const savedTheme = store.get("prefs", {})?.theme;
-  if (savedTheme) document.documentElement.setAttribute("data-theme", savedTheme);
+  applyTheme(currentTheme());
 
   window.addEventListener("hashchange", render);
   if (!location.hash) {

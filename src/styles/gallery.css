@@ -6,6 +6,39 @@
   flex-direction: column;
 }
 
+/* ─── FIRST-VISIT INTRO (U3) ───────────────────────────────── */
+.gallery__intro {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-5);
+  background: var(--bg-elevated);
+  border-bottom: var(--border-thin) solid var(--border);
+}
+.gallery__intro-text {
+  margin: 0;
+  flex: 1;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--fg-muted);
+}
+.gallery__intro-text strong { color: var(--fg); font-weight: 600; }
+.gallery__intro-link { color: var(--fg); text-decoration: underline; text-underline-offset: 2px; }
+.gallery__intro-dismiss {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: var(--fg-subtle);
+  background: transparent;
+  border: var(--border-thin) solid transparent;
+  cursor: pointer;
+}
+.gallery__intro-dismiss:hover { color: var(--fg); border-color: var(--border); }
+
 /* ─── HERO STRIP ───────────────────────────────────────────── */
 .hero-strip {
   padding: var(--space-6) var(--space-5) var(--space-5);
@@ -229,6 +262,11 @@
   background: var(--accent);
   color: var(--accent-fg);
   border-color: var(--accent);
+}
+.chip--toggle {
+  border-style: dashed;
+  color: var(--fg);
+  font-weight: 600;
 }
 
 .gallery__count {

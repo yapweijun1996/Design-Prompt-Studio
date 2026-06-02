@@ -10,6 +10,7 @@
 import { STYLE_PRESETS } from "../data/styles/index.js";
 import { PAGE_TYPES } from "../data/taxonomy.js";
 import { DENSITY_LEVELS, DRAMA_LEVELS, MOTION_LEVELS } from "../data/modifiers.js";
+import { getLocale } from "../data/locales.js";
 import { renderGlobalRules } from "../data/global-rules.js";
 import { getLibrary } from "../data/libraries.js";
 import {
@@ -87,7 +88,7 @@ ${questionBlock}
 
 5. CLOSE — Summarize EXTREMELY BRIEFLY. Caveats and next steps only.
 
-DESIGN SYSTEM IS LAW. Every Bold Factor item is mandatory, not optional. Layered textures are required where specified — never ship flat design. The CROSS-CUTTING OVERRIDES (if present) modify the system; apply on top without compromising non-negotiables.
+DESIGN SYSTEM IS LAW. Every Bold Factor item is mandatory, not optional. Layered textures are required where specified — never ship flat design. The CROSS-CUTTING OVERRIDES (if present) modify the system; apply on top without compromising non-negotiables. If a <cultural-context> block is present, its fonts/palette/motifs are mandatory and its anti-stereotype rules override decorative defaults.
 </operating-rules>`;
   }
 
@@ -102,7 +103,7 @@ DESIGN SYSTEM IS LAW. Every Bold Factor item is mandatory, not optional. Layered
    **Sections to include**:
 ${sectionList}
 
-4. **Design system is law.** Every Bold Factor item and Enforcement rule is mandatory. Layered textures are required where specified — never ship flat design. The CROSS-CUTTING OVERRIDES (if present) modify the design system — apply those modifications on top of the base style without compromising the non-negotiables. If the brief contradicts the design system, the design system wins; note the conflict in Design Decisions.
+4. **Design system is law.** Every Bold Factor item and Enforcement rule is mandatory. Layered textures are required where specified — never ship flat design. The CROSS-CUTTING OVERRIDES (if present) modify the design system — apply those modifications on top of the base style without compromising the non-negotiables. If a <cultural-context> block is present, its fonts, palette, and motifs are mandatory and its anti-stereotype rules override decorative defaults — never reduce a culture to clip-art. If the brief contradicts the design system, the design system wins; note the conflict in Design Decisions.
 
 5. **Accessibility is non-negotiable.** See the GLOBAL RULES block above — every item applies.
 
@@ -314,9 +315,22 @@ export function assemblePrompt(state) {
     ? Array.from(state.libraries)
     : (Array.isArray(state.libraries) ? state.libraries : []);
 
+  // Region/Culture axis — composable layer on top of any base style.
+  const locale = getLocale(state.locale);
+
   const roleBlock = buildRole(promptMode, pageType.name);
-  const globalRulesText = renderGlobalRules(style.overrideGlobalRules || []);
+  // Locale font/script rules are merged into STYLE-LEVEL OVERRIDES so they legally
+  // beat the global "avoid Inter/Roboto/Arial" rule (script fidelity is the point).
+  const globalRulesText = renderGlobalRules([
+    ...(style.overrideGlobalRules || []),
+    ...(locale.overrideGlobalRules || []),
+  ]);
   const designSystemBlock = buildDesignSystem(state);
+  // Dedicated, prominent block — NOT buried in cross-cutting overrides — placed right
+  // after the design system so the LLM reads the base style, then how to localize it.
+  const culturalBlock = locale.override
+    ? `<cultural-context>\nApply this cultural layer ON TOP of the design system above. Fonts, palette, and motifs named here are mandatory; the anti-stereotype rules override decorative defaults.\n\n${locale.override}\n</cultural-context>`
+    : null;
   const librariesBlock = buildLibrariesBlock(libraryIds, stack);
   const componentsBlock = buildComponentsBlock(state, sections, pageType);
   const operatingRulesBlock = buildOperatingRules(state, stack, sectionList);
@@ -326,6 +340,7 @@ export function assemblePrompt(state) {
     roleBlock,
     `<global-rules>\n${globalRulesText}\n</global-rules>`,
     `<design-system>\n${designSystemBlock}\n</design-system>`,
+    culturalBlock,
     librariesBlock,
     componentsBlock,
     operatingRulesBlock,
@@ -349,6 +364,7 @@ export function assembleFromCard(card) {
     density: card.density,
     drama: card.drama,
     motion: card.motion,
+    locale: card.locale,
     pageType: card.pageType,
     sections: card.sections,
     stack: card.stack,

@@ -37,13 +37,51 @@ export function renderGallery({ initialPromptId = null, onTune }) {
 
   // ─── Containers ───────────────────────────────────────────────────────────
   const root = el("main", { id: "main", class: "gallery" });
+  const introSlot = el("div", { class: "gallery__intro-slot" });
   const heroSlot = el("div", { class: "gallery__hero-slot" });
   const filterSlot = el("div", { class: "gallery__filter-slot" });
   const gridSlot = el("div", { class: "gallery__grid", role: "list", "aria-label": "Prompt gallery" });
   const moreSlot = el("div", { class: "gallery__more-slot" });
   const emptySlot = el("div", { class: "gallery__empty-slot" });
 
-  root.append(heroSlot, filterSlot, gridSlot, moreSlot, emptySlot);
+  root.append(introSlot, heroSlot, filterSlot, gridSlot, moreSlot, emptySlot);
+
+  // ─── First-visit intro (U3) ────────────────────────────────────────────────
+  // Slim one-liner explaining what this is, since the default route drops users
+  // straight onto a raw prompt. Dismissible; the choice persists.
+  function renderIntro() {
+    introSlot.replaceChildren();
+    if (store.get("intro-dismissed", false)) return;
+    introSlot.appendChild(
+      el(
+        "div",
+        { class: "gallery__intro", role: "note" },
+        el(
+          "p",
+          { class: "gallery__intro-text" },
+          el("strong", null, "Design Prompt Studio"),
+          " — copy-paste prompts that make any LLM design a webpage. Pick one below, hit ",
+          el("strong", null, "Copy"),
+          ", paste into Claude or ChatGPT. Or ",
+          el("a", { class: "gallery__intro-link", href: "#studio" }, "build your own in Studio"),
+          ".",
+        ),
+        el(
+          "button",
+          {
+            type: "button",
+            class: "gallery__intro-dismiss",
+            "aria-label": "Dismiss intro",
+            onClick: () => {
+              store.setImmediate("intro-dismissed", true);
+              renderIntro();
+            },
+          },
+          "✕",
+        ),
+      ),
+    );
+  }
 
   // ─── Render helpers ───────────────────────────────────────────────────────
   function selectCard(card) {
@@ -174,6 +212,7 @@ export function renderGallery({ initialPromptId = null, onTune }) {
   }
 
   // ─── Initial paint ────────────────────────────────────────────────────────
+  renderIntro();
   renderHero();
   renderFilters();
   renderGrid();

@@ -58,6 +58,13 @@ export function renderFilterBar({ initial = {}, onChange }) {
   const styleGroup = el("div");
   const tierGroup = el("div");
 
+  // U2: the flat style list is ~100 chips. By default (no category, no style
+  // picked) show a handful with a "+N more" expander so the filter doesn't wall
+  // off the prompt tiles — especially on mobile. Picking a Category collapses
+  // the list naturally, so we only cap the unfiltered view.
+  const STYLE_CHIP_LIMIT = 14;
+  let styleExpanded = false;
+
   function paint() {
     fillChipGroup(purposeGroup, {
       label: "Purpose",
@@ -80,11 +87,16 @@ export function renderFilterBar({ initial = {}, onChange }) {
       onSelect: (id) => { state.category = id; state.style = null; onChange?.({ ...state }); paint(); },
     });
 
+    const styleOpts = stylesForCategory(state.category);
+    // Collapse only the big unfiltered list when nothing is picked yet.
+    const collapsible = !state.category && !state.style && styleOpts.length > STYLE_CHIP_LIMIT;
     fillChipGroup(styleGroup, {
       label: "Style",
-      options: stylesForCategory(state.category),
+      options: styleOpts,
       selected: state.style,
       onSelect: (id) => { state.style = id; onChange?.({ ...state }); paint(); },
+      limit: collapsible && !styleExpanded ? STYLE_CHIP_LIMIT : null,
+      onToggle: collapsible ? () => { styleExpanded = !styleExpanded; paint(); } : null,
     });
 
     fillChipGroup(tierGroup, {
@@ -110,14 +122,16 @@ export function renderFilterBar({ initial = {}, onChange }) {
 }
 
 // Repaints `host` in place with a fresh `.chip-group`, preserving the host node
-// so closures over it stay valid across re-renders.
-function fillChipGroup(host, { label, options, selected, onSelect }) {
+// so closures over it stay valid across re-renders. When `limit`/`onToggle` are
+// given the group is collapsible: it shows `limit` chips + a "+N more" toggle.
+function fillChipGroup(host, { label, options, selected, onSelect, limit = null, onToggle = null }) {
   const wrap = el(
     "div",
     { class: "chip-group", role: "group", "aria-label": label },
     el("span", { class: "chip-group__label" }, label),
   );
-  for (const opt of options) {
+  const shown = limit ? options.slice(0, limit) : options;
+  for (const opt of shown) {
     const isActive = opt.id === selected;
     wrap.appendChild(
       el(
@@ -129,6 +143,21 @@ function fillChipGroup(host, { label, options, selected, onSelect }) {
           onClick: () => onSelect?.(opt.id),
         },
         opt.name,
+      ),
+    );
+  }
+  if (onToggle) {
+    const hidden = options.length - shown.length;
+    wrap.appendChild(
+      el(
+        "button",
+        {
+          class: "chip chip--toggle",
+          type: "button",
+          "aria-expanded": hidden > 0 ? "false" : "true",
+          onClick: onToggle,
+        },
+        hidden > 0 ? `+${hidden} more` : "Show fewer",
       ),
     );
   }

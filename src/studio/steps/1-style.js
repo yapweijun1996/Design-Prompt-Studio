@@ -7,6 +7,7 @@ import { el } from "../../lib/dom.js";
 import { STYLE_PRESETS, STYLE_LIST } from "../../data/styles/index.js";
 import { STYLE_VARIANTS, findVariantForState } from "../../data/style-variants.js";
 import { DENSITY_LEVELS, DRAMA_LEVELS, MOTION_LEVELS } from "../../data/modifiers.js";
+import { LOCALE_PRESETS } from "../../data/locales.js";
 import { MOOD_PRESETS } from "../../data/moods.js";
 import { STYLE_CATEGORIES, STYLE_CATEGORY_MAP, categoryCount } from "../../data/styles/categories.js";
 
@@ -216,6 +217,18 @@ export function renderStep1({ state, onStateChange }) {
     moreSlot,
   );
 
+  // Region / Culture — a composable layer applied on top of ANY style. First-class
+  // control (not hidden under "advanced"): sets state.locale, injects a
+  // <cultural-context> block (fonts/palette/motif) into the assembled prompt.
+  root.append(
+    sectionLabel("Region / Culture", "Localizes any style — fonts, palette, motif, copy"),
+    radioRow(
+      LOCALE_PRESETS,
+      state.locale || "default",
+      (id) => { state.locale = id; onStateChange?.(); rebuildCards(); },
+    ),
+  );
+
   // Modifier radio rows (kept for power users who want fine-tune off-mood)
   const advancedToggle = el(
     "details",
@@ -260,22 +273,32 @@ function chip(label, id, onSelect, isActive) {
 
 function radioRow(items, selected, onSelect) {
   const row = el("div", { class: "radio-row", role: "radiogroup" });
+  const buttons = [];
   for (const item of items) {
     const isActive = item.id === selected;
-    row.appendChild(
-      el(
-        "button",
-        {
-          type: "button",
-          class: "radio-row__btn" + (isActive ? " is-active" : ""),
-          role: "radio",
-          "aria-checked": isActive ? "true" : "false",
-          onClick: () => onSelect(item.id),
+    const btn = el(
+      "button",
+      {
+        type: "button",
+        class: "radio-row__btn" + (isActive ? " is-active" : ""),
+        role: "radio",
+        "aria-checked": isActive ? "true" : "false",
+        onClick: () => {
+          // Reflect selection within this row immediately — onSelect rebuilds the
+          // variant grid, not this row, so update the active button here.
+          for (const b of buttons) {
+            const on = b === btn;
+            b.classList.toggle("is-active", on);
+            b.setAttribute("aria-checked", on ? "true" : "false");
+          }
+          onSelect(item.id);
         },
-        el("span", { class: "radio-row__name" }, item.name),
-        item.desc ? el("span", { class: "radio-row__desc" }, item.desc) : null,
-      ),
+      },
+      el("span", { class: "radio-row__name" }, item.name),
+      item.desc ? el("span", { class: "radio-row__desc" }, item.desc) : null,
     );
+    buttons.push(btn);
+    row.appendChild(btn);
   }
   return row;
 }

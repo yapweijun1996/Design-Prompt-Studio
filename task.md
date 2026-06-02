@@ -423,10 +423,23 @@ is confirmed twice (live DOM + source) unless marked otherwise. Ranked by severi
   `tabindex=-1` + focuses the live `#main` and smooth-scrolls to it — no hash navigation, no
   re-render. *Verified live*: after click, hash stays `#gallery`, `#main` not rebuilt,
   `activeElement = MAIN#main`.
-- [ ] **B3 · "(required)" Brief fields are not enforced (MEDIUM).** Step 3 marks
-  Product name / Audience / Tone as "(required)", but you can advance to step 5 and Copy a
-  prompt whose `<request>` is just `[REPLACE WITH YOUR PROJECT BRIEF …]`. Either enforce
-  (block Next + focus the empty field) or drop the "(required)" label so it isn't misleading.
+- [x] **B3 · "(required)" Brief fields are not enforced (MEDIUM).** ✅ FIXED 2026-06-02.
+  Forward navigation is now gated: `validateBrief()` ([3-brief.js](src/studio/steps/3-brief.js))
+  checks name/audience/tone; the Wizard's `go()` ([Wizard.js](src/studio/Wizard.js)) validates
+  every required step *before* the target, and on failure jumps to it, marks the empty fields
+  (red border + inline `role=alert` message), and focuses the first one. Errors clear inline as
+  you type (no repaint → focus kept). Back is always free; Express stays ungated (live preview).
+  *Verified live*: Next on empty brief stays on step, flags Audience+Tone, focuses Audience;
+  typing clears the error; once filled, Next advances.
+- [x] **B4 · (NEW) Studio/Express text inputs lost focus every keystroke (HIGH).** ✅ FIXED
+  2026-06-02. Found while wiring B3: the Brief inputs called `onStateChange`, which the Wizard
+  wrapped as `persist + paint()` → `main.replaceChildren()` rebuilt the whole step on every
+  keystroke, replacing the focused `<input>`. *Reproduced with real keystrokes*: typing "Acme
+  Studios" left only "AA", focus on `<body>`. Same bug in Express (`rerender()` rebuilt all
+  controls). Fix: `onStateChange(opts)` — text inputs pass `{ repaint: false }` (persist only;
+  Express updates just the live preview). Chip/card/checkbox selections keep the default repaint
+  (their cascades need it). *Verified*: "Acme Studios" / "Lumen" type fully with focus retained;
+  Express preview still updates live; step 1/2 cascades and Express purpose cascade still work.
 
 ### 🟠 Stale / incorrect copy
 - [x] **C1 · "10 base styles × 9 moods" is wrong.** ✅ FIXED 2026-06-02.
@@ -448,14 +461,16 @@ is confirmed twice (live DOM + source) unless marked otherwise. Ranked by severi
   search/filter change, and the active card is always kept visible even if it sorts past the
   page. Express reuses this step renderer, so it benefits too. *Verified live*: 37 cards
   initially, **total DOM nodes 11,323 → 687**; "Show more" grows 37 → 72 correctly.
-- [~] **U2 · Mobile filter wall.** Root cause (B1) is fixed — users can now pick a Category to
-  collapse Style from ~100 chips to a handful. **Remaining**: the *default* "All" view still
-  renders all ~100 style chips (intentional flat browse for power users), so a first-time mobile
-  visitor still sees a tall filter until they pick a category. Follow-up: hide/collapse the Style
-  group by default on small screens, or lazy-reveal it after a category is chosen.
-- [ ] **U3 · No first-visit value proposition (UX opinion, not a bug).** The default `#gallery`
-  route lands a new visitor directly on a ~300-line raw prompt in a 394px scroll box, with no
-  one-line explanation of what "Design Prompt Studio" is or does. Consider a slim intro/hero.
+- [x] **U2 · Mobile filter wall.** ✅ FIXED 2026-06-02. On the default unfiltered view the Style
+  group now caps at `STYLE_CHIP_LIMIT = 14` chips with a dashed **"+87 more" / "Show fewer"**
+  toggle ([FilterBar.js](src/gallery/FilterBar.js)). Picking a Category still cascades to the
+  small per-category list (no toggle needed). *Verified live*: 14 chips + "+87 more" by default;
+  expand → 101 + "Show fewer"; Business category → 24 chips, no toggle; B1 cascade unaffected.
+- [x] **U3 · No first-visit value proposition.** ✅ FIXED 2026-06-02. Added a slim, dismissible
+  one-line intro bar atop the gallery ([Gallery.js](src/gallery/Gallery.js)): what the app is +
+  "pick one, hit Copy, paste into Claude/ChatGPT" + a link to Studio. Dismissal persists
+  (`intro-dismissed`). *Verified live*: renders on first visit, dismiss hides it, stays hidden
+  after reload.
 
 ### 🟢 Minor a11y / polish
 - [x] **M1 · Search inputs lack `id`/`name`** → ✅ FIXED 2026-06-02. Added `id`+`name` to all

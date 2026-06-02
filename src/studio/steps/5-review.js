@@ -135,6 +135,7 @@ function buildShareUrl(state) {
     d: state.density,
     r: state.drama,
     m: state.motion,
+    lo: state.locale,
     k: state.stack,
     o: state.outputMode,
     M: state.promptMode,

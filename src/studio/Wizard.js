@@ -12,7 +12,7 @@ export const STEPS = [
   { id: "review", title: "Review & copy",  blurb: "Full assembled prompt, ready to paste." },
 ];
 
-export function renderWizard({ state, onStateChange, onExit, stepRenderers }) {
+export function renderWizard({ state, onStateChange, onExit, stepRenderers, validators = {} }) {
   const wizard = el("section", { class: "wizard" });
 
   const sidebar = el("aside", { class: "wizard__sidebar", "aria-label": "Wizard steps" });
@@ -23,6 +23,30 @@ export function renderWizard({ state, onStateChange, onExit, stepRenderers }) {
 
   function go(idx) {
     if (idx < 0 || idx >= STEPS.length) return;
+    const from = state.meta.currentStep ?? 0;
+
+    // Forward navigation is gated: every required step BEFORE the target must be
+    // valid. If one isn't, jump to it, surface its errors, and focus the first
+    // bad field. Backward navigation is always free.
+    if (idx > from) {
+      for (let j = 0; j < idx; j++) {
+        const validate = validators[STEPS[j].id];
+        if (!validate) continue;
+        const result = validate(state);
+        if (!result.ok) {
+          state.meta.validationErrors = { [STEPS[j].id]: result.invalidKeys };
+          state.meta.currentStep = j;
+          onStateChange?.();
+          paint();
+          if (result.firstInvalidId) {
+            requestAnimationFrame(() => document.getElementById(result.firstInvalidId)?.focus());
+          }
+          return;
+        }
+      }
+    }
+
+    state.meta.validationErrors = {}; // cleared once navigation succeeds
     state.meta.currentStep = idx;
     if (idx > 0) {
       const prev = idx - 1;
@@ -100,7 +124,9 @@ export function renderWizard({ state, onStateChange, onExit, stepRenderers }) {
     if (renderer) {
       const stepEl = renderer({
         state,
-        onStateChange: () => { onStateChange?.(); paint(); },
+        // Persist always; repaint by default. Text inputs pass { repaint: false }
+        // so editing a field doesn't rebuild the step (which would drop focus).
+        onStateChange: (opts) => { onStateChange?.(); if (!opts || opts.repaint !== false) paint(); },
       });
       main.appendChild(stepEl);
     } else {

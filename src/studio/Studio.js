@@ -7,7 +7,7 @@ import { getPromptById, ALL_PROMPTS } from "../data/prompts/index.js";
 import { renderWizard } from "./Wizard.js";
 import { renderStep1 } from "./steps/1-style.js";
 import { renderStep2 } from "./steps/2-page.js";
-import { renderStep3 } from "./steps/3-brief.js";
+import { renderStep3, validateBrief } from "./steps/3-brief.js";
 import { renderStep4 } from "./steps/4-tech.js";
 import { renderStep5 } from "./steps/5-review.js";
 
@@ -25,6 +25,7 @@ const DEFAULT_STATE = () => ({
   density: "default",
   drama: "confident",
   motion: "default",
+  locale: "default",
   purpose: "marketing",
   pageType: "landing",
   sections: new Set(["hero", "features", "cta", "footer"]),
@@ -53,6 +54,7 @@ function stateFromCard(card) {
     density: card.density ?? base.density,
     drama: card.drama ?? base.drama,
     motion: card.motion ?? base.motion,
+    locale: card.locale ?? base.locale,
     purpose: card.purpose ?? base.purpose,
     pageType: card.pageType ?? base.pageType,
     sections: new Set(card.sections ?? base.sections),
@@ -80,6 +82,7 @@ function stateFromHashShare(hash) {
       density: p.d ?? base.density,
       drama: p.r ?? base.drama,
       motion: p.m ?? base.motion,
+      locale: p.lo ?? base.locale,
       stack: p.k ?? base.stack,
       outputMode: p.o ?? base.outputMode,
       promptMode: p.M ?? base.promptMode,
@@ -196,6 +199,9 @@ export function renderStudio({ onExit }) {
       brief: renderStep3,
       tech: renderStep4,
       review: renderStep5,
+    },
+    validators: {
+      brief: validateBrief,
     },
     onStateChange: () => persist(state),
     onExit,

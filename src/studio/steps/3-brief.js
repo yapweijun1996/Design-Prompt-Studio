@@ -19,47 +19,64 @@ export function renderStep3({ state, onStateChange }) {
 
   if (!state.brief) state.brief = {};
 
+  // Validation errors flagged by the Wizard when the user tried to advance with
+  // required fields empty. Shown inline; cleared as the user types.
+  const errorKeys = new Set(state.meta?.validationErrors?.brief || []);
+
   root.append(sectionLabel("Brief", "Structured beats prose"));
 
   const grid = el("div", { class: "step__grid" });
   for (const field of FIELDS) {
+    const hasError = errorKeys.has(field.key);
+    const fieldId = `brief-${field.key}`;
+    const errId = `${fieldId}-err`;
     const wrap = el(
       "div",
-      { class: "step__field" + (field.full ? " step__field--full" : "") },
+      { class: "step__field" + (field.full ? " step__field--full" : "") + (hasError ? " step__field--error" : "") },
       el(
         "label",
-        { class: "step__label", "for": `brief-${field.key}` },
+        { class: "step__label", "for": fieldId },
         field.label,
         field.required ? el("span", { class: "step__label-req" }, " (required)") : null,
       ),
     );
 
+    const sharedAttrs = hasError ? { "aria-invalid": "true", "aria-describedby": errId } : {};
+
     if (field.type === "textarea") {
       const ta = el("textarea", {
-        id: `brief-${field.key}`,
+        id: fieldId,
         class: "step__textarea",
         placeholder: field.placeholder,
         rows: "4",
+        ...sharedAttrs,
       });
       ta.value = state.brief[field.key] || "";
       ta.addEventListener("input", (e) => {
         state.brief[field.key] = e.target.value;
-        onStateChange?.();
+        clearFieldError(state, wrap, field, e.target, errId);
+        onStateChange?.({ repaint: false }); // keep focus while typing
       });
       wrap.appendChild(ta);
     } else {
       const input = el("input", {
-        id: `brief-${field.key}`,
+        id: fieldId,
         class: "step__input",
         type: "text",
         placeholder: field.placeholder,
+        ...sharedAttrs,
       });
       input.value = state.brief[field.key] || "";
       input.addEventListener("input", (e) => {
         state.brief[field.key] = e.target.value;
-        onStateChange?.();
+        clearFieldError(state, wrap, field, e.target, errId);
+        onStateChange?.({ repaint: false }); // keep focus while typing
       });
       wrap.appendChild(input);
+    }
+
+    if (hasError) {
+      wrap.appendChild(el("p", { id: errId, class: "step__field-err", role: "alert" }, `${field.label} is required.`));
     }
     grid.appendChild(wrap);
   }
@@ -78,6 +95,37 @@ export function renderStep3({ state, onStateChange }) {
   }
 
   return root;
+}
+
+// Validate required brief fields. Returns { ok, invalidKeys, firstInvalidId }.
+// Used by the Wizard to gate forward navigation (B3).
+export function validateBrief(state) {
+  const brief = state.brief || {};
+  const invalidKeys = FIELDS
+    .filter((f) => f.required)
+    .filter((f) => !String(brief[f.key] || "").trim())
+    .map((f) => f.key);
+  return {
+    ok: invalidKeys.length === 0,
+    invalidKeys,
+    firstInvalidId: invalidKeys.length ? `brief-${invalidKeys[0]}` : null,
+  };
+}
+
+// Clear a field's error styling inline (no full repaint → focus preserved) once
+// the user has typed something into a previously-invalid required field.
+function clearFieldError(state, wrap, field, target, errId) {
+  if (!wrap.classList.contains("step__field--error")) return;
+  if (!String(target.value || "").trim()) return;
+  wrap.classList.remove("step__field--error");
+  target.removeAttribute("aria-invalid");
+  target.removeAttribute("aria-describedby");
+  wrap.querySelector("#" + CSS.escape(errId))?.remove();
+  const list = state.meta?.validationErrors?.brief;
+  if (Array.isArray(list)) {
+    const i = list.indexOf(field.key);
+    if (i >= 0) list.splice(i, 1);
+  }
 }
 
 function sectionLabel(title, hint) {

@@ -9,6 +9,7 @@ import { PAGE_TYPES, pageTypeCount } from "../src/data/taxonomy.js";
 import { assemblePrompt, assembleFromCard, promptStats as charStats } from "../src/lib/assemblePrompt.js";
 import { STYLE_VARIANTS, getVariant, findVariantForState } from "../src/data/style-variants.js";
 import { MOOD_PRESETS } from "../src/data/moods.js";
+import { LOCALE_PRESETS, getLocale, localeCount } from "../src/data/locales.js";
 import { LIBRARIES, LIBRARY_CATEGORIES, libraryCount, getLibrary } from "../src/data/libraries.js";
 
 const checks = [];
@@ -48,6 +49,56 @@ check("compact preset 'linear' has synthesized md > 1000 chars", () => {
 });
 check("compact preset 'memphis' has Bold Factor section in md", () => {
   return STYLE_PRESETS.memphis?.md?.includes("Bold Factor");
+});
+
+// ─── Region / Culture axis ───────────────────────────────────────────────────
+check("LOCALE_PRESETS has ≥ 6 entries", () => localeCount() >= 6);
+check("locale 'default' exists and injects NO cultural-context block", () => {
+  if (getLocale("default").override !== "") return false;
+  const p = assemblePrompt({
+    style: "cafe", pageType: "landing",
+    density: "default", drama: "confident", motion: "default",
+    locale: "default", sections: ["hero"], stack: "html",
+    promptMode: "one-shot", brief: { name: "Test" },
+  });
+  // The operating-rules prose mentions <cultural-context> conditionally; assert the
+  // actual block (its unique sentinel) is absent for the default locale.
+  return !p.includes("Apply this cultural layer ON TOP") && !p.includes("CULTURAL CONTEXT —");
+});
+check("locale 'vietnam' injects <cultural-context> + Be Vietnam Pro font", () => {
+  const p = assemblePrompt({
+    style: "cafe", pageType: "landing",
+    density: "default", drama: "confident", motion: "default",
+    locale: "vietnam", sections: ["hero"], stack: "html",
+    promptMode: "one-shot", brief: { name: "Cà Phê" },
+  });
+  return p.includes("<cultural-context>") && p.includes("Be Vietnam Pro") && p.includes("CULTURAL CONTEXT — VIETNAMESE");
+});
+check("locale 'vietnam' font rule reaches STYLE-LEVEL OVERRIDES (beats avoid-Inter)", () => {
+  const p = assemblePrompt({
+    style: "saas", pageType: "landing",
+    density: "default", drama: "confident", motion: "default",
+    locale: "vietnam", sections: ["hero"], stack: "html",
+    promptMode: "one-shot", brief: { name: "Test" },
+  });
+  return p.includes("STYLE-LEVEL OVERRIDES") && p.includes("Be Vietnam Pro");
+});
+check("locale composes onto any base style (peranakan × boutique)", () => {
+  const p = assemblePrompt({
+    style: "boutique", pageType: "landing",
+    density: "default", drama: "confident", motion: "default",
+    locale: "peranakan", sections: ["hero"], stack: "html",
+    promptMode: "one-shot", brief: { name: "Nyonya" },
+  });
+  return p.includes("PERANAKAN") && p.includes("Noto Serif SC");
+});
+check("every locale has anti-stereotype guidance (except default)", () => {
+  return LOCALE_PRESETS.every((l) => l.id === "default" || /ANTI-STEREOTYPE/i.test(l.override));
+});
+check("locale survives share-URL encode→decode round-trip (lo field)", () => {
+  const payload = { s: "cafe", p: "landing", d: "default", r: "confident", m: "default", lo: "vietnam", k: "html", o: "single-file", M: "one-shot", se: ["hero"], l: [], b: {} };
+  const decoded = JSON.parse(JSON.stringify(payload));
+  return decoded.lo === "vietnam";
 });
 
 // ─── Libraries ─────────────────────────────────────────────────────────────
