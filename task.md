@@ -460,7 +460,7 @@ is confirmed twice (live DOM + source) unless marked otherwise. Ranked by severi
   rewrote them to be relational (`STYLE_VARIANTS.length === STYLE_IDS.length * MOOD_PRESETS.length`).
   All 43/43 smoke tests pass; lint clean.
 - [ ] **C3 · Header/docs version drift.** UI + `package.json` say **v0.4.0** with "685 prompts /
-  20 styles", but the live app now has 100 styles / 900 variants / **3405 prompts** (git log
+  20 styles", but the live app now has 116 styles / 1044 variants / **3959 prompts** (git log
   notes "v0.5.0-pre"). Bump version label + refresh the metrics block at the top of this file.
 
 ### 🟡 UX / performance
