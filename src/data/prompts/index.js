@@ -22,6 +22,7 @@ import seoulToss from "./curated/seoul-toss.json" with { type: "json" };
 
 import { generateStandardPrompts } from "./generate.js";
 import { STYLE_CATEGORY_MAP, DEFAULT_HIDDEN_CATEGORY } from "../styles/categories.js";
+import { STYLE_IDS } from "../styles/index.js";
 
 // ─── Curated (tier 1) ───────────────────────────────────────────────────────
 export const CURATED_PROMPTS = [
@@ -124,6 +125,40 @@ export function searchPrompts({ query = "", purpose = null, category = null, sty
     }
     return true;
   });
+}
+
+// ─── Browse ordering (interleave) ────────────────────────────────────────────
+// Standard prompts are generated STYLE-MAJOR (all ~34 page-type variants of style
+// A, then style B, …). Shown raw, the browse buries the polished/premium styles
+// behind dozens of near-identical same-style cards (the first `aurora` card landed
+// ~420 cards deep). sortForBrowse() interleaves them: curated stay pinned in front
+// (a hand-picked showcase), then standard cards sort by (page-type priority, style
+// index) so the first screen shows many DIFFERENT styles — premium first (STYLE_IDS
+// leads with the premium tier) and landing pages before 404s. Pure reorder: same
+// cards, same count, same ids — so filters, "Show more", and selection are unaffected.
+
+// Only "what leads" matters for the first impression; the tail can fall in natural order.
+const BROWSE_LEAD_PAGETYPES = ["landing", "pricing", "product", "feature-page", "case-study", "blog-post"];
+const PAGETYPE_RANK = new Map(BROWSE_LEAD_PAGETYPES.map((id, i) => [id, i]));
+const pageTypeRank = (id) => (PAGETYPE_RANK.has(id) ? PAGETYPE_RANK.get(id) : BROWSE_LEAD_PAGETYPES.length);
+const styleRank = (id) => {
+  const i = STYLE_IDS.indexOf(id);
+  return i === -1 ? STYLE_IDS.length : i;
+};
+
+export function sortForBrowse(cards) {
+  const curated = [];
+  const standard = [];
+  for (const c of cards) (c.tier === "curated" ? curated : standard).push(c);
+  standard.sort((a, b) => {
+    const pt = pageTypeRank(a.pageType) - pageTypeRank(b.pageType);
+    if (pt !== 0) return pt;
+    const st = styleRank(a.style) - styleRank(b.style);
+    if (st !== 0) return st;
+    // total order for the tail (non-lead page types share a rank): stable by pageType
+    return a.pageType < b.pageType ? -1 : a.pageType > b.pageType ? 1 : 0;
+  });
+  return [...curated, ...standard];
 }
 
 // ─── Featured rotation (hero default) ───────────────────────────────────────

@@ -9,7 +9,7 @@
 
 import { el, mount } from "../lib/dom.js";
 import { store } from "../lib/store.js";
-import { ALL_PROMPTS, searchPrompts, pickFeaturedPrompt, getPromptById, getFeaturedPrompts, getAvailableLocales, getAvailableMarkets } from "../data/prompts/index.js";
+import { ALL_PROMPTS, searchPrompts, sortForBrowse, pickFeaturedPrompt, getPromptById, getFeaturedPrompts, getAvailableLocales, getAvailableMarkets } from "../data/prompts/index.js";
 import { getLocale } from "../data/locales.js";
 import { getMarket } from "../data/markets.js";
 import { renderHeroStrip } from "./HeroStrip.js";
@@ -178,11 +178,9 @@ export function renderGallery({ initialPromptId = null, onTune }) {
       return;
     }
 
-    // Curated first, then standard.
-    const ordered = [
-      ...results.filter((p) => p.tier === "curated"),
-      ...results.filter((p) => p.tier !== "curated"),
-    ];
+    // Curated pinned first, then standard interleaved so consecutive cards differ
+    // by style (premium-first, landing before 404) — see sortForBrowse.
+    const ordered = sortForBrowse(results);
     const visible = ordered.slice(0, state.visibleCount);
     for (const card of visible) {
       const tile = renderPromptTile({
