@@ -114,6 +114,13 @@ ${sectionList}
    - Then **EXTREMELY BRIEFLY** — caveats and next steps only. Nothing else.
 
 7. **Express the design's personality.** Make deliberate, creative choices in layout, motion, interaction details, and typography. Generic boilerplate is a failure mode. The result should feel like the success references named in the design system below.
+
+8. **Final self-check before you output — fix anything that fails:**
+   - Real, specific content everywhere — no "[Product Name]", "Lorem ipsum", "#", or empty/placeholder stats.
+   - Every Bold Factor from the design system is visibly present (not just the hero — all sections, footer included).
+   - A real type scale + consistent spacing + generous whitespace; nothing crowded or single-size.
+   - Doesn't look like a default framework template — it reads as the named references.
+   - Accessibility minimums met (focus states, contrast, touch targets, skip link).
 </operating-rules>`;
 }
 

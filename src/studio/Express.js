@@ -195,6 +195,13 @@ export function renderExpress({ onExit }) {
           "Open Claude →",
         ),
       ),
+      el(
+        "p",
+        { class: "model-tip" },
+        "Best results with a frontier model — ",
+        el("b", null, "Claude or a GPT-4-class model"),
+        ". Smaller or older models may produce a more generic page.",
+      ),
     );
   }
 

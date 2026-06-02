@@ -145,8 +145,16 @@ export function renderHeroStrip({ card, onTune, onRandom, onCopy }) {
     el("span", null, `${stats.lines} lines`),
   );
 
+  const modelTip = el(
+    "p",
+    { class: "model-tip" },
+    "Best results with a frontier model — ",
+    el("b", null, "Claude or a GPT-4-class model"),
+    ". Smaller or older models may produce a more generic page.",
+  );
+
   // Compose
-  root.append(eyebrow, titleBlock, topActions, promptBox, actions, statsRow);
+  root.append(eyebrow, titleBlock, topActions, promptBox, actions, statsRow, modelTip);
   return root;
 }
 

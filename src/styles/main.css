@@ -224,6 +224,23 @@ body {
 .appfoot a { color: var(--fg-muted); }
 .appfoot a:hover { color: var(--fg); }
 
+/* Model recommendation tip — shown near Copy / Open-Claude actions */
+.model-tip {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  margin-top: var(--space-3);
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--fg-subtle);
+}
+.model-tip::before {
+  content: "✦";
+  color: var(--accent-2);
+  flex-shrink: 0;
+}
+.model-tip b { color: var(--fg-muted); font-weight: 600; }
+
 /* No-script fallback */
 .noscript {
   padding: var(--space-7) var(--space-5);
