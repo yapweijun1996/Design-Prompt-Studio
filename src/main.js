@@ -27,6 +27,11 @@ import { renderExpress } from "./studio/Express.js";
 import { renderComponentsPage } from "./components-page/ComponentsPage.js";
 
 const VERSION = "0.4.0";
+// Build identity — injected by Vite from the commit SHA at build time (see
+// vite.config.js `define`). Falls back to "dev" for local `vite dev`. Shown in
+// the footer + boot log so the live deploy is always identifiable, and used as
+// the PWA cacheId so each deploy ships a fresh service worker + cache.
+const BUILD_SHA = typeof __BUILD_SHA__ !== "undefined" ? __BUILD_SHA__ : "dev";
 const ROUTES = ["gallery", "studio", "express", "components"];
 const DEFAULT_ROUTE = "gallery";
 
@@ -102,7 +107,7 @@ function footer() {
     { class: "appfoot" },
     el("span", null, "© 2026 Design/md"),
     el("span", { class: "appfoot__dot" }, "·"),
-    el("span", null, "v" + VERSION),
+    el("span", { title: "build " + BUILD_SHA }, "v" + VERSION + " · " + BUILD_SHA),
     el("span", { class: "appfoot__dot" }, "·"),
     el(
       "a",
@@ -127,7 +132,21 @@ function boot() {
   }
   render();
 
-  console.log(`[dps] v${VERSION} booted · route=${currentRoute()}`);
+  // Skip-to-content: move focus to <main> WITHOUT a hash navigation. The app is
+  // hash-routed, so an href="#main" would be parsed as a route, trigger a full
+  // re-render, and drop focus to <body> — the opposite of accessible. Intercept
+  // it and focus the live #main (re-created on each route) instead.
+  const skipLink = document.querySelector(".skip-link");
+  skipLink?.addEventListener("click", (e) => {
+    e.preventDefault();
+    const main = document.getElementById("main");
+    if (!main) return;
+    main.setAttribute("tabindex", "-1");
+    main.focus({ preventScroll: false });
+    main.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  console.log(`[dps] v${VERSION} (${BUILD_SHA}) booted · route=${currentRoute()}`);
 }
 
 if (document.readyState === "loading") {

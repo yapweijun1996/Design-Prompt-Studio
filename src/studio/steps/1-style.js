@@ -1,5 +1,5 @@
 // Step 1 — Style & feel
-// Picker: 90 variant cards (10 base styles × 9 moods). Search + base-style filter chips.
+// Picker: one variant card per base-style × mood combo. Search + base-style filter chips.
 // Clicking a card sets state.style + density + drama + motion together.
 // Modifier radio rows remain available below for power-users who want to tune off-mood.
 
@@ -14,11 +14,15 @@ export function renderStep1({ state, onStateChange }) {
   const root = el("section", { class: "step step--style" });
 
   // ─── State for the filter UI (local — not persisted) ─────────────────────
+  // Page the variant grid: with ~900 variants, rendering them all eagerly creates
+  // 10k+ DOM nodes on a single step. Show a page at a time with a "Show more" CTA.
+  const PAGE_SIZE = 36;
   const ui = {
     query: "",
     categoryFilter: null, // null = all categories
     baseFilter: null, // null = all bases
     moodFilter: null,
+    visibleCount: PAGE_SIZE,
   };
 
   // ─── Filter bar ──────────────────────────────────────────────────────────
@@ -26,11 +30,14 @@ export function renderStep1({ state, onStateChange }) {
   const searchInput = el("input", {
     type: "search",
     class: "step__variant-search",
+    id: "style-search",
+    name: "style-search",
     placeholder: `Search ${STYLE_VARIANTS.length} style presets…`,
     "aria-label": "Search style presets",
   });
   searchInput.addEventListener("input", (e) => {
     ui.query = e.target.value;
+    ui.visibleCount = PAGE_SIZE; // new query → back to first page
     rebuildCards();
   });
 
@@ -80,6 +87,7 @@ export function renderStep1({ state, onStateChange }) {
   // ─── Variant grid ────────────────────────────────────────────────────────
   const grid = el("div", { class: "step__variant-grid", role: "radiogroup", "aria-label": "Style preset" });
   const countLine = el("p", { class: "step__variant-count", "aria-live": "polite" });
+  const moreSlot = el("div", { class: "step__variant-more" });
 
   function applyVariant(variant) {
     state.style = variant.baseStyle;
@@ -103,17 +111,25 @@ export function renderStep1({ state, onStateChange }) {
     });
 
     grid.replaceChildren();
+    moreSlot.replaceChildren();
     countLine.textContent = `${visible.length} of ${STYLE_VARIANTS.length} variants`;
 
     if (visible.length === 0) {
-      grid.appendChild(el("p", { class: "step__variant-empty" }, "No matches. Clear filters to see all 90."));
+      grid.appendChild(el("p", { class: "step__variant-empty" }, `No matches. Clear filters to see all ${STYLE_VARIANTS.length}.`));
       return;
     }
 
     const activeVariant = findVariantForState(state);
     const activeId = activeVariant?.id;
 
-    for (const v of visible) {
+    // Keep the active card visible even if it sorts beyond the current page.
+    const page = visible.slice(0, ui.visibleCount);
+    if (activeId && !page.some((v) => v.id === activeId)) {
+      const activeInList = visible.find((v) => v.id === activeId);
+      if (activeInList) page.push(activeInList);
+    }
+
+    for (const v of page) {
       const isActive = v.id === activeId;
       grid.appendChild(
         el(
@@ -145,6 +161,24 @@ export function renderStep1({ state, onStateChange }) {
         ),
       );
     }
+
+    const remaining = visible.length - Math.min(ui.visibleCount, visible.length);
+    if (remaining > 0) {
+      moreSlot.appendChild(
+        el(
+          "button",
+          {
+            type: "button",
+            class: "step__variant-more-btn",
+            onClick: () => {
+              ui.visibleCount += PAGE_SIZE;
+              rebuildCards();
+            },
+          },
+          `Show more · ${remaining} remaining`,
+        ),
+      );
+    }
   }
 
   function rebuildAll() {
@@ -165,6 +199,7 @@ export function renderStep1({ state, onStateChange }) {
     // Mood chips (unchanged)
     rebuildChip(moodChips, [{ id: null, name: "All moods" }, ...MOOD_PRESETS.map((m) => ({ id: m.id, name: m.name }))], ui.moodFilter, (id) => { ui.moodFilter = id; rebuildAll(); });
 
+    ui.visibleCount = PAGE_SIZE; // filter change → back to first page
     rebuildCards();
   }
 
@@ -174,10 +209,11 @@ export function renderStep1({ state, onStateChange }) {
 
   // ─── Initial paint ───────────────────────────────────────────────────────
   root.append(
-    sectionLabel(`Style preset · ${STYLE_VARIANTS.length} variants`, "10 base styles × 9 moods"),
+    sectionLabel(`Style preset · ${STYLE_VARIANTS.length} variants`, `${STYLE_LIST.length} base styles × ${MOOD_PRESETS.length} moods`),
     filterBar,
     countLine,
     grid,
+    moreSlot,
   );
 
   // Modifier radio rows (kept for power users who want fine-tune off-mood)

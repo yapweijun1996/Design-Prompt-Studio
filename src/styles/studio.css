@@ -522,6 +522,25 @@
   color: var(--fg-muted);
 }
 
+.step__variant-more {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-5) 0 var(--space-2);
+}
+.step__variant-more-btn {
+  padding: 12px var(--space-5);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  background: transparent;
+  border: var(--border-thin) solid var(--border);
+  min-height: 44px;
+  cursor: pointer;
+}
+.step__variant-more-btn:hover { color: var(--fg); border-color: var(--border-strong); }
+
 .step__advanced {
   margin-top: var(--space-5);
   padding-top: var(--space-4);

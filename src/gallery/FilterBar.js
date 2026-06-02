@@ -22,6 +22,8 @@ export function renderFilterBar({ initial = {}, onChange }) {
   const searchInput = el("input", {
     class: "filter-bar__search",
     type: "search",
+    id: "gallery-search",
+    name: "gallery-search",
     placeholder: "Search by name, industry, tone…",
     value: state.query,
     "aria-label": "Search prompts",
@@ -38,39 +40,8 @@ export function renderFilterBar({ initial = {}, onChange }) {
     searchInput,
   );
 
-  // Chip groups
-  const purposeChips = renderChipGroup({
-    label: "Purpose",
-    options: [
-      { id: null, name: "All" },
-      ...Object.values(PURPOSE_BUCKETS).map((b) => ({ id: b.id, name: b.name })),
-    ],
-    selected: state.purpose,
-    onSelect: (id) => {
-      state.purpose = id;
-      onChange?.({ ...state });
-      refresh();
-    },
-  });
-
-  // Category chips (primary — cascades to style chips below)
-  const categoryChips = renderChipGroup({
-    label: "Category",
-    options: [
-      { id: null, name: "All" },
-      ...Object.values(STYLE_CATEGORIES).map((c) => ({ id: c.id, name: `${c.name} · ${categoryCount(c.id)}` })),
-    ],
-    selected: state.category,
-    onSelect: (id) => {
-      state.category = id;
-      state.style = null; // reset secondary when category changes
-      onChange?.({ ...state });
-      refresh();
-    },
-  });
-
   // Style chips filtered by selected category. Renders the FULL list when
-  // no category is picked, so existing power-users keep their flat browse.
+  // no category is picked, so power-users keep their flat browse.
   function stylesForCategory(catId) {
     const all = Object.values(STYLE_PRESETS);
     const filtered = catId ? all.filter((s) => STYLE_CATEGORY_MAP[s.id] === catId) : all;
@@ -80,63 +51,67 @@ export function renderFilterBar({ initial = {}, onChange }) {
     ];
   }
 
-  const styleChips = renderChipGroup({
-    label: "Style",
-    options: stylesForCategory(state.category),
-    selected: state.style,
-    onSelect: (id) => {
-      state.style = id;
-      onChange?.({ ...state });
-      refresh();
-    },
-  });
+  // Stable wrapper per group — we repaint their *contents* so the cascade keeps
+  // working across repeated interactions (replaceWith on a stale node is a no-op).
+  const purposeGroup = el("div");
+  const categoryGroup = el("div");
+  const styleGroup = el("div");
+  const tierGroup = el("div");
 
-  const tierChips = renderChipGroup({
-    label: "Tier",
-    options: [
-      { id: null, name: "All" },
-      { id: "curated", name: "★ Curated" },
-      { id: "standard", name: "Standard" },
-    ],
-    selected: state.tier,
-    onSelect: (id) => {
-      state.tier = id;
-      onChange?.({ ...state });
-      refresh();
-    },
-  });
+  function paint() {
+    fillChipGroup(purposeGroup, {
+      label: "Purpose",
+      options: [
+        { id: null, name: "All" },
+        ...Object.values(PURPOSE_BUCKETS).map((b) => ({ id: b.id, name: b.name })),
+      ],
+      selected: state.purpose,
+      onSelect: (id) => { state.purpose = id; onChange?.({ ...state }); paint(); },
+    });
 
-  function refresh() {
-    const purposeOpts = Object.values(PURPOSE_BUCKETS).map((b) => ({ id: b.id, name: b.name }));
-    const categoryOpts = Object.values(STYLE_CATEGORIES).map((c) => ({ id: c.id, name: `${c.name} · ${categoryCount(c.id)}` }));
-    const tierOpts = [{ id: "curated", name: "★ Curated" }, { id: "standard", name: "Standard" }];
-    // stylesForCategory already returns the leading "All" option; pass through wrapped: false
-    const styleOpts = stylesForCategory(state.category).slice(1); // drop dup "All"; rebuiltGroup re-prepends it
+    // Category (primary) — cascades into the style group below.
+    fillChipGroup(categoryGroup, {
+      label: "Category",
+      options: [
+        { id: null, name: "All" },
+        ...Object.values(STYLE_CATEGORIES).map((c) => ({ id: c.id, name: `${c.name} · ${categoryCount(c.id)}` })),
+      ],
+      selected: state.category,
+      onSelect: (id) => { state.category = id; state.style = null; onChange?.({ ...state }); paint(); },
+    });
 
-    purposeChips.replaceWith(rebuiltGroup("Purpose", purposeOpts, state.purpose, (id) => { state.purpose = id; onChange?.({ ...state }); refresh(); }));
-    categoryChips.replaceWith(rebuiltGroup("Category", categoryOpts, state.category, (id) => { state.category = id; state.style = null; onChange?.({ ...state }); refresh(); }));
-    styleChips.replaceWith(rebuiltGroup("Style", styleOpts, state.style, (id) => { state.style = id; onChange?.({ ...state }); refresh(); }));
-    tierChips.replaceWith(rebuiltGroup("Tier", tierOpts, state.tier, (id) => { state.tier = id; onChange?.({ ...state }); refresh(); }));
-  }
+    fillChipGroup(styleGroup, {
+      label: "Style",
+      options: stylesForCategory(state.category),
+      selected: state.style,
+      onSelect: (id) => { state.style = id; onChange?.({ ...state }); paint(); },
+    });
 
-  function rebuiltGroup(label, options, selected, onSelect) {
-    return renderChipGroup({
-      label,
-      options: [{ id: null, name: "All" }, ...options],
-      selected,
-      onSelect,
+    fillChipGroup(tierGroup, {
+      label: "Tier",
+      options: [
+        { id: null, name: "All" },
+        { id: "curated", name: "★ Curated" },
+        { id: "standard", name: "Standard" },
+      ],
+      selected: state.tier,
+      onSelect: (id) => { state.tier = id; onChange?.({ ...state }); paint(); },
     });
   }
 
+  paint();
+
   root.append(
     searchWrap,
-    el("div", { class: "filter-bar__chips" }, purposeChips, styleChips, tierChips),
+    el("div", { class: "filter-bar__chips" }, purposeGroup, categoryGroup, styleGroup, tierGroup),
   );
 
   return root;
 }
 
-function renderChipGroup({ label, options, selected, onSelect }) {
+// Repaints `host` in place with a fresh `.chip-group`, preserving the host node
+// so closures over it stay valid across re-renders.
+function fillChipGroup(host, { label, options, selected, onSelect }) {
   const wrap = el(
     "div",
     { class: "chip-group", role: "group", "aria-label": label },
@@ -157,5 +132,6 @@ function renderChipGroup({ label, options, selected, onSelect }) {
       ),
     );
   }
-  return wrap;
+  host.replaceChildren(wrap);
+  return host;
 }

@@ -134,6 +134,8 @@ export function renderStep4({ state, onStateChange }) {
   const searchInput = el("input", {
     type: "search",
     class: "step__lib-search",
+    id: "library-search",
+    name: "library-search",
     placeholder: `Search ${supportedLibs.length} libraries…`,
     "aria-label": "Search libraries",
   });

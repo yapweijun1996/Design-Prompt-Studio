@@ -400,3 +400,84 @@ For context if a future session picks up cold:
 
 **Final build stats**: 117 KB JS / 31 KB CSS (41 + 5 KB gzip), 12 SW precache
 entries, lint clean, 25/25 smoke tests passing.
+
+---
+
+## 🔍 UX/UI Audit — end-user simulation (2026-06-02)
+
+Driven live in Chrome (desktop 1440px + mobile 375px) walking the full journey:
+Gallery → tile click → Studio 5-step wizard → Express → Components. Each finding
+is confirmed twice (live DOM + source) unless marked otherwise. Ranked by severity.
+
+### 🔴 Functional bugs
+- [x] **B1 · Gallery category filter is dead code (HIGH).** ✅ FIXED 2026-06-02.
+  `categoryChips` was built but **never appended**; `refresh()` also called `replaceWith` on
+  stale/detached nodes (a no-op after the first interaction). Rewrote the chip section to use
+  stable per-group wrapper nodes repainted in place via `fillChipGroup()`, mounted the Category
+  group, and added `category` support to `searchPrompts()` (+`STYLE_CATEGORY_MAP` import).
+  Gallery now cascades Purpose → Category → Style like Studio. *Verified live*: Category group
+  present; "Business · 23" narrows Style 101 → 24 chips and grid to 782 prompts; repeated
+  category switches re-cascade; active highlights correct. (Largely resolves U2's root cause.)
+- [x] **B2 · Skip-to-content link is broken (a11y, MEDIUM).** ✅ FIXED 2026-06-02.
+  Added a click handler in `boot()` ([main.js](src/main.js)) that `preventDefault`s, then sets
+  `tabindex=-1` + focuses the live `#main` and smooth-scrolls to it — no hash navigation, no
+  re-render. *Verified live*: after click, hash stays `#gallery`, `#main` not rebuilt,
+  `activeElement = MAIN#main`.
+- [ ] **B3 · "(required)" Brief fields are not enforced (MEDIUM).** Step 3 marks
+  Product name / Audience / Tone as "(required)", but you can advance to step 5 and Copy a
+  prompt whose `<request>` is just `[REPLACE WITH YOUR PROJECT BRIEF …]`. Either enforce
+  (block Next + focus the empty field) or drop the "(required)" label so it isn't misleading.
+
+### 🟠 Stale / incorrect copy
+- [x] **C1 · "10 base styles × 9 moods" is wrong.** ✅ FIXED 2026-06-02.
+  Now derived: `${STYLE_LIST.length} base styles × ${MOOD_PRESETS.length} moods`
+  ([1-style.js:177](src/studio/steps/1-style.js#L177)). Also fixed the stale file header comment.
+- [x] **C2 · Empty-state said "see all 90".** ✅ FIXED 2026-06-02. Now
+  ``No matches. Clear filters to see all ${STYLE_VARIANTS.length}.`` ([1-style.js:109](src/studio/steps/1-style.js#L109)).
+  Bonus: smoke-test assertions for style/variant counts were also stale (asserted 20 / 180) —
+  rewrote them to be relational (`STYLE_VARIANTS.length === STYLE_IDS.length * MOOD_PRESETS.length`).
+  All 43/43 smoke tests pass; lint clean.
+- [ ] **C3 · Header/docs version drift.** UI + `package.json` say **v0.4.0** with "685 prompts /
+  20 styles", but the live app now has 100 styles / 900 variants / **3405 prompts** (git log
+  notes "v0.5.0-pre"). Bump version label + refresh the metrics block at the top of this file.
+
+### 🟡 UX / performance
+- [x] **U1 · Studio step 1 renders all 900 variant cards eagerly → 11,323 DOM nodes.**
+  ✅ FIXED 2026-06-02. Paginated the variant grid at `PAGE_SIZE = 36` with a "Show more · N
+  remaining" button ([1-style.js](src/studio/steps/1-style.js)); page resets to 1 on any
+  search/filter change, and the active card is always kept visible even if it sorts past the
+  page. Express reuses this step renderer, so it benefits too. *Verified live*: 37 cards
+  initially, **total DOM nodes 11,323 → 687**; "Show more" grows 37 → 72 correctly.
+- [~] **U2 · Mobile filter wall.** Root cause (B1) is fixed — users can now pick a Category to
+  collapse Style from ~100 chips to a handful. **Remaining**: the *default* "All" view still
+  renders all ~100 style chips (intentional flat browse for power users), so a first-time mobile
+  visitor still sees a tall filter until they pick a category. Follow-up: hide/collapse the Style
+  group by default on small screens, or lazy-reveal it after a category is chosen.
+- [ ] **U3 · No first-visit value proposition (UX opinion, not a bug).** The default `#gallery`
+  route lands a new visitor directly on a ~300-line raw prompt in a 394px scroll box, with no
+  one-line explanation of what "Design Prompt Studio" is or does. Consider a slim intro/hero.
+
+### 🟢 Minor a11y / polish
+- [x] **M1 · Search inputs lack `id`/`name`** → ✅ FIXED 2026-06-02. Added `id`+`name` to all
+  four search inputs (gallery, style picker, library picker, components). Console warning gone.
+- [ ] **M2 · No theme toggle UI.** `main.js` reads & applies a saved `prefs.theme`
+  ([main.js:121-122](src/main.js#L121)) but there is no control to set it — latent/dead feature.
+
+### ✅ Verified working (no action needed)
+Copy prompt (label → "Copied ✓", clipboard written) · Share URL round-trip (encoded
+`#studio?s=<b64>` restores brief/style — tested with a sentinel value) · auto-save & resume
+(reload restores last wizard step) · arrow-key step nav (P7) · sidebar step jumps ·
+tile → hero swap + smooth scroll-to-hero · "Show more" pagination · Components page filters.
+
+### 🔁 PWA cache busting tied to commit SHA (2026-06-02)
+Goal: every GitHub Pages deploy must force end users onto the latest source — no stale
+service-worker cache.
+- `vite.config.js`: `resolveBuildSha()` reads `GITHUB_SHA` (Actions) / `git rev-parse`
+  (local) / `"dev"`. Injected as `__BUILD_SHA__` (define) **and** used as Workbox
+  `cacheId: dps-<sha>` → each deploy gets fresh cache names; `cleanupOutdatedCaches` purges
+  the old ones. Combined with existing `skipWaiting` + `clientsClaim` + the `controllerchange`
+  reload in `main.js`, the new SW activates and reloads the page automatically.
+- `main.js`: footer + boot log now show `v0.4.0 · <sha>` so the live build is identifiable.
+- `eslint.config.js`: declared `__BUILD_SHA__` global.
+- *Verified*: `npm run build` → `dist/sw.js` contains `dps-fb05bce` (= current commit short SHA);
+  footer renders `v0.4.0 · fb05bce`. On the next deploy the SHA becomes that commit's hash.

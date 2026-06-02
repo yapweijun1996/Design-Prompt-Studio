@@ -14,6 +14,8 @@ export default [
       globals: {
         ...globals.browser,
         ...globals.serviceworker,
+        // Injected at build time by Vite `define` (commit SHA).
+        __BUILD_SHA__: "readonly",
       },
     },
     linterOptions: {

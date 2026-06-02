@@ -92,6 +92,8 @@ export function renderComponentsPage() {
   const searchInput = el("input", {
     type: "search",
     class: "components-page__search",
+    id: "components-search",
+    name: "components-search",
     placeholder: `Search ${componentCount()} components by name, use, libraries…`,
     "aria-label": "Search components",
   });

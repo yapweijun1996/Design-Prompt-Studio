@@ -8,6 +8,7 @@ import nova from "./curated/nova.json" with { type: "json" };
 import hush from "./curated/hush.json" with { type: "json" };
 
 import { generateStandardPrompts } from "./generate.js";
+import { STYLE_CATEGORY_MAP } from "../styles/categories.js";
 
 // ─── Curated (tier 1) ───────────────────────────────────────────────────────
 export const CURATED_PROMPTS = [horloge, roughhouse, stilllife, nova, hush];
@@ -55,11 +56,12 @@ const searchIndex = ALL_PROMPTS.map((p) => ({
 /**
  * Filter prompts by query + structured filters. All filter values are optional.
  */
-export function searchPrompts({ query = "", purpose = null, style = null, pageType = null, industry = null, tier = null } = {}) {
+export function searchPrompts({ query = "", purpose = null, category = null, style = null, pageType = null, industry = null, tier = null } = {}) {
   const q = query.trim().toLowerCase();
   return ALL_PROMPTS.filter((p) => {
     if (tier && p.tier !== tier) return false;
     if (purpose && p.purpose !== purpose) return false;
+    if (category && STYLE_CATEGORY_MAP[p.style] !== category) return false;
     if (style && p.style !== style) return false;
     if (pageType && p.pageType !== pageType) return false;
     if (industry && !(p.industryTags || []).includes(industry)) return false;

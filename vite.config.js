@@ -1,3 +1,4 @@
+import { execSync } from "node:child_process";
 import { defineConfig } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
 
@@ -5,8 +6,31 @@ import { VitePWA } from "vite-plugin-pwa";
 // When a custom domain is set, change `base` to "/".
 const BASE = "/Design-Prompt-Studio/";
 
+// Build identity = the commit SHA. On GitHub Actions, `GITHUB_SHA` is set
+// automatically; locally we read it from git; otherwise "dev". This value is:
+//   1. injected as `__BUILD_SHA__` (footer + boot log → the live build is always
+//      identifiable), and
+//   2. used as the Workbox `cacheId`, so every deploy ships a service worker with
+//      fresh cache names. Combined with cleanupOutdatedCaches + skipWaiting +
+//      clientsClaim + the controllerchange reload in main.js, end users always
+//      pick up the latest source on the next visit — no stale cache.
+function resolveBuildSha() {
+  if (process.env.GITHUB_SHA) return process.env.GITHUB_SHA.slice(0, 7);
+  try {
+    return execSync("git rev-parse --short HEAD", { stdio: ["ignore", "pipe", "ignore"] })
+      .toString()
+      .trim();
+  } catch {
+    return "dev";
+  }
+}
+const BUILD_SHA = resolveBuildSha();
+
 export default defineConfig({
   base: BASE,
+  define: {
+    __BUILD_SHA__: JSON.stringify(BUILD_SHA),
+  },
   server: {
     port: 5173,
     strictPort: false,
@@ -120,6 +144,9 @@ export default defineConfig({
         ],
       },
       workbox: {
+        // Cache namespace tied to the commit SHA → each deploy uses fresh cache
+        // names; cleanupOutdatedCaches purges the previous deploy's caches.
+        cacheId: `dps-${BUILD_SHA}`,
         globPatterns: ["**/*.{js,css,html,svg,png,ico,woff2,json}"],
         cleanupOutdatedCaches: true,
         clientsClaim: true,

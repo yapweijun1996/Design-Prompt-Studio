@@ -31,7 +31,7 @@ export function renderGallery({ initialPromptId = null, onTune }) {
 
   const state = {
     selectedId: initial.id,
-    filter: { query: "", purpose: null, style: null, tier: null },
+    filter: { query: "", purpose: null, category: null, style: null, tier: null },
     visibleCount: TILE_PAGE_SIZE,
   };
 
@@ -123,7 +123,7 @@ export function renderGallery({ initialPromptId = null, onTune }) {
           el("p", null, "No prompts match those filters."),
           el(
             "button",
-            { type: "button", class: "gallery__empty-cta", onClick: () => { state.filter = { query: "", purpose: null, style: null, tier: null }; renderFilters(); renderGrid(); } },
+            { type: "button", class: "gallery__empty-cta", onClick: () => { state.filter = { query: "", purpose: null, category: null, style: null, tier: null }; renderFilters(); renderGrid(); } },
             "Clear filters",
           ),
         ),
