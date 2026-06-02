@@ -42,25 +42,13 @@ export const GLOBAL_RULES = {
     ],
   },
 
-  deliberateDesign: {
-    id: "deliberateDesign",
-    title: "DELIBERATE DESIGN FLOOR (the difference between a senior designer and a template)",
-    bullets: [
-      "Every element must look chosen, not defaulted. No unstyled framework look (raw Bootstrap/Tailwind defaults), no default browser form controls, no flat untreated boxes.",
-      "Commit to the style's point of view in EVERY section — a hero that's polished over a body that's generic is a fail. Carry the craft all the way down (footer included).",
-      "Match the style's own depth language: if it uses shadows/borders/elevation, apply them consistently; if it's intentionally flat (Swiss/brutalist), stay flat on purpose — never flat-by-accident.",
-      "If a section looks like it could belong to any other site, it isn't done — push it toward the named references.",
-    ],
-  },
-
   craftFloor: {
     id: "craftFloor",
-    title: "TYPOGRAPHIC & SPATIAL CRAFT FLOOR (applies unless the style overrides)",
+    title: "CRAFT FLOOR (senior-designer vs template; the style may override)",
     bullets: [
-      "Use a real type scale — distinct, deliberate sizes for display / heading / body / caption. Never set a whole page at one or two sizes.",
-      "Body text 16–18px, line-height ~1.5–1.7; tighten leading + letter-spacing as type gets larger. Cap reading measure at ~70ch.",
-      "Use ONE consistent spacing scale (e.g. 4/8/12/16/24/32/48/64) for padding, gaps, and rhythm — no arbitrary one-off values.",
-      "Be generous and consistent with whitespace and section rhythm; let the page breathe. Crowding reads as cheap.",
+      "Deliberate design only — no default-framework look, no default form controls, no flat-by-accident boxes. Commit the style's point of view in EVERY section (footer included) and match its own depth language. If a section could belong to any other site, it isn't done.",
+      "Real type scale (distinct display / heading / body / caption); body 16–18px, line-height ~1.5–1.7, reading measure ≤ ~70ch.",
+      "One consistent spacing scale; generous, consistent whitespace and rhythm — crowding reads as cheap.",
     ],
   },
 
