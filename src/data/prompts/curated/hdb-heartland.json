@@ -5,6 +5,7 @@
   "tagline": "A BTO launch microsite for a new Singapore housing estate",
   "style": "bto",
   "locale": "singapore",
+  "market": "sg",
   "purpose": "identity",
   "pageType": "landing",
   "density": "balanced",

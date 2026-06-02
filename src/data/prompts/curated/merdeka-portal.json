@@ -5,6 +5,7 @@
   "tagline": "A Malaysian government services portal that citizens trust",
   "style": "government",
   "locale": "malay",
+  "market": "my",
   "purpose": "identity",
   "pageType": "landing",
   "density": "dense",

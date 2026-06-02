@@ -3,7 +3,7 @@
 //
 // Not part of the build — useful for verifying P1 / future data-layer changes.
 
-import { ALL_PROMPTS, CURATED_PROMPTS, promptStats, pickFeaturedPrompt, searchPrompts } from "../src/data/prompts/index.js";
+import { ALL_PROMPTS, CURATED_PROMPTS, promptStats, pickFeaturedPrompt, searchPrompts, getAvailableMarkets } from "../src/data/prompts/index.js";
 import { STYLE_PRESETS, STYLE_IDS } from "../src/data/styles/index.js";
 import { PAGE_TYPES, pageTypeCount } from "../src/data/taxonomy.js";
 import { assemblePrompt, assembleFromCard, promptStats as charStats } from "../src/lib/assemblePrompt.js";
@@ -161,6 +161,26 @@ check("every market (except none) names a currency + payment cue", () => {
 check("market survives share-URL round-trip (mk field)", () => {
   const payload = { s: "saas", p: "landing", lo: "chinese", mk: "my", b: {} };
   return JSON.parse(JSON.stringify(payload)).mk === "my";
+});
+check("national-visual: market 'my' adds a NATIONAL VISUAL ACCENT (Jalur Gemilang)", () => {
+  if (!getMarket("my").visual) return false;
+  const p = assemblePrompt({
+    style: "government", pageType: "landing",
+    density: "default", drama: "confident", motion: "default",
+    market: "my", sections: ["hero"], stack: "html",
+    promptMode: "one-shot", brief: { name: "Test" },
+  });
+  return p.includes("NATIONAL VISUAL ACCENT") && p.includes("Jalur Gemilang");
+});
+check("national-visual: market 'none' has no visual accent", () => getMarket("none").visual === null);
+check("gallery: getAvailableMarkets ≥ 6 (cards now market-tagged)", () => getAvailableMarkets().length >= 6);
+check("gallery: searchPrompts({market:'my'}) surfaces the Malaysia cards", () => {
+  const r = searchPrompts({ market: "my" });
+  const ids = r.map((p) => p.id);
+  return r.length >= 2 && ids.includes("peranakan-boutique") && ids.includes("merdeka-portal");
+});
+check("gallery: searchPrompts({market:'vn'}) surfaces saigon-cafe", () => {
+  return searchPrompts({ market: "vn" }).some((p) => p.id === "saigon-cafe");
 });
 
 // ─── Libraries ─────────────────────────────────────────────────────────────

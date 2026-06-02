@@ -5,6 +5,7 @@
   "tagline": "Specialty Vietnamese coffee, roasted in District 3",
   "style": "cafe",
   "locale": "vietnam",
+  "market": "vn",
   "purpose": "marketing",
   "pageType": "landing",
   "density": "balanced",

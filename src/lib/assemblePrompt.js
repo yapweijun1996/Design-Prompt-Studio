@@ -340,8 +340,12 @@ export function assemblePrompt(state) {
   // Market/Region axis — operating context (language, currency, payments, calendar,
   // civic tone), ORTHOGONAL to the cultural/visual layer above. Carries no visuals.
   const market = getMarket(state.market);
+  // Optional light national-visual accent — SUBORDINATE to the cultural/visual heritage.
+  const nationalAccentLine = market.visual
+    ? `\n- NATIONAL VISUAL ACCENT (use sparingly, for civic / national-day / sporting contexts only — the cultural heritage above leads the palette & type): ${market.visual}`
+    : "";
   const marketBlock = market.override
-    ? `<market-context>\nThis product operates in the market below. Use it for copy language, currency, payment options, seasonal calendar, and legal/trust cues — NOT for visual style (that is the design system + cultural context above).\n\n${market.override}\n</market-context>`
+    ? `<market-context>\nThis product operates in the market below. Use it for copy language, currency, payment options, seasonal calendar, and legal/trust cues — NOT for the primary visual style (that is the design system + cultural context above).\n\n${market.override}${nationalAccentLine}\n</market-context>`
     : null;
   const librariesBlock = buildLibrariesBlock(libraryIds, stack);
   const componentsBlock = buildComponentsBlock(state, sections, pageType);

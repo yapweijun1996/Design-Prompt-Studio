@@ -5,6 +5,7 @@
   "tagline": "An everyday super-app for Jakarta — ride, food, pay",
   "style": "delivery",
   "locale": "indonesia",
+  "market": "id",
   "purpose": "marketing",
   "pageType": "landing",
   "density": "balanced",

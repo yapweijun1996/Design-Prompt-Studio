@@ -67,6 +67,15 @@ export function getAvailableLocales() {
   return [...seen];
 }
 
+// Markets (Market/Region axis) present in the catalog — same contract as locales.
+export function getAvailableMarkets() {
+  const seen = new Set();
+  for (const p of ALL_PROMPTS) {
+    if (p.market && p.market !== "none") seen.add(p.market);
+  }
+  return [...seen];
+}
+
 // ─── Search index ───────────────────────────────────────────────────────────
 const searchIndex = ALL_PROMPTS.map((p) => ({
   id: p.id,
@@ -85,7 +94,7 @@ const searchIndex = ALL_PROMPTS.map((p) => ({
 /**
  * Filter prompts by query + structured filters. All filter values are optional.
  */
-export function searchPrompts({ query = "", purpose = null, category = null, style = null, pageType = null, industry = null, tier = null, locale = null } = {}) {
+export function searchPrompts({ query = "", purpose = null, category = null, style = null, pageType = null, industry = null, tier = null, locale = null, market = null } = {}) {
   const q = query.trim().toLowerCase();
   return ALL_PROMPTS.filter((p) => {
     if (tier && p.tier !== tier) return false;
@@ -100,6 +109,11 @@ export function searchPrompts({ query = "", purpose = null, category = null, sty
     if (locale) {
       const pl = p.locale || "default";
       if (pl !== locale) return false;
+    }
+    // Market = the Region/operating axis. Cards with no market are treated as "none".
+    if (market) {
+      const pm = p.market || "none";
+      if (pm !== market) return false;
     }
     if (q) {
       const idx = searchIndex.find((i) => i.id === p.id);

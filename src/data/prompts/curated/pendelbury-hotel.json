@@ -5,6 +5,7 @@
   "tagline": "A country house hotel in the Cotswolds, est. 1887",
   "style": "hotel",
   "locale": "english-trad",
+  "market": "uk",
   "purpose": "marketing",
   "pageType": "landing",
   "density": "sparse",

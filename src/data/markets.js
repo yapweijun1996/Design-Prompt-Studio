@@ -170,6 +170,26 @@ export const MARKET_PRESETS = [
   },
 ];
 
+// Optional NATIONAL VISUAL ACCENT per market — a LIGHT national-flavour layer the
+// user asked for ("a bit of national visual tone, layered with heritage"). It is
+// deliberately SUBORDINATE to the heritage/visual axis: a flag-derived accent for
+// civic / national-day / sporting contexts only — never the primary palette (that
+// stays heritage's job). Kept here (not a 3rd axis/selector) so it composes for free.
+const NATIONAL_VISUAL = {
+  us: "Stars & stripes — navy #3C3B6E + red #B22234 on white; star motif ONLY for patriotic/gov/sporting contexts.",
+  uk: "Union-flag navy #012169 + red #C8102E on white, or quiet heraldic restraint — an accent, never bunting.",
+  my: "Jalur Gemilang — royal blue, red, white, gold crescent & star — a sparing civic/Merdeka accent; defer to heritage palette otherwise.",
+  sg: "Singapore red & white + crescent-and-five-stars — a restrained National-Day / civic accent.",
+  vn: "Vietnam flag red #DA251D + gold star — aligns with lacquer-red heritage; gold star as a sparing accent.",
+  id: "Merah-putih (red #FF0000 + white) — a sparing Independence-Day / civic accent.",
+  th: "Thai tricolour red/white/blue, or royal gold — a restrained national accent; defer to heritage.",
+  jp: "Hinomaru — a single red disc #BC002D on white, extreme restraint and negative space; one accent dot, not a theme.",
+  kr: "Taegeukgi — red/blue taegeuk + black trigrams — a minimal accent on a clean white base.",
+  in: "Tiranga — saffron / white / green + navy Ashoka Chakra — a sparing national/festive accent; defer to heritage.",
+};
+// Attach at load so each market owns its `visual` accent string (null for none/global).
+for (const m of MARKET_PRESETS) m.visual = NATIONAL_VISUAL[m.id] || null;
+
 export const MARKET_IDS = MARKET_PRESETS.map((m) => m.id);
 
 export const MARKET_BY_ID = Object.fromEntries(MARKET_PRESETS.map((m) => [m.id, m]));

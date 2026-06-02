@@ -7,13 +7,14 @@ import { PURPOSE_BUCKETS } from "../data/taxonomy.js";
 import { STYLE_PRESETS } from "../data/styles/index.js";
 import { STYLE_CATEGORIES, STYLE_CATEGORY_MAP, categoryCount } from "../data/styles/categories.js";
 
-export function renderFilterBar({ initial = {}, onChange, locales = [] }) {
+export function renderFilterBar({ initial = {}, onChange, locales = [], markets = [] }) {
   const state = {
     query: initial.query || "",
     purpose: initial.purpose || null,
     category: initial.category || null,
     style: initial.style || null,
     locale: initial.locale || null,
+    market: initial.market || null,
     tier: initial.tier || null,
   };
 
@@ -58,6 +59,7 @@ export function renderFilterBar({ initial = {}, onChange, locales = [] }) {
   const categoryGroup = el("div");
   const styleGroup = el("div");
   const localeGroup = el("div"); // Region/Culture axis — only painted if locales exist
+  const marketGroup = el("div"); // Market/Region axis — only painted if markets exist
   const tierGroup = el("div");
 
   // U2: the flat style list is ~100 chips. By default (no category, no style
@@ -112,6 +114,16 @@ export function renderFilterBar({ initial = {}, onChange, locales = [] }) {
       });
     }
 
+    // Market (Market/Region axis) — only shown when the catalog has market-tagged cards.
+    if (markets.length) {
+      fillChipGroup(marketGroup, {
+        label: "Market",
+        options: [{ id: null, name: "All" }, ...markets],
+        selected: state.market,
+        onSelect: (id) => { state.market = id; onChange?.({ ...state }); paint(); },
+      });
+    }
+
     fillChipGroup(tierGroup, {
       label: "Tier",
       options: [
@@ -128,7 +140,7 @@ export function renderFilterBar({ initial = {}, onChange, locales = [] }) {
 
   root.append(
     searchWrap,
-    el("div", { class: "filter-bar__chips" }, purposeGroup, categoryGroup, styleGroup, localeGroup, tierGroup),
+    el("div", { class: "filter-bar__chips" }, purposeGroup, categoryGroup, styleGroup, localeGroup, marketGroup, tierGroup),
   );
 
   return root;
