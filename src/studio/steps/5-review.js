@@ -136,6 +136,7 @@ function buildShareUrl(state) {
     r: state.drama,
     m: state.motion,
     lo: state.locale,
+    mk: state.market,
     k: state.stack,
     o: state.outputMode,
     M: state.promptMode,

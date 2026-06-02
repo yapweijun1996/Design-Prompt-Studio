@@ -8,6 +8,7 @@ import { STYLE_PRESETS, STYLE_LIST } from "../../data/styles/index.js";
 import { STYLE_VARIANTS, findVariantForState } from "../../data/style-variants.js";
 import { DENSITY_LEVELS, DRAMA_LEVELS, MOTION_LEVELS } from "../../data/modifiers.js";
 import { LOCALE_PRESETS } from "../../data/locales.js";
+import { MARKET_PRESETS, getMarket } from "../../data/markets.js";
 import { MOOD_PRESETS } from "../../data/moods.js";
 import { STYLE_CATEGORIES, STYLE_CATEGORY_MAP, categoryCount } from "../../data/styles/categories.js";
 
@@ -217,15 +218,45 @@ export function renderStep1({ state, onStateChange }) {
     moreSlot,
   );
 
-  // Region / Culture — a composable layer applied on top of ANY style. First-class
-  // control (not hidden under "advanced"): sets state.locale, injects a
-  // <cultural-context> block (fonts/palette/motif) into the assembled prompt.
-  root.append(
-    sectionLabel("Region / Culture", "Localizes any style — fonts, palette, motif, copy"),
-    radioRow(
+  // Region / Culture (heritage) — the VISUAL axis: fonts, palette, motif, copy.
+  // Kept in a rebuildable slot so the Market row below can auto-select a coherent
+  // heritage when a market is picked (overridable).
+  let localeRow = buildLocaleRow();
+  function buildLocaleRow() {
+    return radioRow(
       LOCALE_PRESETS,
       state.locale || "default",
       (id) => { state.locale = id; onStateChange?.(); rebuildCards(); },
+    );
+  }
+  function rebuildLocaleRow() {
+    const fresh = buildLocaleRow();
+    localeRow.replaceWith(fresh);
+    localeRow = fresh;
+  }
+  root.append(
+    sectionLabel("Region / Culture", "Visual heritage — fonts, palette, motif, copy"),
+    localeRow,
+  );
+
+  // Market / Region — the OPERATING axis (orthogonal by kind): language, currency,
+  // payments, calendar, civic tone. Sets state.market → a <market-context> block.
+  // Picking a market defaults the heritage to a coherent one IF none chosen yet.
+  root.append(
+    sectionLabel("Market / Region", "Where it operates — language, currency, payments, calendar"),
+    radioRow(
+      MARKET_PRESETS,
+      state.market || "none",
+      (id) => {
+        state.market = id;
+        const m = getMarket(id);
+        if (m.defaultHeritage && (!state.locale || state.locale === "default")) {
+          state.locale = m.defaultHeritage;
+          rebuildLocaleRow();
+        }
+        onStateChange?.();
+        rebuildCards();
+      },
     ),
   );
 

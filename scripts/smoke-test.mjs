@@ -10,6 +10,7 @@ import { assemblePrompt, assembleFromCard, promptStats as charStats } from "../s
 import { STYLE_VARIANTS, getVariant, findVariantForState } from "../src/data/style-variants.js";
 import { MOOD_PRESETS } from "../src/data/moods.js";
 import { LOCALE_PRESETS, getLocale, localeCount } from "../src/data/locales.js";
+import { MARKET_PRESETS, getMarket, marketCount } from "../src/data/markets.js";
 import { LIBRARIES, LIBRARY_CATEGORIES, libraryCount, getLibrary } from "../src/data/libraries.js";
 
 const checks = [];
@@ -122,6 +123,44 @@ check("locale survives share-URL encode→decode round-trip (lo field)", () => {
   const payload = { s: "cafe", p: "landing", d: "default", r: "confident", m: "default", lo: "vietnam", k: "html", o: "single-file", M: "one-shot", se: ["hero"], l: [], b: {} };
   const decoded = JSON.parse(JSON.stringify(payload));
   return decoded.lo === "vietnam";
+});
+
+// ─── Market / Region axis (orthogonal to heritage) ───────────────────────────
+check("MARKET_PRESETS has ≥ 6 entries", () => marketCount() >= 6);
+check("market 'none' exists and injects NO market-context", () => {
+  if (getMarket("none").override !== "") return false;
+  const p = assemblePrompt({
+    style: "saas", pageType: "landing",
+    density: "default", drama: "confident", motion: "default",
+    market: "none", sections: ["hero"], stack: "html",
+    promptMode: "one-shot", brief: { name: "Test" },
+  });
+  return !p.includes("<market-context>");
+});
+check("market 'my' injects <market-context> with Ringgit + FPX", () => {
+  const p = assemblePrompt({
+    style: "saas", pageType: "landing",
+    density: "default", drama: "confident", motion: "default",
+    market: "my", sections: ["hero"], stack: "html",
+    promptMode: "one-shot", brief: { name: "Test" },
+  });
+  return p.includes("<market-context>") && p.includes("MARKET CONTEXT — MALAYSIA") && p.includes("FPX") && p.includes("Ringgit");
+});
+check("two axes compose: heritage=chinese × market=my → BOTH blocks present", () => {
+  const p = assemblePrompt({
+    style: "boutique", pageType: "landing",
+    density: "default", drama: "confident", motion: "default",
+    locale: "chinese", market: "my", sections: ["hero"], stack: "html",
+    promptMode: "one-shot", brief: { name: "新年礼盒" },
+  });
+  return p.includes("CULTURAL CONTEXT — CHINESE") && p.includes("MARKET CONTEXT — MALAYSIA");
+});
+check("every market (except none) names a currency + payment cue", () => {
+  return MARKET_PRESETS.every((m) => m.id === "none" || /Payments to surface/i.test(m.override));
+});
+check("market survives share-URL round-trip (mk field)", () => {
+  const payload = { s: "saas", p: "landing", lo: "chinese", mk: "my", b: {} };
+  return JSON.parse(JSON.stringify(payload)).mk === "my";
 });
 
 // ─── Libraries ─────────────────────────────────────────────────────────────

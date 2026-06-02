@@ -11,6 +11,7 @@ import { STYLE_PRESETS } from "../data/styles/index.js";
 import { PAGE_TYPES } from "../data/taxonomy.js";
 import { DENSITY_LEVELS, DRAMA_LEVELS, MOTION_LEVELS } from "../data/modifiers.js";
 import { getLocale } from "../data/locales.js";
+import { getMarket } from "../data/markets.js";
 import { renderGlobalRules } from "../data/global-rules.js";
 import { getLibrary } from "../data/libraries.js";
 import {
@@ -336,6 +337,12 @@ export function assemblePrompt(state) {
   const culturalBlock = locale.override
     ? `<cultural-context>\nApply this cultural layer ON TOP of the design system above. Fonts, palette, and motifs named here are mandatory; the anti-stereotype rules override decorative defaults.\n\n${locale.override}${fontLoadLine}\n</cultural-context>`
     : null;
+  // Market/Region axis — operating context (language, currency, payments, calendar,
+  // civic tone), ORTHOGONAL to the cultural/visual layer above. Carries no visuals.
+  const market = getMarket(state.market);
+  const marketBlock = market.override
+    ? `<market-context>\nThis product operates in the market below. Use it for copy language, currency, payment options, seasonal calendar, and legal/trust cues — NOT for visual style (that is the design system + cultural context above).\n\n${market.override}\n</market-context>`
+    : null;
   const librariesBlock = buildLibrariesBlock(libraryIds, stack);
   const componentsBlock = buildComponentsBlock(state, sections, pageType);
   const operatingRulesBlock = buildOperatingRules(state, stack, sectionList);
@@ -346,6 +353,7 @@ export function assemblePrompt(state) {
     `<global-rules>\n${globalRulesText}\n</global-rules>`,
     `<design-system>\n${designSystemBlock}\n</design-system>`,
     culturalBlock,
+    marketBlock,
     librariesBlock,
     componentsBlock,
     operatingRulesBlock,
@@ -370,6 +378,7 @@ export function assembleFromCard(card) {
     drama: card.drama,
     motion: card.motion,
     locale: card.locale,
+    market: card.market,
     pageType: card.pageType,
     sections: card.sections,
     stack: card.stack,
