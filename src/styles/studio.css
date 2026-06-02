@@ -949,3 +949,100 @@
   .step__grid { grid-template-columns: 1fr; }
   .step__field--full { grid-column: auto; }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   DIRECTION B REFINEMENTS — applied over the rules above so Studio,
+   Express & Components match the redesigned Gallery: sans chrome (mono
+   is for code only), soft radii, indigo accent, real depth. Later rules
+   win at equal specificity, so this is an additive theming layer.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* 1 — De-monospace the UI chrome */
+.express__eyebrow, .express__section-title, .express__preview-meta,
+.studio__resume-banner, .studio__resume-reset, .studio__resume-dismiss,
+.wizard__sidebar-title, .wizard__step-num, .wizard__step-mark, .wizard__step-eyebrow,
+.wizard__nav-btn, .wizard__exit, .express__exit,
+.step__section-label, .step__variant-count, .step__variant-mood-tag, .step__variant-more-btn,
+.step__advanced-summary, .step__lib-card-license, .step__lib-card-meta, .step__card-tag,
+.radio-row__name, .step__label, .step__copy-btn, .step__action-btn {
+  font-family: var(--font-sans);
+  letter-spacing: 0.04em;
+}
+
+/* 2 — Soft radius on interactive surfaces */
+.wizard__step-btn, .wizard__exit, .wizard__nav-btn, .step__variant-search, .step__lib-search,
+.step__type-card, .step__check, .step__input, .step__textarea, .radio-row__btn,
+.step__variant-more-btn, .express__exit, .studio__resume-reset, .studio__resume-dismiss,
+.step__action-btn, .step__copy-btn { border-radius: var(--radius-md); }
+.step__variant-card, .step__card, .step__lib-card { border-radius: var(--radius-lg); overflow: hidden; }
+.step__prompt, .express__preview, .express__preview-prompt { border-radius: var(--radius-lg); }
+
+/* 3 — Variant + style cards: surface + hover lift + accent glow */
+.step__variant-card, .step__card, .step__lib-card {
+  background: var(--surface); border-color: var(--border-2); box-shadow: var(--shadow);
+  transition: transform var(--duration-base) var(--ease-out),
+              box-shadow var(--duration-base) var(--ease-out),
+              border-color var(--duration-base) var(--ease-out);
+}
+.step__variant-card:hover, .step__card:hover, .step__lib-card:hover {
+  transform: translateY(-3px); border-color: var(--accent-ring); box-shadow: var(--glow-accent);
+}
+.step__variant-card.is-active, .step__card.is-active, .step__lib-card.is-checked {
+  border-color: var(--accent); outline: none; box-shadow: var(--glow-accent);
+}
+.step__variant-name, .step__card-name { font-family: var(--font-display); }
+
+/* 4 — Radio rows + type cards: accent-soft active (match chips) */
+.radio-row__btn, .step__type-card { background: var(--surface); border-color: var(--border-2); }
+.radio-row__btn:hover, .step__type-card:hover { border-color: var(--fg-subtle); color: var(--fg); }
+.radio-row__btn.is-active, .step__type-card.is-active {
+  background: var(--accent-soft); color: var(--accent-2); border-color: var(--accent-ring);
+}
+.radio-row__name { text-transform: none; font-size: 13px; font-weight: 500; }
+
+/* 5 — Inputs: surface + accent focus ring */
+.step__input, .step__textarea, .step__variant-search, .step__lib-search {
+  background: var(--surface); border-color: var(--border-2);
+}
+.step__input:focus, .step__textarea:focus, .step__variant-search:focus, .step__lib-search:focus {
+  outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+/* 6 — Primary buttons: indigo gradient + glow */
+.step__copy-btn, .wizard__nav-btn--primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color: var(--accent-fg); border: none; font-weight: 600; text-transform: none;
+  box-shadow: 0 12px 28px -12px var(--accent-ring);
+}
+.step__copy-btn:hover, .wizard__nav-btn--primary:hover:not(:disabled) {
+  transform: translateY(-1px); opacity: 1; box-shadow: 0 16px 36px -12px var(--accent-ring);
+}
+.step__copy-btn.is-copied { background: var(--success); box-shadow: none; color: #06231a; }
+
+/* 7 — Secondary buttons: surface + rounded + accent hover */
+.wizard__nav-btn, .step__action-btn, .express__exit, .step__variant-more-btn,
+.studio__resume-reset, .studio__resume-dismiss {
+  background: var(--surface); border: var(--border-thin) solid var(--border-2);
+  color: var(--fg-muted); text-transform: none; font-weight: 500;
+}
+.wizard__nav-btn:hover:not(:disabled), .step__action-btn:hover, .express__exit:hover,
+.step__variant-more-btn:hover, .studio__resume-reset:hover, .studio__resume-dismiss:hover {
+  border-color: var(--accent); color: var(--fg);
+}
+
+/* 8 — Wizard chrome: glassy sidebar/footer, accent step + progress */
+.wizard__sidebar, .wizard__footer { background: color-mix(in srgb, var(--bg) 86%, transparent); }
+.wizard__step.is-current .wizard__step-btn {
+  background: var(--accent-soft); color: var(--accent-2); border-color: transparent; border-radius: var(--radius-md);
+}
+.wizard__progress { border-radius: var(--radius-pill); }
+.wizard__progress-bar { background: linear-gradient(90deg, var(--accent), var(--accent-cyan)); }
+.step__tip { border-radius: var(--radius-md); border-left-color: var(--accent); background: var(--accent-soft); color: var(--fg-muted); }
+.step__section-label { border-bottom-color: var(--border); }
+
+/* 9 — Express preview panel */
+.express__preview { background: var(--surface); border-color: var(--border-2); box-shadow: var(--shadow); }
+.express__preview-prompt { background: var(--bg-elevated); border-color: var(--border); }
+
+/* 10 — Step-2 category chips: accent-soft active (not solid black) */
+.step__variant-chips--category .chip.is-active { background: var(--accent-soft); color: var(--accent-2); }

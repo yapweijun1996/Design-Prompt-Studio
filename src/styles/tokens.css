@@ -1,26 +1,22 @@
-/* Design tokens — light by default, dark via prefers-color-scheme or data-theme="dark". */
+/* Design tokens — Direction B "Product" language.
+   Dark = rich near-black + indigo→cyan signature accent (the default mood the
+   redesign is built around). Light = a polished warm-neutral companion that keeps
+   the same accent, type, depth, and motion (never the old cold monochrome). */
 :root {
-  /* Type */
-  --font-sans: "Inter Tight", system-ui, sans-serif;
+  /* Type — expressive display + clean body; mono is now a RARE accent (code only) */
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-display: "Space Grotesk", "Inter", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
-  --font-display: "Inter Tight", system-ui, sans-serif;
 
   /* Scale */
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 24px;
-  --space-6: 32px;
-  --space-7: 48px;
-  --space-8: 64px;
-  --space-9: 96px;
-  --space-10: 128px;
+  --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px; --space-5: 24px;
+  --space-6: 32px; --space-7: 48px; --space-8: 64px; --space-9: 96px; --space-10: 128px;
 
-  /* Radius */
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 16px;
+  /* Radius — soft, considered (no more sharp dev-tool corners) */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-pill: 999px;
 
   /* Border weight */
   --border-thin: 1px;
@@ -28,77 +24,101 @@
   --border-thick: 4px;
 
   /* Motion */
-  --duration-fast: 120ms;
-  --duration-base: 200ms;
-  --duration-slow: 320ms;
+  --duration-fast: 140ms;
+  --duration-base: 220ms;
+  --duration-slow: 380ms;
   --ease-out: cubic-bezier(0.2, 0, 0, 1);
 
   /* Layout */
-  --container-max: 1400px;
-  --header-height: 64px;
+  --container-max: 1240px;
+  --header-height: 70px;
 
-  /* Color — light scheme defaults */
-  --bg: #FFFFFF;
-  --bg-elevated: #FAFAFA;
-  --fg: #0A0A0A;
-  --fg-muted: #525252;
-  --fg-subtle: #8E8E8E;
-  --border: #E5E5E5;
-  --border-strong: #0A0A0A;
-  --accent: #0A0A0A;
+  /* Signature accent — indigo → cyan (shared by both themes) */
+  --accent: #6E62F6;
+  --accent-strong: #5A4DE0;
+  --accent-2: #9C8CFF;
+  --accent-cyan: #46E0D0;
   --accent-fg: #FFFFFF;
-  --focus: #0A0A0A;
-  --danger: #B91C1C;
-  --success: #047857;
+  --accent-soft: rgba(110, 98, 246, 0.12);
+  --accent-ring: rgba(110, 98, 246, 0.40);
+
+  /* Back-compat aliases (components-page.css uses these names) — theme-aware */
+  --rule: var(--border);
+  --bg-soft: var(--surface-2);
+  --fg-soft: var(--fg);
+
+  /* ── LIGHT palette (polished warm-neutral companion) ── */
+  --bg: #FAF9F7;
+  --bg-elevated: #FFFFFF;
+  --surface: #FFFFFF;
+  --surface-2: #F4F2EE;
+  --fg: #16161A;
+  --fg-muted: #585862;
+  --fg-subtle: #8B8B95;
+  --border: #E8E5DF;
+  --border-2: #DCD8D0;
+  --border-strong: #16161A;
+  --focus: #6E62F6;
+  --danger: #C0362B;
+  --success: #0E8A5F;
+
+  --shadow: 0 1px 2px rgba(16,16,26,.05), 0 14px 34px -18px rgba(16,16,26,.20);
+  --shadow-lg: 0 2px 6px rgba(16,16,26,.06), 0 30px 60px -24px rgba(16,16,26,.28);
+  --glow-accent: 0 0 0 1px var(--accent-ring), 0 18px 44px -16px rgba(110,98,246,.36);
+  --hero-glow: radial-gradient(680px 320px at 18% 22%, rgba(110,98,246,.14), transparent 70%),
+               radial-gradient(560px 300px at 78% 8%, rgba(70,224,208,.10), transparent 72%);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #050506;
-    --bg-elevated: #0E0E10;
-    --fg: #EDEDEF;
-    --fg-muted: #A0A0A8;
-    --fg-subtle: #6B6B73;
-    --border: #1F1F22;
-    --border-strong: #EDEDEF;
-    --accent: #EDEDEF;
-    --accent-fg: #050506;
-    --focus: #EDEDEF;
+    --bg: #0B0C0F;
+    --bg-elevated: #15171D;
+    --surface: #15171D;
+    --surface-2: #1B1E26;
+    --fg: #ECEDF1;
+    --fg-muted: #9A9DA6;
+    --fg-subtle: #6A6D77;
+    --border: #23262E;
+    --border-2: #2D313B;
+    --border-strong: #3A3F4B;
+    --focus: #9C8CFF;
+    --danger: #F0716A;
+    --success: #46D6A0;
+
+    --shadow: 0 1px 0 rgba(255,255,255,.03) inset, 0 18px 40px -22px rgba(0,0,0,.82);
+    --shadow-lg: 0 1px 0 rgba(255,255,255,.04) inset, 0 30px 64px -24px rgba(0,0,0,.9);
+    --glow-accent: 0 0 0 1px var(--accent-ring), 0 22px 54px -18px rgba(110,98,246,.55);
+    --hero-glow: radial-gradient(640px 340px at 16% 24%, rgba(110,98,246,.30), transparent 70%),
+                 radial-gradient(560px 320px at 80% 6%, rgba(70,224,208,.14), transparent 72%);
   }
 }
 
 [data-theme="light"] {
   color-scheme: light;
-  --bg: #FFFFFF;
-  --bg-elevated: #FAFAFA;
-  --fg: #0A0A0A;
-  --fg-muted: #525252;
-  --fg-subtle: #8E8E8E;
-  --border: #E5E5E5;
-  --border-strong: #0A0A0A;
-  --accent: #0A0A0A;
-  --accent-fg: #FFFFFF;
-  --focus: #0A0A0A;
+  --bg: #FAF9F7; --bg-elevated: #FFFFFF; --surface: #FFFFFF; --surface-2: #F4F2EE;
+  --fg: #16161A; --fg-muted: #585862; --fg-subtle: #8B8B95;
+  --border: #E8E5DF; --border-2: #DCD8D0; --border-strong: #16161A; --focus: #6E62F6;
+  --danger: #C0362B; --success: #0E8A5F;
+  --shadow: 0 1px 2px rgba(16,16,26,.05), 0 14px 34px -18px rgba(16,16,26,.20);
+  --shadow-lg: 0 2px 6px rgba(16,16,26,.06), 0 30px 60px -24px rgba(16,16,26,.28);
+  --glow-accent: 0 0 0 1px var(--accent-ring), 0 18px 44px -16px rgba(110,98,246,.36);
+  --hero-glow: radial-gradient(680px 320px at 18% 22%, rgba(110,98,246,.14), transparent 70%),
+               radial-gradient(560px 300px at 78% 8%, rgba(70,224,208,.10), transparent 72%);
 }
 
 [data-theme="dark"] {
   color-scheme: dark;
-  --bg: #050506;
-  --bg-elevated: #0E0E10;
-  --fg: #EDEDEF;
-  --fg-muted: #A0A0A8;
-  --fg-subtle: #6B6B73;
-  --border: #1F1F22;
-  --border-strong: #EDEDEF;
-  --accent: #EDEDEF;
-  --accent-fg: #050506;
-  --focus: #EDEDEF;
+  --bg: #0B0C0F; --bg-elevated: #15171D; --surface: #15171D; --surface-2: #1B1E26;
+  --fg: #ECEDF1; --fg-muted: #9A9DA6; --fg-subtle: #6A6D77;
+  --border: #23262E; --border-2: #2D313B; --border-strong: #3A3F4B; --focus: #9C8CFF;
+  --danger: #F0716A; --success: #46D6A0;
+  --shadow: 0 1px 0 rgba(255,255,255,.03) inset, 0 18px 40px -22px rgba(0,0,0,.82);
+  --shadow-lg: 0 1px 0 rgba(255,255,255,.04) inset, 0 30px 64px -24px rgba(0,0,0,.9);
+  --glow-accent: 0 0 0 1px var(--accent-ring), 0 22px 54px -18px rgba(110,98,246,.55);
+  --hero-glow: radial-gradient(640px 340px at 16% 24%, rgba(110,98,246,.30), transparent 70%),
+               radial-gradient(560px 320px at 80% 6%, rgba(70,224,208,.14), transparent 72%);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  :root {
-    --duration-fast: 1ms;
-    --duration-base: 1ms;
-    --duration-slow: 1ms;
-  }
+  :root { --duration-fast: 1ms; --duration-base: 1ms; --duration-slow: 1ms; }
 }

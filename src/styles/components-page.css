@@ -316,3 +316,43 @@
     gap: 4px;
   }
 }
+
+/* ═══ DIRECTION B REFINEMENTS (match the redesigned app) ═══ */
+.components-page__eyebrow {
+  font-family: var(--font-sans); font-weight: 600; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--accent-2);
+}
+.components-page__title { font-family: var(--font-display); font-weight: 600; }
+.components-page__count, .comp-card__cat, .comp-card__label {
+  font-family: var(--font-sans); letter-spacing: 0.04em;
+}
+
+.components-page__search {
+  border-radius: var(--radius-pill); border-color: var(--border-2);
+  background: var(--surface); padding: 12px 18px; color: var(--fg);
+}
+.components-page__search:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+
+.components-page__cta, .comp-card__action {
+  border-radius: var(--radius-md); border-color: var(--border-2); background: var(--surface); color: var(--fg);
+}
+.components-page__cta:hover, .comp-card__action:hover { border-color: var(--accent); background: var(--surface); }
+.components-page__cta--primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong)); color: var(--accent-fg);
+  border: none; box-shadow: 0 10px 24px -12px var(--accent-ring);
+}
+.components-page__cta--primary:hover { transform: translateY(-1px); }
+
+.comp-card {
+  border-radius: var(--radius-lg); border-color: var(--border-2); background: var(--surface); box-shadow: var(--shadow);
+  transition: transform var(--duration-base) var(--ease-out), box-shadow var(--duration-base) var(--ease-out),
+              border-color var(--duration-base) var(--ease-out);
+}
+.comp-card:hover, .comp-card.is-expanded { border-color: var(--accent-ring); box-shadow: var(--glow-accent); }
+.comp-card__name { font-family: var(--font-display); }
+.comp-card__tier { background: var(--accent-soft); color: var(--accent-2); border-radius: var(--radius-sm); font-family: var(--font-sans); }
+.comp-card__body { border-top-color: var(--border); }
+.comp-card__pill { font-family: var(--font-sans); border-radius: var(--radius-pill); background: var(--surface-2); color: var(--fg-muted); }
+.comp-card__pill--lib { background: var(--accent-soft); color: var(--accent-2); }
+.comp-card__pill--style { background: rgba(201,162,75,.16); color: #C9A24B; }
+.comp-card__pill--ctx { background: rgba(70,224,208,.14); color: var(--accent-cyan); }
