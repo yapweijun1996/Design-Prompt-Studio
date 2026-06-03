@@ -244,6 +244,24 @@
   font-size: 10px; font-weight: 600; letter-spacing: 0.08em; color: var(--accent-2); text-transform: uppercase;
 }
 
+/* Collapsed-catalog drill-in hint: "⊞ 34 layouts" — picks the style filter. */
+.tile__layouts {
+  align-self: flex-start;
+  margin-top: 2px;
+  display: inline-flex; align-items: center; gap: 5px;
+  font-family: var(--font-sans); font-size: 12px; font-weight: 500;
+  color: var(--fg-subtle);
+  background: var(--bg-soft);
+  border: var(--border-thin) solid var(--rule);
+  border-radius: var(--radius-pill);
+  padding: 4px 11px; cursor: pointer;
+  transition: color var(--duration-fast) var(--ease-out), border-color var(--duration-fast) var(--ease-out), background var(--duration-fast) var(--ease-out);
+}
+.tile__layouts:hover, .tile__layouts:focus-visible {
+  color: var(--accent-2); background: var(--accent-soft); border-color: var(--accent-ring);
+  outline: none;
+}
+
 .gallery__more-slot { display: flex; justify-content: center; padding: 0 var(--space-5) var(--space-8); }
 .gallery__more-btn {
   padding: 13px var(--space-6);

@@ -7,7 +7,7 @@ import { STYLE_PRESETS } from "../data/styles/index.js";
 import { PAGE_TYPES } from "../data/taxonomy.js";
 import { assembleFromCard } from "../lib/assemblePrompt.js";
 
-export function renderPromptTile({ card, isActive = false, onSelect, onQuickCopy }) {
+export function renderPromptTile({ card, isActive = false, onSelect, onQuickCopy, layoutCount = null, onDrillIn = null }) {
   const style = STYLE_PRESETS[card.style];
   const pageType = PAGE_TYPES[card.pageType];
 
@@ -75,11 +75,31 @@ export function renderPromptTile({ card, isActive = false, onSelect, onQuickCopy
     info.appendChild(el("span", { class: "tile__badge" }, "★ Curated"));
   }
 
+  // Collapsed catalog view: advertise the drill-in — this style is available in
+  // `layoutCount` page-type layouts; the pill expands to all of them.
+  if (layoutCount && onDrillIn) {
+    const layoutsBtn = el(
+      "button",
+      {
+        class: "tile__layouts",
+        type: "button",
+        title: `See all ${layoutCount} page-type layouts in this style`,
+        "aria-label": `See all ${layoutCount} layouts in the ${style?.name || card.style} style`,
+        onClick: (e) => { e.stopPropagation(); onDrillIn(card.style); },
+      },
+      `⊞ ${layoutCount} layouts`,
+    );
+    // Keep keyboard activation on the pill from also selecting the tile.
+    layoutsBtn.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") e.stopPropagation(); });
+    info.appendChild(layoutsBtn);
+  }
+
   tile.append(preview, info);
 
   // Click selects (swap hero)
   tile.addEventListener("click", () => onSelect?.(card));
   tile.addEventListener("keydown", (e) => {
+    if (e.target !== tile) return; // nested buttons (quick-copy, layouts) handle their own keys
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       onSelect?.(card);
