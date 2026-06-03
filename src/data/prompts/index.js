@@ -161,6 +161,26 @@ export function sortForBrowse(cards) {
   return [...curated, ...standard];
 }
 
+// Collapse a browse result to ONE representative card per base style, turning the
+// default gallery into a tight ~116-style CATALOG instead of a ~3550-variant feed.
+// Curated cards are all kept (a pinned showcase); for standard cards only the first
+// occurrence of each style survives. MUST run AFTER sortForBrowse so "first per
+// style" is the LANDING page (rank 0) — in raw style-major generation it would be
+// the 404. The gallery applies this only when no specific style is selected; picking
+// a style shows that style's full page-type set (no functional loss — every combo is
+// still reachable via the Style filter). Revert = stop calling this one function.
+export function collapseToStyles(cards) {
+  const seen = new Set();
+  const out = [];
+  for (const c of cards) {
+    if (c.tier === "curated") { out.push(c); continue; } // keep all curated (showcase)
+    if (seen.has(c.style)) continue;
+    seen.add(c.style);
+    out.push(c);
+  }
+  return out;
+}
+
 // ─── Featured rotation (hero default) ───────────────────────────────────────
 /**
  * Pick the prompt to show in the gallery hero on first load.
