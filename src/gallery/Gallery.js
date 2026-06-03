@@ -12,6 +12,7 @@ import { store } from "../lib/store.js";
 import { ALL_PROMPTS, searchPrompts, sortForBrowse, collapseToStyles, pickFeaturedPrompt, getPromptById, getFeaturedPrompts, getAvailableLocales, getAvailableMarkets } from "../data/prompts/index.js";
 import { getLocale } from "../data/locales.js";
 import { getMarket } from "../data/markets.js";
+import { PAGE_TYPES } from "../data/taxonomy.js";
 import { renderHeroStrip } from "./HeroStrip.js";
 import { renderFilterBar } from "./FilterBar.js";
 import { renderPromptTile } from "./PromptTile.js";
@@ -20,6 +21,9 @@ const STORAGE_KEY_LAST = "last-prompt";
 const STORAGE_KEY_COPIES = "copies";
 
 const TILE_PAGE_SIZE = 24;
+// Every base style is generated in all page types, so each collapsed catalog card
+// stands in for this many page-type layouts (advertised via the drill-in hint).
+const LAYOUTS_PER_STYLE = Object.keys(PAGE_TYPES).length;
 
 export function renderGallery({ initialPromptId = null, onTune }) {
   // ─── Initial state ────────────────────────────────────────────────────────
@@ -104,6 +108,19 @@ export function renderGallery({ initialPromptId = null, onTune }) {
     });
   }
 
+  // Drill in from a collapsed catalog card → show that style's full page-type set.
+  // Reuses the same filter path as the Style chip (renderFilters re-syncs the chip UI).
+  function drillIntoStyle(styleId) {
+    if (!styleId) return;
+    state.filter = { ...state.filter, style: styleId };
+    state.visibleCount = TILE_PAGE_SIZE;
+    renderFilters();
+    renderGrid();
+    window.requestAnimationFrame(() => {
+      gridSlot.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }
+
   function pickRandom() {
     const featured = getFeaturedPrompts();
     let next;
@@ -183,7 +200,8 @@ export function renderGallery({ initialPromptId = null, onTune }) {
     // Default view = one-card-per-style catalog; picking a specific style expands to
     // that style's full page-type set (see collapseToStyles).
     let ordered = sortForBrowse(results);
-    if (!state.filter.style) ordered = collapseToStyles(ordered);
+    const collapsed = !state.filter.style;
+    if (collapsed) ordered = collapseToStyles(ordered);
     const visible = ordered.slice(0, state.visibleCount);
     for (const card of visible) {
       const tile = renderPromptTile({
@@ -191,6 +209,10 @@ export function renderGallery({ initialPromptId = null, onTune }) {
         isActive: card.id === state.selectedId,
         onSelect: (c) => selectCard(c),
         onQuickCopy: (c, ok) => { if (ok) recordCopy(c); },
+        // Collapsed catalog: each standard card stands in for a whole style — offer a
+        // one-click drill-in to its full set of page-type layouts.
+        layoutCount: collapsed && card.tier !== "curated" ? LAYOUTS_PER_STYLE : null,
+        onDrillIn: drillIntoStyle,
       });
       gridSlot.appendChild(tile);
     }
