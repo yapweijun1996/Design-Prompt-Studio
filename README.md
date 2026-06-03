@@ -127,4 +127,4 @@ The `docs/` folder holds the living design documents:
 
 ## License
 
-MIT © Yap Wei Jun
+[MIT](LICENSE) © Yap Wei Jun
