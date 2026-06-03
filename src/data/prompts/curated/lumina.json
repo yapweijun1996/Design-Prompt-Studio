@@ -1,0 +1,28 @@
+{
+  "id": "lumina",
+  "tier": "curated",
+  "name": "LUMINA",
+  "tagline": "Electric concept-car immersive reveal",
+  "style": "cyberpunk",
+  "purpose": "experience",
+  "pageType": "immersive",
+  "density": "default",
+  "drama": "loud",
+  "motion": "playful",
+  "promptMode": "one-shot",
+  "sections": ["full-bleed-hero", "scroll-scenes", "parallax-layers", "interactive-moments", "reveal-cta", "credits-footer"],
+  "stack": "react",
+  "outputMode": "page-component",
+  "industryTags": ["automotive", "luxury", "launch", "immersive", "B2C"],
+  "brief": {
+    "name": "LUMINA",
+    "industry": "Electric concept-car launch experience for a premium automotive brand",
+    "audience": "Design-conscious premium buyers and EV enthusiasts aged 28-50. Many arrive on mobile from a social teaser, then revisit on desktop. They expect cinematic storytelling but still need real specs (range, charge time, 0-100) before reserving a test drive.",
+    "tone": "cinematic, premium, confident, restrained, future-facing, quietly technical",
+    "references": "Apple AirPods/Vision Pro product pages, Polestar.com, Zaha Hadid material studies, Blade Runner 2049 color grading, Igarashi Design motion reels",
+    "context": "Full-bleed hero must reveal the vehicle silhouette with one bold headline and a single 'Reserve a test drive' CTA. Each scroll scene is a distinct chapter: exterior design, interior experience, powertrain, sustainability. Interactive moments expose 3-5 vehicle hotspots (lighting, wheels, yoke, battery). Specs (range 580km, 18-min 10-80% charge, 0-100 in 3.4s) must appear as a clear factual panel before the final reservation CTA. Respect prefers-reduced-motion: the whole story must still read as a clean vertical stack with no scroll choreography.",
+    "avoid": "Falling back to a generic SaaS landing pattern. Motion in every section. Burying the specs behind interaction only. Auto-playing audio. Stock photos of people. Marketing words like 'revolutionary' or 'game-changing'. Carousels that trap keyboard focus."
+  },
+  "featured": true,
+  "createdAt": "2026-05-30"
+}

@@ -26,7 +26,7 @@ import { renderStudio } from "./studio/Studio.js";
 import { renderExpress } from "./studio/Express.js";
 import { renderComponentsPage } from "./components-page/ComponentsPage.js";
 
-const VERSION = "0.4.0";
+const VERSION = "0.5.0";
 // Build identity — injected by Vite from the commit SHA at build time (see
 // vite.config.js `define`). Falls back to "dev" for local `vite dev`. Shown in
 // the footer + boot log so the live deploy is always identifiable, and used as

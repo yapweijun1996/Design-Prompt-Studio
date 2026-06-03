@@ -9,6 +9,7 @@ Living design documents for the Studio.
 | **[PROMPT-PATTERNS.md](PROMPT-PATTERNS.md)** | Living pattern library — lessons extracted from studying external design prompts. Each sample analyzed for adopt/reject patterns, with diffs against our system | When studying a new prompt or rewriting our template |
 | **[COMPONENTS.md](COMPONENTS.md)** | UI component vocabulary (70 primitives across input/disclosure/feedback/progress/search/navigation/data/media/identity/commerce/chat/auth/advanced/misc categories × 3 tiers) the prompt generator emits as a `<components>` block. Schema, scoring algorithm, cross-refs to libraries & styles, integration handoffs (Studio toggle + pin-from-page). | When tuning component schema, adding new primitives, or debugging which widget the LLM picked |
 | **[TECH-STACK.md](TECH-STACK.md)** | Tech-stack decisions: PWA, localStorage (IndexedDB deferred to v0.5), GitHub Pages + Actions, zero-build vanilla ES modules | When making infra / deploy / storage choices |
+| **[RESEARCH-REVIEW.md](RESEARCH-REVIEW.md)** | Decision record reviewing the ChatGPT deep-research report against what DPS already ships: adopt / defer / reject calls (e.g. add prompt quality scoring; do NOT rewrite to React) | When weighing external strategy advice against current architecture |
 | **[../task.md](../task.md)** | Current state, done list, in-progress, todo, open decisions, file map, next-step paths | Every session start |
 
 ---
@@ -42,20 +43,23 @@ Numbers below are the live values — verify any time with `npm test` (the smoke
 
 - **Live**: https://yapweijun1996.github.io/Design-Prompt-Studio/
 - **116 base styles** × 9 moods = **1,044 style variants**
-- **3,959 total prompts** (15 curated + 3,944 algorithmic)
+- **4,541 total prompts** (17 curated + 4,524 algorithmic)
 - **6 style categories** (creative/business/commerce/content/institutional/regional) with cascade chip UX — a flat 100+-chip list was unusable
 - **70 UI component primitives** across input/disclosure/feedback/progress/search/navigation/data/media/identity/misc/commerce/chat/auth/advanced categories, in 3 tiers; the `<components>` block gives the LLM a shared widget vocabulary so it stops reinventing combobox-vs-select / modal-vs-drawer every time
 - **100 business-free libraries** (strict license whitelist: MIT / Apache-2.0 / BSD / ISC, no copyleft, no paid-tier products)
 - **2 composable localization axes** — 11 culture/heritage presets × 10 market presets (each with a neutral default)
-- **34 page types** with per-type clarifying questions
+- **39 page types** with per-type clarifying questions
 - **#components** route with browse + filter + expandable cards + "📌 Use in Studio" pin-to-prompt handoff
 - Studio Step 4 has a **Components vocabulary** toggle + pinned-chip row
 - vite **manualChunks**: app shell / styles / prompts split for independent caching + parallel download
 - PWA installable (manifest + Workbox SW + generated icons + sitemap)
-- **77/77 smoke tests** + ESLint zero warnings + Vite build green
+- **92/92 smoke tests** + ESLint zero warnings + Vite build green
 - localStorage state persistence (gallery handoff + studio + express + URL share)
 - Auto light/dark theme + keyboard nav + skip link + focus-visible everywhere
 - Actions: **Open in Claude / ChatGPT / Google AI Studio** (copy-on-open) alongside the plain Copy button
+- **Prompt quality score + export gating** in Studio Review *and* Express (shared panel)
+- **Industry** as a selectable second taxonomy axis — quick-pick chips in the brief step
+- **7 purpose buckets** — added the `experience` bucket (immersive, scrollytelling, 3d-showcase, product-launch, microsite)
 
 ---
 

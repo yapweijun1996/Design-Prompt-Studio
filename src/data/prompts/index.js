@@ -6,6 +6,8 @@ import roughhouse from "./curated/roughhouse.json" with { type: "json" };
 import stilllife from "./curated/stilllife.json" with { type: "json" };
 import nova from "./curated/nova.json" with { type: "json" };
 import hush from "./curated/hush.json" with { type: "json" };
+import lumina from "./curated/lumina.json" with { type: "json" };
+import meridian from "./curated/meridian.json" with { type: "json" };
 
 // Region/Culture showcase cards — each pairs a base style with a locale to prove
 // the axis composes (boutique×peranakan, cafe×vietnam, government×malay, …).
@@ -26,7 +28,7 @@ import { STYLE_IDS } from "../styles/index.js";
 
 // ─── Curated (tier 1) ───────────────────────────────────────────────────────
 export const CURATED_PROMPTS = [
-  horloge, roughhouse, stilllife, nova, hush,
+  horloge, roughhouse, stilllife, nova, hush, lumina, meridian,
   peranakanBoutique, saigonCafe, merdekaPortal, pendelburyHotel, deepavaliBazaar, hdbHeartland,
   jakartaAntar, bangkokRimNam, tokyoStudio, seoulToss,
 ];

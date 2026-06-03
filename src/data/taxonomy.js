@@ -43,6 +43,12 @@ export const PURPOSE_BUCKETS = {
     desc: "Edge cases and one-offs",
     icon: "puzzle",
   },
+  experience: {
+    id: "experience",
+    name: "Interactive & Immersive",
+    desc: "Make visitors feel something — motion, depth, story",
+    icon: "sparkles",
+  },
 };
 
 // ─── PAGE TYPES (flat) ──────────────────────────────────────────────────────
@@ -541,6 +547,83 @@ export const PAGE_TYPES = {
       "Email/password, magic link, or OAuth-only?",
       "Combined login+signup, or separate pages?",
       "Forgot password flow?",
+    ],
+  },
+
+  // Experience (interactive & immersive)
+  immersive: {
+    id: "immersive",
+    name: "Immersive experience",
+    purpose: "experience",
+    genericTagline: "full-screen, motion-led brand experience",
+    genericIndustry: "brand / creative",
+    commonIndustries: ["fashion", "automotive", "agency", "entertainment"],
+    sections: ["full-bleed-hero", "scroll-scenes", "parallax-layers", "interactive-moments", "reveal-cta", "credits-footer"],
+    clarifyingQuestions: [
+      "What ONE feeling should a visitor walk away with?",
+      "Motion budget — subtle polish, or full cinematic takeover?",
+      "Any hero asset ready (video, 3D model, large imagery)?",
+      "Accessibility floor — does it still work with reduced-motion / no-JS?",
+    ],
+  },
+  scrollytelling: {
+    id: "scrollytelling",
+    name: "Scroll-driven story",
+    purpose: "experience",
+    genericTagline: "narrative that unfolds as you scroll",
+    genericIndustry: "editorial / brand",
+    commonIndustries: ["publishing", "nonprofit", "saas", "brand"],
+    sections: ["intro-hook", "sticky-chapters", "scroll-triggered-visuals", "data-reveals", "pull-quotes", "conclusion-cta"],
+    clarifyingQuestions: [
+      "What's the story arc — beginning, turn, payoff?",
+      "How many scroll chapters / scenes?",
+      "Are visuals charts/data, illustration, or photography?",
+      "Mobile: same scroll choreography, or simplified stack?",
+    ],
+  },
+  "3d-showcase": {
+    id: "3d-showcase",
+    name: "3D / WebGL showcase",
+    purpose: "experience",
+    genericTagline: "interactive 3D product or scene",
+    genericIndustry: "product / tech",
+    commonIndustries: ["automotive", "hardware", "gaming", "fashion"],
+    sections: ["canvas-stage", "orbit-controls", "hotspot-annotations", "config-options", "spec-panel", "cta"],
+    clarifyingQuestions: [
+      "Real 3D model (glTF) or faked depth with layered 2D?",
+      "Can the user rotate / configure, or is it auto-playing?",
+      "Performance ceiling — must it run on mid-range phones?",
+      "Fallback when WebGL is unavailable?",
+    ],
+  },
+  "product-launch": {
+    id: "product-launch",
+    name: "Product launch / reveal",
+    purpose: "experience",
+    genericTagline: "hype-driven single-product reveal",
+    genericIndustry: "consumer tech",
+    commonIndustries: ["hardware", "dtc", "automotive", "consumer-app"],
+    sections: ["countdown-or-reveal", "cinematic-hero", "feature-deep-dives", "spec-highlights", "pre-order-cta", "footer"],
+    clarifyingQuestions: [
+      "Is the product revealed now, or teased before a launch date?",
+      "What's the single hero moment people will screenshot?",
+      "Pre-order / waitlist, or just awareness?",
+      "How much motion vs. how much hard spec detail?",
+    ],
+  },
+  microsite: {
+    id: "microsite",
+    name: "Campaign microsite",
+    purpose: "experience",
+    genericTagline: "short-lived themed campaign site",
+    genericIndustry: "marketing / brand",
+    commonIndustries: ["marketing-agency", "brand", "events", "entertainment"],
+    sections: ["themed-hero", "interactive-feature", "shareable-moment", "participation-cta", "social-proof", "footer"],
+    clarifyingQuestions: [
+      "What's the campaign hook / theme?",
+      "What's the one shareable / participatory moment?",
+      "How long does this site need to live?",
+      "Tied to a hashtag, event, or launch date?",
     ],
   },
 };
