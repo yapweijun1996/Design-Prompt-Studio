@@ -1,0 +1,40 @@
+{
+  "id": "helm-approvals",
+  "tier": "curated",
+  "name": "HELM — APPROVALS",
+  "tagline": "Controller's sales-order approval console",
+  "sampleHref": "erp-demo/helm-approvals.html",
+  "style": "admin",
+  "purpose": "app",
+  "pageType": "admin",
+  "density": "dense",
+  "drama": "default",
+  "motion": "minimal",
+  "promptMode": "one-shot",
+  "sections": [
+    "dark left rail — only the 'Approvals' item is active (do NOT build out other modules)",
+    "top bar — global search / ⌘K, company + fiscal-period switcher 'FY2026 · P06 — Jun', a 'PRODUCTION' environment badge, user menu",
+    "approval queue table — sortable, frozen SO# first column, bulk-select checkboxes, per-row 'why it needs approval' reason chip, density toggle (Comfortable/Compact)",
+    "order detail split-pane — header block + Overview / Line Items / History tabs (selecting a row never leaves the queue)",
+    "editable-look line-item grid — live-sums subtotal + tax + grand total",
+    "approval action bar — Approve / Reject-with-reason",
+    "audit trail — created → submitted → approved/rejected with timestamps",
+    "bulk-approve bar — appears on multi-select with a confirm step",
+    "5 mandatory states — loading skeleton / empty (zero work) / no-results (filter) / error+retry / no-permission row",
+    "command palette (⌘K) + keyboard shortcuts"
+  ],
+  "stack": "html",
+  "outputMode": "single-file",
+  "industryTags": ["erp", "admin", "enterprise", "back-office", "manufacturing", "fintech", "approvals", "role-based"],
+  "brief": {
+    "name": "Northwind Manufacturing ERP — console 'Helm'",
+    "industry": "Mid-market discrete manufacturing & distribution back-office (multi-currency, USD base). This is ONE internal screen, not a whole ERP.",
+    "audience": "A single role — Maya Chen, Controller. She approves sales orders flagged for review (over a customer's credit limit, or line discounts > 15%), in batches at month-end close. Speed and trust matter far more than visuals; she is a daily power user who works keyboard-first.",
+    "tone": "calm, precise, trustworthy, efficient — feels like a desktop application, not a website",
+    "references": "SAP Fiori (role-based clarity), Ant Design Pro (density), Oracle NetSuite, Odoo 17, Linear (keyboard speed). Inspiration only — never copy.",
+    "context": "ROLE-BASED, ONE SCREEN ONLY (SAP Fiori's first principle). Build the Controller's Sales Order Approval workspace and nothing else — the left rail shows other modules greyed/inactive for context but you do NOT build them. Optimize the entire screen for one job-to-be-done: triage the queue fast, inspect the risky lines of one order, approve or reject with a reason, move on.\n\nMASTER-DETAIL: left = approval queue table; right = the selected order's detail pane. Selecting a row must never navigate away or lose the queue.\n\nQUEUE: 8–12 sales orders — SO number, customer, submitted-by, submitted date, amount (USD; at least one with a foreign-currency line showing base-currency equivalent), and a reason chip ('Over credit limit', 'Discount 22%'). Sticky header, sortable columns, frozen SO# column on horizontal scroll, bulk-select, density toggle.\n\nDETAIL: e.g. SO-2026-00417, customer 'Bay Area Robotics LLC', status 'Pending Approval', currency USD. Header shows the customer's credit limit vs current exposure so the 'over credit limit' reason is justified by REAL numbers. Tabs: Overview / Line Items / History. The Line Items grid has 5–6 rows (item code like 'ACT-SRV-200 · Servo actuator', qty, UOM, unit price, disc %, line total) that LIVE-SUM to subtotal + tax (8.25%) + grand total. The queue amount for an order MUST equal its detail grand total.\n\nWORKFLOW: status pills Draft → Pending Approval → Approved → Rejected → Posted. Approve/Reject must update the pill AND append the action to the History/audit trail with a timestamp. Bulk-approve shows a confirm step ('Approve 3 orders · $128,400').\n\nSEGREGATION OF DUTIES: include one order Maya submitted herself → view-only, Approve disabled with a tooltip explaining she can't approve her own order. This also doubles as the no-permission state.\n\nFIVE MANDATORY STATES — wire a small JS switch (buttons or ?state= param) so a reviewer can SEE each one; this is what separates a real ERP from a screenshot: (1) Loading = skeleton rows + skeleton detail, not a blank spinner; (2) Empty = 'No orders awaiting your approval' + a 'View all orders' action; (3) No-results = distinct from empty, 'No orders match these filters' + 'Clear filters'; (4) Error = 'Couldn't load the approval queue' + Retry + a quiet error code; (5) No-permission = the segregation-of-duties row above.\n\nKEYBOARD-FIRST (mandatory, show a '?' shortcuts hint): ↑/↓ or j/k move row selection with a visible focus ring, Enter opens detail, A approves, R rejects (opens a reason field), x toggles row select, ⌘/Ctrl-K opens the command palette, Esc closes detail/palette.\n\nINTERACTIVITY: the single .html file must actually work — row select loads detail, sort, density toggle, bulk-approve confirm, tab switch, approve/reject mutating the pill + audit trail, ⌘K palette, and all 5 states reachable.",
+    "avoid": "A marketing hero or dashboard KPIs (this is an approval screen, not a home). Gradients as the aesthetic. A card grid for the order list (must be a sortable table). A modal for row actions (use the split-pane). Emoji status. Numbers that don't reconcile. Building any module other than Approvals. Adding sections to pad breadth instead of deepening this one screen."
+  },
+  "featured": true,
+  "createdAt": "2026-06-04"
+}

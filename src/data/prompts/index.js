@@ -22,12 +22,19 @@ import bangkokRimNam from "./curated/bangkok-rim-nam.json" with { type: "json" }
 import tokyoStudio from "./curated/tokyo-studio.json" with { type: "json" };
 import seoulToss from "./curated/seoul-toss.json" with { type: "json" };
 
+// Role-based ERP showcase — one design system (Admin Dense), two roles, proving
+// SAP Fiori's #1 principle: the role drives the layout. The Controller's approval
+// console is table-dense; the Warehouse receiving station is big-target & scan-first.
+import helmApprovals from "./curated/helm-approvals.json" with { type: "json" };
+import helmReceiving from "./curated/helm-receiving.json" with { type: "json" };
+
 import { generateStandardPrompts } from "./generate.js";
 import { STYLE_CATEGORY_MAP, DEFAULT_HIDDEN_CATEGORY } from "../styles/categories.js";
 import { STYLE_IDS } from "../styles/index.js";
 
 // ─── Curated (tier 1) ───────────────────────────────────────────────────────
 export const CURATED_PROMPTS = [
+  helmApprovals, helmReceiving,
   horloge, roughhouse, stilllife, nova, hush, lumina, meridian,
   peranakanBoutique, saigonCafe, merdekaPortal, pendelburyHotel, deepavaliBazaar, hdbHeartland,
   jakartaAntar, bangkokRimNam, tokyoStudio, seoulToss,

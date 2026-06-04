@@ -1,0 +1,813 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Helm · Sales Order Approvals — Northwind Manufacturing ERP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#F5F6F8; --surface:#FFFFFF; --rail:#0F172A; --rail-fg:#CBD5E1;
+    --brand:#2563EB; --fg:#0F172A; --muted:#64748B; --border:#E2E8F0;
+    --ok:#16A34A; --warn:#D97706; --danger:#DC2626; --info:#0891B2;
+    --row-h:40px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:"Inter",system-ui,-apple-system,sans-serif;
+    background:var(--bg); color:var(--fg); font-size:14px; line-height:1.45;
+    -webkit-font-smoothing:antialiased;
+  }
+  .num{font-family:"JetBrains Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums;}
+  a{color:var(--brand);}
+  button{font-family:inherit;cursor:pointer;}
+  :focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:4px;}
+
+  .skip{position:absolute;left:-999px;top:0;background:var(--brand);color:#fff;padding:8px 12px;z-index:100;border-radius:0 0 6px 0;}
+  .skip:focus{left:0;}
+
+  /* ---- shell ---- */
+  .shell{display:grid;grid-template-columns:240px 1fr;grid-template-rows:56px 1fr;height:100vh;}
+  .rail{grid-row:1 / -1;background:var(--rail);color:var(--rail-fg);display:flex;flex-direction:column;overflow-y:auto;}
+  .rail .brand{display:flex;align-items:center;gap:9px;padding:16px;font-weight:700;color:#fff;font-size:15px;letter-spacing:.2px;}
+  .rail .brand .dot{width:10px;height:10px;border-radius:3px;background:var(--brand);}
+  .rail .grp{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#64748B;padding:14px 16px 4px;}
+  .rail a{display:flex;align-items:center;gap:10px;padding:8px 16px;color:var(--rail-fg);text-decoration:none;font-size:14px;}
+  .rail a.inactive{color:#475569;pointer-events:none;}
+  .rail a.active{background:var(--brand);color:#fff;font-weight:500;}
+  .rail svg{width:16px;height:16px;flex:0 0 16px;}
+
+  .topbar{display:flex;align-items:center;gap:14px;padding:0 16px;background:var(--surface);border-bottom:1px solid var(--border);}
+  .search{flex:1;max-width:420px;position:relative;}
+  .search input{width:100%;height:34px;border:1px solid var(--border);border-radius:8px;padding:0 10px 0 32px;font-size:13px;background:#F8FAFC;}
+  .search svg{position:absolute;left:9px;top:9px;width:16px;height:16px;color:var(--muted);}
+  .search kbd{position:absolute;right:8px;top:7px;}
+  kbd{font-family:"JetBrains Mono",monospace;font-size:11px;background:#EEF2F7;border:1px solid var(--border);border-bottom-width:2px;border-radius:4px;padding:1px 5px;color:var(--muted);}
+  .period{display:flex;align-items:center;gap:6px;height:32px;padding:0 10px;border:1px solid var(--border);border-radius:8px;font-size:13px;background:var(--surface);}
+  .badge-env{font-size:11px;font-weight:700;letter-spacing:.06em;color:#991B1B;background:#FEE2E2;border:1px solid #FCA5A5;padding:3px 8px;border-radius:6px;}
+  .spacer{flex:1;}
+  .user{display:flex;align-items:center;gap:8px;font-size:13px;}
+  .avatar{width:28px;height:28px;border-radius:50%;background:var(--brand);color:#fff;display:grid;place-items:center;font-weight:600;font-size:12px;}
+
+  .main{overflow:hidden;display:flex;flex-direction:column;}
+  .pagehead{display:flex;align-items:center;gap:12px;padding:14px 20px 12px;}
+  .crumb{font-size:12px;color:var(--muted);}
+  .pagehead h1{font-size:20px;margin:0;font-weight:600;}
+  .pagehead .count{font-size:12px;color:var(--muted);background:#EEF2F7;border-radius:999px;padding:2px 9px;}
+
+  .filterbar{display:flex;align-items:center;gap:8px;padding:0 20px 12px;flex-wrap:wrap;}
+  .filterbar select,.filterbar input{height:32px;border:1px solid var(--border);border-radius:7px;padding:0 9px;font-size:13px;background:var(--surface);}
+  .chip-filter{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 10px;border:1px solid var(--border);border-radius:7px;background:var(--surface);font-size:13px;}
+  .density{margin-left:auto;display:flex;border:1px solid var(--border);border-radius:7px;overflow:hidden;}
+  .density button{border:0;background:var(--surface);padding:0 11px;height:32px;font-size:12px;color:var(--muted);}
+  .density button.on{background:var(--brand);color:#fff;}
+
+  /* ---- split pane ---- */
+  .split{flex:1;display:grid;grid-template-columns:1fr;overflow:hidden;border-top:1px solid var(--border);}
+  .split.detail-open{grid-template-columns:55% 45%;}
+  .queue-wrap{overflow:auto;background:var(--surface);}
+  .detail-wrap{border-left:1px solid var(--border);background:var(--surface);overflow:auto;display:none;}
+  .split.detail-open .detail-wrap{display:block;}
+
+  /* ---- table ---- */
+  table.dt{width:100%;border-collapse:separate;border-spacing:0;font-size:13px;}
+  table.dt thead th{position:sticky;top:0;z-index:3;background:#F8FAFC;text-align:left;font-weight:600;color:#334155;padding:9px 12px;border-bottom:1px solid var(--border);white-space:nowrap;user-select:none;}
+  table.dt thead th.sortable{cursor:pointer;}
+  table.dt thead th .arrow{color:var(--brand);font-size:10px;}
+  table.dt td{padding:0 12px;height:var(--row-h);border-bottom:1px solid #EFF2F6;white-space:nowrap;}
+  table.dt td.num,table.dt th.num{text-align:right;}
+  /* frozen SO# first column (after checkbox) */
+  th.col-so,td.col-so{position:sticky;left:0;z-index:2;background:var(--surface);}
+  thead th.col-so{z-index:4;background:#F8FAFC;}
+  th.col-chk,td.col-chk{position:sticky;left:0;z-index:2;background:var(--surface);width:38px;text-align:center;}
+  thead th.col-chk{z-index:4;background:#F8FAFC;}
+  /* when checkbox present, SO# sticks after it */
+  td.col-so,th.col-so{left:38px;}
+  tbody tr{cursor:pointer;}
+  tbody tr:hover td{background:#F8FAFC;}
+  tbody tr:hover td.col-chk,tbody tr:hover td.col-so{background:#F1F5F9;}
+  tbody tr.selected td{background:#EFF6FF;}
+  tbody tr.selected td.col-chk,tbody tr.selected td.col-so{background:#E0EAFE;}
+  tbody tr.focused{box-shadow:inset 3px 0 0 var(--brand);}
+  tbody tr.focused td{background:#EFF6FF;}
+
+  .pill{display:inline-flex;align-items:center;gap:5px;height:20px;padding:0 8px;border-radius:999px;font-size:11px;font-weight:600;line-height:1;}
+  .pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;}
+  .pill.pending{background:#FEF3C7;color:#92400E;}
+  .pill.approved{background:#DCFCE7;color:#166534;}
+  .pill.rejected{background:#FEE2E2;color:#991B1B;}
+  .pill.draft{background:#E0F2FE;color:#075985;}
+  .pill.posted{background:#EDE9FE;color:#5B21B6;}
+
+  .reason{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:6px;background:#FEF3C7;color:#92400E;border:1px solid #FDE68A;}
+  .reason.credit{background:#FEE2E2;color:#991B1B;border-color:#FECACA;}
+
+  .who{display:flex;align-items:center;gap:7px;}
+  .who .a{width:22px;height:22px;border-radius:50%;background:#E2E8F0;color:#475569;display:grid;place-items:center;font-size:10px;font-weight:600;}
+
+  /* bulk bar */
+  .bulkbar{display:none;align-items:center;gap:12px;padding:8px 20px;background:#EFF6FF;border-bottom:1px solid #BFDBFE;font-size:13px;}
+  .bulkbar.show{display:flex;}
+  .bulkbar .c{font-weight:600;color:#1D4ED8;}
+  .btn{height:32px;padding:0 14px;border-radius:7px;border:1px solid var(--border);background:var(--surface);font-size:13px;font-weight:500;display:inline-flex;align-items:center;gap:7px;}
+  .btn.primary{background:var(--brand);border-color:var(--brand);color:#fff;}
+  .btn.ok{background:var(--ok);border-color:var(--ok);color:#fff;}
+  .btn.danger{background:#fff;border-color:#FCA5A5;color:var(--danger);}
+  .btn:disabled{opacity:.5;cursor:not-allowed;}
+
+  /* detail pane */
+  .dp{padding:18px 20px;}
+  .dp .dh{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
+  .dp h2{margin:0;font-size:18px;}
+  .dp .sub{color:var(--muted);font-size:13px;margin-top:2px;}
+  .dp .closex{border:1px solid var(--border);background:var(--surface);border-radius:7px;width:30px;height:30px;}
+  .credit{margin:14px 0;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:#FAFBFC;}
+  .credit .bar{height:8px;border-radius:5px;background:#E2E8F0;overflow:hidden;margin-top:8px;}
+  .credit .bar > i{display:block;height:100%;background:var(--danger);}
+  .credit .line{display:flex;justify-content:space-between;font-size:12px;}
+  .meta{display:grid;grid-template-columns:1fr 1fr;gap:8px 18px;font-size:13px;margin:12px 0;}
+  .meta .k{color:var(--muted);}
+  .tabs{display:flex;gap:2px;border-bottom:1px solid var(--border);margin-top:8px;}
+  .tabs button{border:0;background:none;padding:9px 12px;font-size:13px;color:var(--muted);border-bottom:2px solid transparent;}
+  .tabs button[aria-selected="true"]{color:var(--fg);border-bottom-color:var(--brand);font-weight:600;}
+  .tabpanel{padding-top:14px;}
+  table.li{width:100%;border-collapse:collapse;font-size:13px;}
+  table.li th{text-align:left;font-weight:600;color:#334155;font-size:12px;padding:6px 8px;border-bottom:1px solid var(--border);}
+  table.li td{padding:6px 8px;border-bottom:1px solid #EFF2F6;}
+  table.li td.num,table.li th.num{text-align:right;font-family:"JetBrains Mono",monospace;font-variant-numeric:tabular-nums;}
+  .totals{margin-top:10px;margin-left:auto;width:280px;font-size:13px;}
+  .totals .r{display:flex;justify-content:space-between;padding:4px 8px;}
+  .totals .r.grand{border-top:2px solid var(--fg);margin-top:4px;font-weight:700;font-size:15px;}
+  .totals .num{font-family:"JetBrains Mono",monospace;font-variant-numeric:tabular-nums;}
+
+  .actionbar{display:flex;gap:10px;align-items:center;margin-top:18px;padding-top:14px;border-top:1px solid var(--border);}
+  .actionbar .note{font-size:12px;color:var(--muted);}
+  .tip{position:relative;}
+  .tip .tt{display:none;position:absolute;bottom:120%;left:0;background:#0F172A;color:#fff;font-size:12px;padding:7px 10px;border-radius:7px;width:230px;font-weight:400;z-index:5;}
+  .tip:hover .tt,.tip:focus-within .tt{display:block;}
+
+  .trail{list-style:none;margin:0;padding:0;}
+  .trail li{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid #EFF2F6;font-size:13px;}
+  .trail .ts{color:var(--muted);font-size:12px;font-family:"JetBrains Mono",monospace;flex:0 0 132px;}
+  .trail .act{font-weight:600;}
+
+  /* state overlays */
+  .state{display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:60px 20px;text-align:center;color:var(--muted);}
+  .state.show{display:flex;}
+  .state .ill{width:64px;height:64px;border-radius:14px;background:#EEF2F7;display:grid;place-items:center;color:#94A3B8;}
+  .state h3{margin:6px 0 0;color:var(--fg);font-size:16px;}
+  .skel{height:var(--row-h);border-bottom:1px solid #EFF2F6;display:flex;align-items:center;padding:0 12px;gap:12px;}
+  .skel i{display:block;height:11px;border-radius:5px;background:linear-gradient(90deg,#EEF2F7,#E2E8F0,#EEF2F7);background-size:200% 100%;animation:sh 1.2s infinite;}
+  @keyframes sh{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+  /* state switcher (demo harness) */
+  .demobar{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);background:#0F172A;color:#fff;border-radius:10px;padding:8px 10px;display:flex;gap:6px;align-items:center;z-index:50;box-shadow:0 8px 24px rgba(0,0,0,.3);font-size:12px;}
+  .demobar span{color:#94A3B8;margin-right:4px;}
+  .demobar button{background:#1E293B;color:#CBD5E1;border:1px solid #334155;border-radius:6px;padding:4px 9px;font-size:12px;}
+  .demobar button.on{background:var(--brand);border-color:var(--brand);color:#fff;}
+
+  /* command palette */
+  .palette-back{display:none;position:fixed;inset:0;background:rgba(15,23,42,.4);z-index:60;align-items:flex-start;justify-content:center;padding-top:12vh;}
+  .palette-back.show{display:flex;}
+  .palette{width:540px;max-width:92vw;background:#fff;border-radius:12px;box-shadow:0 20px 50px rgba(0,0,0,.3);overflow:hidden;}
+  .palette input{width:100%;border:0;border-bottom:1px solid var(--border);padding:14px 16px;font-size:15px;}
+  .palette ul{list-style:none;margin:0;padding:6px;max-height:300px;overflow:auto;}
+  .palette li{padding:9px 12px;border-radius:8px;font-size:13px;display:flex;justify-content:space-between;}
+  .palette li.on{background:#EFF6FF;}
+
+  /* shortcuts hint */
+  .kbtn{position:fixed;right:16px;bottom:16px;width:34px;height:34px;border-radius:50%;background:#0F172A;color:#fff;border:0;font-size:15px;z-index:50;}
+  .sheet-back{display:none;position:fixed;inset:0;background:rgba(15,23,42,.4);z-index:60;align-items:center;justify-content:center;}
+  .sheet-back.show{display:flex;}
+  .sheet{background:#fff;border-radius:12px;padding:18px 20px;width:380px;max-width:92vw;}
+  .sheet h3{margin:0 0 12px;font-size:15px;}
+  .sheet .row{display:flex;justify-content:space-between;padding:6px 0;font-size:13px;border-bottom:1px solid #EFF2F6;}
+
+  /* reject reason inline */
+  .reject-box{display:none;margin-top:12px;padding:12px;border:1px solid #FCA5A5;border-radius:10px;background:#FEF2F2;}
+  .reject-box.show{display:block;}
+  .reject-box textarea{width:100%;border:1px solid var(--border);border-radius:7px;padding:8px;font-family:inherit;font-size:13px;resize:vertical;min-height:54px;}
+
+  @media (max-width:900px){
+    .shell{grid-template-columns:64px 1fr;}
+    .rail .brand span,.rail a span,.rail .grp{display:none;}
+    .split.detail-open{grid-template-columns:1fr;}
+    .split.detail-open .queue-wrap{display:none;}
+  }
+</style>
+</head>
+<body>
+<a href="#main" class="skip">Skip to content</a>
+<div class="shell">
+  <!-- RAIL -->
+  <nav class="rail" aria-label="Primary">
+    <div class="brand"><span class="dot"></span><span>Helm</span></div>
+    <div class="grp">Overview</div>
+    <a href="#" class="inactive" tabindex="-1">▦ <span>Dashboard</span></a>
+    <div class="grp">Finance</div>
+    <a href="#" class="inactive" tabindex="-1">▤ <span>General Ledger</span></a>
+    <a href="#" class="inactive" tabindex="-1">▤ <span>Accounts Payable</span></a>
+    <a href="#" class="inactive" tabindex="-1">▤ <span>Accounts Receivable</span></a>
+    <a href="#" class="active" aria-current="page">✓ <span>Approvals</span></a>
+    <div class="grp">Operations</div>
+    <a href="#" class="inactive" tabindex="-1">▣ <span>Inventory</span></a>
+    <a href="#" class="inactive" tabindex="-1">▣ <span>Sales Orders</span></a>
+    <a href="#" class="inactive" tabindex="-1">▣ <span>Procurement</span></a>
+    <div class="grp">System</div>
+    <a href="#" class="inactive" tabindex="-1">⚙ <span>Settings</span></a>
+  </nav>
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="globalSearch" type="search" placeholder="Search orders, customers…  (⌘K)" aria-label="Global search" />
+      <kbd>⌘K</kbd>
+    </div>
+    <button class="period" id="periodBtn" aria-label="Fiscal period">📅 FY2026 · P06 — Jun ▾</button>
+    <span class="badge-env" title="You are working in the live production company">PRODUCTION</span>
+    <div class="spacer"></div>
+    <div class="user"><span class="avatar">MC</span><span>Maya Chen · Controller ▾</span></div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="main" id="main">
+    <div class="pagehead">
+      <div>
+        <div class="crumb">Finance / Approvals</div>
+        <h1>Sales Order Approvals</h1>
+      </div>
+      <span class="count" id="qCount">— pending</span>
+    </div>
+
+    <div class="filterbar">
+      <input id="tableFilter" type="search" placeholder="Filter this list…" aria-label="Filter list" style="width:200px" />
+      <select id="statusFilter" aria-label="Status filter">
+        <option value="">All statuses</option>
+        <option value="pending" selected>Pending Approval</option>
+        <option value="approved">Approved</option>
+        <option value="rejected">Rejected</option>
+      </select>
+      <span class="chip-filter">Reason: <strong style="margin-left:4px">Any</strong></span>
+      <div class="density" role="group" aria-label="Row density">
+        <button data-d="comfortable" class="on">Comfortable</button>
+        <button data-d="compact">Compact</button>
+      </div>
+    </div>
+
+    <div class="bulkbar" id="bulkbar" role="region" aria-label="Bulk actions">
+      <span class="c"><span id="bulkN">0</span> selected · <span class="num" id="bulkSum">$0.00</span></span>
+      <button class="btn ok" id="bulkApprove">✓ Approve selected</button>
+      <button class="btn" id="bulkClear">Clear</button>
+    </div>
+
+    <div class="split" id="split">
+      <div class="queue-wrap">
+        <!-- loading state -->
+        <div class="state" id="st-loading" aria-hidden="true">
+          <div style="width:100%">
+            <div class="skel"><i style="width:18px"></i><i style="width:90px"></i><i style="width:150px"></i><i style="width:110px"></i><i style="width:80px;margin-left:auto"></i></div>
+            <div class="skel"><i style="width:18px"></i><i style="width:90px"></i><i style="width:130px"></i><i style="width:120px"></i><i style="width:80px;margin-left:auto"></i></div>
+            <div class="skel"><i style="width:18px"></i><i style="width:90px"></i><i style="width:160px"></i><i style="width:100px"></i><i style="width:80px;margin-left:auto"></i></div>
+            <div class="skel"><i style="width:18px"></i><i style="width:90px"></i><i style="width:140px"></i><i style="width:130px"></i><i style="width:80px;margin-left:auto"></i></div>
+            <div class="skel"><i style="width:18px"></i><i style="width:90px"></i><i style="width:120px"></i><i style="width:110px"></i><i style="width:80px;margin-left:auto"></i></div>
+          </div>
+        </div>
+        <!-- empty -->
+        <div class="state" id="st-empty">
+          <div class="ill">✓</div>
+          <h3>No orders awaiting your approval</h3>
+          <p>You're all caught up for FY2026 · P06.</p>
+          <button class="btn">View all orders</button>
+        </div>
+        <!-- no results -->
+        <div class="state" id="st-noresults">
+          <div class="ill">🔍</div>
+          <h3>No orders match these filters</h3>
+          <p>Try widening the status or clearing the search.</p>
+          <button class="btn primary" id="clearFilters">Clear filters</button>
+        </div>
+        <!-- error -->
+        <div class="state" id="st-error">
+          <div class="ill" style="color:var(--danger)">!</div>
+          <h3>Couldn't load the approval queue</h3>
+          <p>Check your connection and try again.</p>
+          <button class="btn primary" id="retryBtn">Retry</button>
+          <code style="font-size:11px;color:#94A3B8">ERR_APPROVALS_FETCH_504</code>
+        </div>
+
+        <table class="dt" id="qtable">
+          <thead>
+            <tr>
+              <th class="col-chk"><input type="checkbox" id="selAll" aria-label="Select all" /></th>
+              <th class="col-so sortable" data-k="so">SO # <span class="arrow">▲</span></th>
+              <th class="sortable" data-k="customer">Customer</th>
+              <th>Submitted by</th>
+              <th class="sortable" data-k="date">Submitted</th>
+              <th>Reason</th>
+              <th>Status</th>
+              <th class="num sortable" data-k="total">Amount</th>
+            </tr>
+          </thead>
+          <tbody id="qbody"></tbody>
+        </table>
+      </div>
+
+      <aside class="detail-wrap" id="detail" aria-label="Order detail"></aside>
+    </div>
+  </main>
+</div>
+
+<!-- demo state switcher -->
+<div class="demobar" role="group" aria-label="Demo: switch state">
+  <span>State:</span>
+  <button data-state="data" class="on">Data</button>
+  <button data-state="loading">Loading</button>
+  <button data-state="empty">Empty</button>
+  <button data-state="noresults">No-results</button>
+  <button data-state="error">Error</button>
+  <button data-state="noperm">No-permission</button>
+</div>
+
+<button class="kbtn" id="kbtn" aria-label="Keyboard shortcuts" title="Keyboard shortcuts (?)">?</button>
+
+<!-- command palette -->
+<div class="palette-back" id="paletteBack">
+  <div class="palette" role="dialog" aria-modal="true" aria-label="Command palette">
+    <input id="palInput" placeholder="Jump to an order or run a command…" aria-label="Command" />
+    <ul id="palList"></ul>
+  </div>
+</div>
+
+<!-- shortcuts sheet -->
+<div class="sheet-back" id="sheetBack">
+  <div class="sheet" role="dialog" aria-modal="true" aria-label="Keyboard shortcuts">
+    <h3>Keyboard shortcuts</h3>
+    <div class="row"><span>Move selection</span><span><kbd>j</kbd> / <kbd>k</kbd> or <kbd>↑</kbd> <kbd>↓</kbd></span></div>
+    <div class="row"><span>Open order</span><span><kbd>Enter</kbd></span></div>
+    <div class="row"><span>Approve focused</span><span><kbd>A</kbd></span></div>
+    <div class="row"><span>Reject focused</span><span><kbd>R</kbd></span></div>
+    <div class="row"><span>Toggle row select</span><span><kbd>x</kbd></span></div>
+    <div class="row"><span>Command palette</span><span><kbd>⌘</kbd>/<kbd>Ctrl</kbd> <kbd>K</kbd></span></div>
+    <div class="row"><span>Close</span><span><kbd>Esc</kbd></span></div>
+    <div style="text-align:right;margin-top:12px"><button class="btn" onclick="document.getElementById('sheetBack').classList.remove('show')">Close</button></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  const TAX = 0.0825;
+  const money = n => "$" + n.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
+  const r2 = n => Math.round(n*100)/100;
+
+  // line total = qty * unit * (1 - disc)
+  function lineTotal(l){ return r2(l.qty * l.unit * (1 - (l.disc||0)/100)); }
+  function calc(o){
+    const sub = r2(o.lines.reduce((s,l)=>s+lineTotal(l),0));
+    const tax = r2(sub * TAX);
+    const grand = r2(sub + tax);
+    return {sub,tax,grand};
+  }
+
+  // ── Data (totals are COMPUTED from lines, so the queue amount always equals
+  //    the detail grand total, and subtotal+tax always equals grand) ──
+  const ORDERS = [
+    { so:"SO-2026-00417", customer:"Bay Area Robotics LLC", by:"J. Okafor", byInit:"JO", date:"2026-06-02",
+      reason:"Over credit limit", reasonKind:"credit", status:"pending", currency:"USD",
+      creditLimit:50000, exposure:38500,
+      lines:[
+        {code:"ACT-SRV-200", desc:"Servo actuator, 200W", qty:40, uom:"ea", unit:380.00, disc:0},
+        {code:"CTRL-PLC-12", desc:"PLC controller unit", qty:12, uom:"ea", unit:1250.00, disc:5},
+        {code:"CBL-HV-08",   desc:"High-flex cable, 8 m", qty:200, uom:"ea", unit:24.50, disc:0},
+        {code:"SNS-PROX-50", desc:"Proximity sensor M18", qty:150, uom:"ea", unit:46.00, disc:10},
+        {code:"MNT-RAIL-DIN",desc:"DIN mount rail, 1 m", qty:80, uom:"ea", unit:12.75, disc:0},
+        {code:"PSU-24V-10A",  desc:"Power supply 24V 10A", qty:30, uom:"ea", unit:89.00, disc:0}
+      ],
+      created:{by:"J. Okafor (Sales)", at:"2026-06-02 09:14"},
+      submitted:{by:"J. Okafor", at:"2026-06-02 09:51"} },
+
+    { so:"SO-2026-00421", customer:"Cascade Hydraulics Inc", by:"R. Mehta", byInit:"RM", date:"2026-06-02",
+      reason:"Discount 22%", reasonKind:"disc", status:"pending", currency:"EUR", fx:1.0857,
+      creditLimit:40000, exposure:9200,
+      lines:[
+        {code:"VLV-HYD-3W", desc:"3-way hydraulic valve", qty:24, uom:"ea", unit:520.00, disc:22},
+        {code:"SEAL-KIT-9", desc:"Seal kit, type 9", qty:60, uom:"ea", unit:38.00, disc:22}
+      ],
+      created:{by:"R. Mehta (Sales)", at:"2026-06-02 11:02"},
+      submitted:{by:"R. Mehta", at:"2026-06-02 11:20"} },
+
+    { so:"SO-2026-00418", customer:"Lonestar Fab Works", by:"T. Nguyen", byInit:"TN", date:"2026-06-01",
+      reason:"Discount 18%", reasonKind:"disc", status:"pending", currency:"USD",
+      creditLimit:25000, exposure:4100,
+      lines:[
+        {code:"PLT-STL-4X8", desc:"Steel plate 4x8, 6mm", qty:30, uom:"ea", unit:210.00, disc:18},
+        {code:"WLD-WIRE-15", desc:"Welding wire, 15kg", qty:24, uom:"ea", unit:95.00, disc:18}
+      ],
+      created:{by:"T. Nguyen (Sales)", at:"2026-06-01 14:33"},
+      submitted:{by:"T. Nguyen", at:"2026-06-01 15:05"} },
+
+    { so:"SO-2026-00425", customer:"Meridian Aerospace Sub", by:"J. Okafor", byInit:"JO", date:"2026-06-03",
+      reason:"Over credit limit", reasonKind:"credit", status:"pending", currency:"USD",
+      creditLimit:100000, exposure:71000,
+      lines:[
+        {code:"BRG-PRC-90", desc:"Precision bearing 90mm", qty:120, uom:"ea", unit:640.00, disc:0},
+        {code:"SHFT-TI-300",desc:"Titanium shaft 300mm", qty:40, uom:"ea", unit:980.00, disc:5}
+      ],
+      created:{by:"J. Okafor (Sales)", at:"2026-06-03 08:20"},
+      submitted:{by:"J. Okafor", at:"2026-06-03 08:44"} },
+
+    { so:"SO-2026-00410", customer:"Cobalt Mining Supplies", by:"A. Park", byInit:"AP", date:"2026-05-30",
+      reason:"Discount 16%", reasonKind:"disc", status:"pending", currency:"USD",
+      creditLimit:30000, exposure:8800,
+      lines:[
+        {code:"GRD-CARB-22", desc:"Carbide grinding disc", qty:80, uom:"ea", unit:62.50, disc:16},
+        {code:"HLM-SAFE-XL", desc:"Safety helmet, XL", qty:40, uom:"ea", unit:48.00, disc:16}
+      ],
+      created:{by:"A. Park (Sales)", at:"2026-05-30 16:10"},
+      submitted:{by:"A. Park", at:"2026-05-30 16:31"} },
+
+    // ── Maya's OWN order → segregation of duties → view-only / no-permission ──
+    { so:"SO-2026-00427", customer:"Northwind Internal R&D", by:"M. Chen", byInit:"MC", date:"2026-06-03",
+      reason:"Discount 20%", reasonKind:"disc", status:"pending", currency:"USD", ownOrder:true,
+      creditLimit:20000, exposure:2500,
+      lines:[
+        {code:"PRTO-KIT-1", desc:"Prototype enclosure kit", qty:10, uom:"ea", unit:450.00, disc:20},
+        {code:"SBC-DEV-08", desc:"Dev single-board computer", qty:25, uom:"ea", unit:240.00, disc:20}
+      ],
+      created:{by:"M. Chen (Controller)", at:"2026-06-03 10:00"},
+      submitted:{by:"M. Chen", at:"2026-06-03 10:05"} },
+
+    { so:"SO-2026-00419", customer:"Pacific Components Co", by:"R. Mehta", byInit:"RM", date:"2026-06-01",
+      reason:"Over credit limit", reasonKind:"credit", status:"pending", currency:"USD",
+      creditLimit:60000, exposure:52000,
+      lines:[
+        {code:"RES-SMD-1K", desc:"SMD resistor reel 1k", qty:50, uom:"ea", unit:120.00, disc:0},
+        {code:"CAP-ELC-470",desc:"Electrolytic cap 470uF", qty:300, uom:"ea", unit:0.85, disc:0},
+        {code:"PCB-4L-100", desc:"4-layer PCB, 100x100", qty:200, uom:"ea", unit:112.00, disc:8}
+      ],
+      created:{by:"R. Mehta (Sales)", at:"2026-06-01 09:40"},
+      submitted:{by:"R. Mehta", at:"2026-06-01 10:12"} },
+
+    { so:"SO-2026-00405", customer:"Granite State Tooling", by:"T. Nguyen", byInit:"TN", date:"2026-05-28",
+      reason:"Discount 17%", reasonKind:"disc", status:"approved", currency:"USD",
+      creditLimit:25000, exposure:3000,
+      lines:[
+        {code:"DRL-HSS-SET", desc:"HSS drill bit set", qty:50, uom:"ea", unit:84.00, disc:17}
+      ],
+      created:{by:"T. Nguyen (Sales)", at:"2026-05-28 13:00"},
+      submitted:{by:"T. Nguyen", at:"2026-05-28 13:22"},
+      decided:{by:"M. Chen", at:"2026-05-29 09:10", action:"approved"} },
+
+    { so:"SO-2026-00399", customer:"Atlas Conveyor Systems", by:"A. Park", byInit:"AP", date:"2026-05-27",
+      reason:"Over credit limit", reasonKind:"credit", status:"rejected", currency:"USD",
+      creditLimit:45000, exposure:44000,
+      lines:[
+        {code:"MTR-AC-5HP", desc:"AC motor 5HP", qty:30, uom:"ea", unit:1280.00, disc:0},
+        {code:"BLT-CONV-2M",desc:"Conveyor belt, 2 m", qty:40, uom:"ea", unit:310.00, disc:5}
+      ],
+      created:{by:"A. Park (Sales)", at:"2026-05-27 15:00"},
+      submitted:{by:"A. Park", at:"2026-05-27 15:18"},
+      decided:{by:"M. Chen", at:"2026-05-28 08:40", action:"rejected", note:"Exceeds limit; request prepayment."} }
+  ];
+  // attach computed totals + audit trail
+  ORDERS.forEach(o=>{ o.totals = calc(o); o.trail = buildTrail(o); });
+  function buildTrail(o){
+    const t = [
+      {at:o.created.at, act:"Created", by:o.created.by},
+      {at:o.submitted.at, act:"Submitted for approval", by:o.submitted.by}
+    ];
+    if(o.decided) t.push({at:o.decided.at, act:o.decided.action==="approved"?"Approved":"Rejected", by:o.decided.by, note:o.decided.note});
+    return t;
+  }
+
+  // ── App state ──
+  const S = {
+    state:"data", sortKey:"so", sortDir:1, density:"comfortable",
+    filterText:"", statusFilter:"pending",
+    selected:new Set(), focusIdx:0, openSo:null
+  };
+
+  const $ = s => document.querySelector(s);
+  const qbody = $("#qbody");
+
+  function visibleOrders(){
+    let list = ORDERS.slice();
+    if(S.statusFilter) list = list.filter(o=>o.status===S.statusFilter);
+    if(S.filterText){
+      const q = S.filterText.toLowerCase();
+      list = list.filter(o=> (o.so+o.customer+o.by+o.reason).toLowerCase().includes(q));
+    }
+    const k = S.sortKey, d = S.sortDir;
+    list.sort((a,b)=>{
+      let av,bv;
+      if(k==="total"){av=a.totals.grand;bv=b.totals.grand;}
+      else if(k==="date"){av=a.date;bv=b.date;}
+      else if(k==="customer"){av=a.customer;bv=b.customer;}
+      else {av=a.so;bv=b.so;}
+      return av<bv?-1*d:av>bv?1*d:0;
+    });
+    return list;
+  }
+
+  function setState(st){
+    S.state = st;
+    ["loading","empty","noresults","error"].forEach(x=>$("#st-"+x).classList.remove("show"));
+    const showTable = (st==="data" || st==="noperm");
+    $("#qtable").style.display = showTable ? "" : "none";
+    if(st==="loading") $("#st-loading").classList.add("show");
+    if(st==="empty") $("#st-empty").classList.add("show");
+    if(st==="noresults") $("#st-noresults").classList.add("show");
+    if(st==="error") $("#st-error").classList.add("show");
+    // demo bar
+    document.querySelectorAll(".demobar button").forEach(b=>b.classList.toggle("on", b.dataset.state===st));
+    if(st==="noperm"){
+      // focus Maya's own order so the disabled Approve + tooltip is visible
+      S.statusFilter="pending"; $("#statusFilter").value="pending";
+      render();
+      const idx = visibleOrders().findIndex(o=>o.ownOrder);
+      if(idx>=0){ S.focusIdx=idx; openOrder(visibleOrders()[idx].so); }
+    } else if(showTable){
+      render();
+    }
+  }
+
+  function render(){
+    const list = visibleOrders();
+    // empty vs no-results distinction
+    if(S.state==="data" || S.state==="noperm"){
+      if(list.length===0){
+        $("#qtable").style.display="none";
+        const anyPending = ORDERS.some(o=>o.status==="pending");
+        if(S.filterText || (S.statusFilter && S.statusFilter!=="pending") ){ $("#st-noresults").classList.add("show"); }
+        else if(!anyPending){ $("#st-empty").classList.add("show"); }
+        else { $("#st-noresults").classList.add("show"); }
+      } else {
+        $("#qtable").style.display="";
+        $("#st-empty").classList.remove("show");
+        $("#st-noresults").classList.remove("show");
+      }
+    }
+    qbody.innerHTML = "";
+    list.forEach((o,i)=>{
+      const tr = document.createElement("tr");
+      tr.dataset.so = o.so;
+      if(S.selected.has(o.so)) tr.classList.add("selected");
+      if(i===S.focusIdx) tr.classList.add("focused");
+      const fx = o.currency!=="USD" ? `<div style="font-size:11px;color:var(--muted)" class="num">${o.currency} ${(o.totals.grand/ (o.fx||1)).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2})}</div>`:"";
+      tr.innerHTML =
+        `<td class="col-chk"><input type="checkbox" aria-label="Select ${o.so}" ${S.selected.has(o.so)?"checked":""}></td>`+
+        `<td class="col-so num"><strong>${o.so}</strong></td>`+
+        `<td>${o.customer}</td>`+
+        `<td><div class="who"><span class="a">${o.byInit}</span>${o.by}</div></td>`+
+        `<td class="num">${o.date}</td>`+
+        `<td><span class="reason ${o.reasonKind==="credit"?"credit":""}">${o.reason}</span></td>`+
+        `<td>${pill(o.status)}</td>`+
+        `<td class="num"><strong>${money(o.totals.grand)}</strong>${fx}</td>`;
+      // events
+      tr.querySelector(".col-chk input").addEventListener("click",e=>{e.stopPropagation();toggleSel(o.so);});
+      tr.addEventListener("click",()=>{ S.focusIdx=i; openOrder(o.so); render(); });
+      qbody.appendChild(tr);
+    });
+    // pending count
+    const pend = ORDERS.filter(o=>o.status==="pending").length;
+    $("#qCount").textContent = pend + " pending";
+    updateBulk();
+    // sort arrows
+    document.querySelectorAll("thead th.sortable").forEach(th=>{
+      const a = th.querySelector(".arrow"); if(a) a.remove();
+      if(th.dataset.k===S.sortKey){ th.insertAdjacentHTML("beforeend",` <span class="arrow">${S.sortDir>0?"▲":"▼"}</span>`); }
+    });
+  }
+
+  function pill(st){
+    const map={pending:["pending","Pending Approval"],approved:["approved","Approved"],rejected:["rejected","Rejected"],draft:["draft","Draft"],posted:["posted","Posted"]};
+    const [c,t]=map[st]||["draft",st];
+    return `<span class="pill ${c}">${t}</span>`;
+  }
+
+  function toggleSel(so){
+    if(S.selected.has(so)) S.selected.delete(so); else S.selected.add(so);
+    render();
+  }
+  function updateBulk(){
+    const n=S.selected.size;
+    $("#bulkbar").classList.toggle("show", n>0);
+    $("#bulkN").textContent=n;
+    let sum=0; S.selected.forEach(so=>{const o=ORDERS.find(x=>x.so===so); if(o)sum+=o.totals.grand;});
+    $("#bulkSum").textContent=money(r2(sum));
+  }
+
+  function openOrder(so){
+    const o = ORDERS.find(x=>x.so===so);
+    if(!o) return;
+    S.openSo = so;
+    $("#split").classList.add("detail-open");
+    renderDetail(o,"overview");
+  }
+  function closeDetail(){ S.openSo=null; $("#split").classList.remove("detail-open"); $("#detail").innerHTML=""; }
+
+  function renderDetail(o, tab){
+    const t=o.totals;
+    const newExposure = r2(o.exposure + t.grand);
+    const over = newExposure > o.creditLimit;
+    const pct = Math.min(100, Math.round(newExposure/o.creditLimit*100));
+    const canApprove = !o.ownOrder && o.status==="pending";
+
+    let panel="";
+    if(tab==="overview"){
+      panel = `
+        <div class="credit">
+          <div class="line"><span>Credit limit</span><span class="num">${money(o.creditLimit)}</span></div>
+          <div class="line"><span>Current exposure</span><span class="num">${money(o.exposure)}</span></div>
+          <div class="line"><span>+ This order</span><span class="num">${money(t.grand)}</span></div>
+          <div class="bar"><i style="width:${pct}%"></i></div>
+          <div class="line" style="margin-top:6px;font-weight:600;color:${over?'var(--danger)':'var(--ok)'}">
+            <span>New exposure</span><span class="num">${money(newExposure)} ${over?'· OVER LIMIT':'· within limit'}</span></div>
+        </div>
+        <div class="meta">
+          <div><div class="k">Customer</div>${o.customer}</div>
+          <div><div class="k">Currency</div>${o.currency}${o.currency!=="USD"?` (fx ${o.fx})`:""}</div>
+          <div><div class="k">Submitted by</div>${o.submitted.by}</div>
+          <div><div class="k">Submitted</div><span class="num">${o.submitted.at}</span></div>
+          <div><div class="k">Reason for review</div>${o.reason}</div>
+          <div><div class="k">Status</div>${pill(o.status)}</div>
+        </div>`;
+    } else if(tab==="lines"){
+      const rows = o.lines.map(l=>`<tr>
+        <td><strong class="num">${l.code}</strong><div style="font-size:12px;color:var(--muted)">${l.desc}</div></td>
+        <td class="num">${l.qty}</td><td>${l.uom}</td>
+        <td class="num">${money(l.unit)}</td><td class="num">${l.disc}%</td>
+        <td class="num"><strong>${money(lineTotal(l))}</strong></td></tr>`).join("");
+      panel = `
+        <table class="li"><thead><tr><th>Item</th><th class="num">Qty</th><th>UOM</th><th class="num">Unit</th><th class="num">Disc</th><th class="num">Line total</th></tr></thead>
+        <tbody>${rows}</tbody></table>
+        <div class="totals">
+          <div class="r"><span>Subtotal</span><span class="num">${money(t.sub)}</span></div>
+          <div class="r"><span>Tax (8.25%)</span><span class="num">${money(t.tax)}</span></div>
+          <div class="r grand"><span>Grand total</span><span class="num">${money(t.grand)}</span></div>
+        </div>`;
+    } else {
+      panel = `<ul class="trail">${o.trail.map(e=>`<li><span class="ts">${e.at}</span><span><span class="act">${e.act}</span> · ${e.by}${e.note?`<div style="color:var(--muted)">"${e.note}"</div>`:""}</span></li>`).join("")}</ul>`;
+    }
+
+    const approveBtn = canApprove
+      ? `<button class="btn ok" id="approveBtn">✓ Approve</button>`
+      : `<span class="tip"><button class="btn ok" disabled aria-describedby="sodtip">✓ Approve</button>
+          <span class="tt" id="sodtip" role="tooltip">${o.ownOrder?"Segregation of duties: you submitted this order, so you can't approve your own request. Route it to another approver.":"This order isn't pending approval."}</span></span>`;
+    const rejectBtn = canApprove ? `<button class="btn danger" id="rejectBtn">Reject…</button>` : "";
+
+    $("#detail").innerHTML = `
+      <div class="dp">
+        <div class="dh">
+          <div><h2 class="num">${o.so}</h2><div class="sub">${o.customer} · ${pill(o.status)}</div></div>
+          <button class="closex" id="closeDetail" aria-label="Close detail">✕</button>
+        </div>
+        <div class="tabs" role="tablist">
+          <button role="tab" data-tab="overview" aria-selected="${tab==='overview'}">Overview</button>
+          <button role="tab" data-tab="lines" aria-selected="${tab==='lines'}">Line Items</button>
+          <button role="tab" data-tab="history" aria-selected="${tab==='history'}">History</button>
+        </div>
+        <div class="tabpanel">${panel}</div>
+        <div class="actionbar">
+          ${approveBtn}${rejectBtn}
+          ${o.ownOrder?'<span class="note">View-only · submitted by you</span>':''}
+        </div>
+        <div class="reject-box" id="rejectBox">
+          <label for="rejReason" style="font-size:12px;font-weight:600">Reason for rejection</label>
+          <textarea id="rejReason" placeholder="e.g. Exceeds credit limit; request prepayment."></textarea>
+          <div style="margin-top:8px;text-align:right"><button class="btn danger" id="confirmReject">Confirm reject</button></div>
+        </div>
+      </div>`;
+
+    $("#closeDetail").addEventListener("click",closeDetail);
+    $("#detail").querySelectorAll("[data-tab]").forEach(b=>b.addEventListener("click",()=>renderDetail(o,b.dataset.tab)));
+    if(canApprove){
+      $("#approveBtn").addEventListener("click",()=>decide(o,"approved"));
+      $("#rejectBtn").addEventListener("click",()=>$("#rejectBox").classList.toggle("show"));
+      const cr=$("#confirmReject"); if(cr) cr.addEventListener("click",()=>{
+        const note=$("#rejReason").value.trim()||"No reason given";
+        decide(o,"rejected",note);
+      });
+    }
+  }
+
+  function decide(o, action, note){
+    o.status = action;
+    o.decided = {by:"M. Chen", at:nowStamp(), action, note};
+    o.trail.push({at:o.decided.at, act:action==="approved"?"Approved":"Rejected", by:"M. Chen (Controller)", note});
+    S.selected.delete(o.so);
+    render();
+    renderDetail(o, "history");
+  }
+  // fixed clock for deterministic demo
+  let clockMin = 30;
+  function nowStamp(){ clockMin++; return "2026-06-04 14:"+String(clockMin).padStart(2,"0"); }
+
+  function bulkApprove(){
+    const ids=[...S.selected];
+    const approvable = ids.map(id=>ORDERS.find(o=>o.so===id)).filter(o=>o && !o.ownOrder && o.status==="pending");
+    if(approvable.length===0){ alert("Nothing approvable selected (your own orders can't be self-approved)."); return; }
+    const sum = r2(approvable.reduce((s,o)=>s+o.totals.grand,0));
+    if(!confirm(`Approve ${approvable.length} order(s) · ${money(sum)}?`)) return;
+    approvable.forEach(o=>{ o.status="approved"; o.decided={by:"M. Chen",at:nowStamp(),action:"approved"}; o.trail.push({at:o.decided.at,act:"Approved (bulk)",by:"M. Chen (Controller)"}); });
+    S.selected.clear();
+    render();
+    if(S.openSo){ const o=ORDERS.find(x=>x.so===S.openSo); if(o) renderDetail(o,"history"); }
+  }
+
+  // ── Sorting ──
+  document.querySelectorAll("thead th.sortable").forEach(th=>{
+    th.addEventListener("click",()=>{
+      const k=th.dataset.k;
+      if(S.sortKey===k) S.sortDir*=-1; else {S.sortKey=k;S.sortDir=1;}
+      render();
+    });
+  });
+  // density
+  document.querySelectorAll(".density button").forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll(".density button").forEach(x=>x.classList.remove("on"));
+    b.classList.add("on"); S.density=b.dataset.d;
+    document.documentElement.style.setProperty("--row-h", b.dataset.d==="compact"?"32px":"40px");
+  }));
+  // filters
+  $("#tableFilter").addEventListener("input",e=>{S.filterText=e.target.value;S.focusIdx=0;render();});
+  $("#statusFilter").addEventListener("change",e=>{S.statusFilter=e.target.value;S.focusIdx=0;render();});
+  $("#clearFilters").addEventListener("click",()=>{S.filterText="";S.statusFilter="pending";$("#tableFilter").value="";$("#statusFilter").value="pending";setState("data");});
+  $("#retryBtn").addEventListener("click",()=>{setState("loading");setTimeout(()=>setState("data"),700);});
+  // select all
+  $("#selAll").addEventListener("change",e=>{
+    if(e.target.checked) visibleOrders().forEach(o=>S.selected.add(o.so)); else S.selected.clear();
+    render();
+  });
+  $("#bulkApprove").addEventListener("click",bulkApprove);
+  $("#bulkClear").addEventListener("click",()=>{S.selected.clear();render();});
+
+  // demo state switcher
+  document.querySelectorAll(".demobar button").forEach(b=>b.addEventListener("click",()=>{
+    const st=b.dataset.state;
+    if(st==="loading"){setState("loading");setTimeout(()=>{},0);} else setState(st);
+  }));
+
+  // command palette
+  const palette=$("#paletteBack"), palInput=$("#palInput"), palList=$("#palList");
+  let palIdx=0, palItems=[];
+  function openPalette(){ palette.classList.add("show"); palInput.value=""; buildPal(""); palInput.focus(); }
+  function closePalette(){ palette.classList.remove("show"); }
+  function buildPal(q){
+    const cmds=[{label:"Go to: all pending",act:()=>{S.statusFilter="pending";$("#statusFilter").value="pending";setState("data");}}];
+    const orderItems=ORDERS.filter(o=>(o.so+o.customer).toLowerCase().includes(q.toLowerCase()))
+      .slice(0,6).map(o=>({label:o.so+" · "+o.customer, hint:money(o.totals.grand), act:()=>{S.statusFilter="";$("#statusFilter").value="";setState("data");openOrder(o.so);}}));
+    palItems=[...orderItems, ...cmds.filter(c=>c.label.toLowerCase().includes(q.toLowerCase()))];
+    palIdx=0; drawPal();
+  }
+  function drawPal(){
+    palList.innerHTML=palItems.map((it,i)=>`<li class="${i===palIdx?'on':''}">${it.label}<span style="color:var(--muted)">${it.hint||''}</span></li>`).join("")||`<li style="color:var(--muted)">No matches</li>`;
+  }
+  palInput.addEventListener("input",e=>buildPal(e.target.value));
+  palInput.addEventListener("keydown",e=>{
+    if(e.key==="ArrowDown"){palIdx=Math.min(palItems.length-1,palIdx+1);drawPal();e.preventDefault();}
+    else if(e.key==="ArrowUp"){palIdx=Math.max(0,palIdx-1);drawPal();e.preventDefault();}
+    else if(e.key==="Enter"){const it=palItems[palIdx];if(it){it.act();closePalette();}}
+    else if(e.key==="Escape"){closePalette();}
+  });
+
+  // shortcuts sheet
+  $("#kbtn").addEventListener("click",()=>$("#sheetBack").classList.add("show"));
+
+  // global keyboard
+  document.addEventListener("keydown",e=>{
+    const inField = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName);
+    if((e.metaKey||e.ctrlKey) && e.key.toLowerCase()==="k"){ e.preventDefault(); openPalette(); return; }
+    if(e.key==="Escape"){ closePalette(); $("#sheetBack").classList.remove("show"); if(S.openSo) closeDetail(); return; }
+    if(inField) return;
+    if(S.state!=="data" && S.state!=="noperm") return;
+    const list=visibleOrders();
+    if(e.key==="j"||e.key==="ArrowDown"){ S.focusIdx=Math.min(list.length-1,S.focusIdx+1); render(); scrollFocus(); e.preventDefault(); }
+    else if(e.key==="k"||e.key==="ArrowUp"){ S.focusIdx=Math.max(0,S.focusIdx-1); render(); scrollFocus(); e.preventDefault(); }
+    else if(e.key==="Enter"){ const o=list[S.focusIdx]; if(o) openOrder(o.so); }
+    else if(e.key==="x"){ const o=list[S.focusIdx]; if(o) toggleSel(o.so); e.preventDefault(); }
+    else if(e.key==="a"||e.key==="A"){ const o=list[S.focusIdx]; if(o && !o.ownOrder && o.status==="pending"){ openOrder(o.so); decide(o,"approved"); } }
+    else if(e.key==="r"||e.key==="R"){ const o=list[S.focusIdx]; if(o && !o.ownOrder && o.status==="pending"){ openOrder(o.so); $("#rejectBox").classList.add("show"); $("#rejReason").focus(); } }
+    else if(e.key==="?"){ $("#sheetBack").classList.add("show"); }
+  });
+  function scrollFocus(){ const el=qbody.querySelector("tr.focused"); if(el) el.scrollIntoView({block:"nearest"}); }
+  $("#periodBtn").addEventListener("click",()=>alert("Period switcher — FY2026 · P06 (Jun). (demo)"));
+  document.querySelector(".search input").addEventListener("focus",e=>{ /* allow type */ });
+
+  // ── boot: read ?state= and simulate a real load ──
+  const params = new URLSearchParams(location.search);
+  const initial = params.get("state") || "boot";
+  if(initial==="boot"){
+    setState("loading");
+    setTimeout(()=>{ setState("data"); }, 600);
+  } else {
+    setState(initial);
+  }
+})();
+</script>
+</body>
+</html>
