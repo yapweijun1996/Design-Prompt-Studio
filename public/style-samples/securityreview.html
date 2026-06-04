@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(620px 280px at 78% 0%, color-mix(in srgb, #22C55E 24%, transparent), transparent 72%),
+        #0A1018;
+      color: #EEF5FF;
+      font-family: "Inter", system-ui, sans-serif;
+    }
+    .page { min-height: 100vh; padding: 28px; }
+    .shell { max-width: 1120px; margin: 0 auto; }
+    .nav {
+      display: flex; justify-content: space-between; align-items: center;
+      border-bottom: 1px solid #243449; padding-bottom: 18px;
+      font: 700 12px/1 "Geist Mono", "IBM Plex Mono", monospace; letter-spacing: .1em; text-transform: uppercase;
+    }
+    .nav span:last-child { color: #91A3B8; }
+    .hero {
+      display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(280px, .85fr);
+      gap: 28px; align-items: stretch; padding: 54px 0 34px;
+    }
+    h1 {
+      font-family: "Inter Tight", "Geist", system-ui; font-size: clamp(48px, 8vw, 94px);
+      line-height: .92; letter-spacing: -.045em; margin: 0 0 18px;
+    }
+    .lead { max-width: 62ch; color: #91A3B8; font-size: 18px; line-height: 1.6; margin: 0 0 24px; }
+    .actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn {
+      border: 1px solid #22C55E; background: #22C55E; color: #0A1018;
+      min-height: 46px; padding: 0 18px; border-radius: 12px;
+      font-weight: 750; display: inline-flex; align-items: center;
+    }
+    .btn.secondary { background: transparent; color: #EEF5FF; border-color: #243449; }
+    .artifact {
+      background: color-mix(in srgb, #111A26 88%, transparent);
+      border: 1px solid #243449; border-radius: 18px; padding: 18px;
+      min-height: 340px; box-shadow: 0 30px 80px rgba(0,0,0,.13);
+      display: grid; gap: 12px;
+    }
+    .artifact-head { display:flex; justify-content:space-between; color:#91A3B8; font: 650 11px/1 "Geist Mono", "IBM Plex Mono", monospace; letter-spacing:.08em; text-transform:uppercase; }
+    .metric { display:grid; grid-template-columns: 1fr auto; gap:12px; align-items:center; border:1px solid #243449; border-radius:14px; padding:14px; background:#111A26; }
+    .metric b { font-family:"Inter Tight", "Geist", system-ui; font-size: 28px; line-height:1; letter-spacing:-.03em; }
+    .bar { height: 9px; border-radius: 999px; background: color-mix(in srgb, #22C55E 22%, #243449); overflow:hidden; }
+    .bar i { display:block; height:100%; width:72%; border-radius:inherit; background:#22C55E; }
+    .grid { display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; padding-top: 8px; }
+    .card { border:1px solid #243449; background:#111A26; border-radius:16px; padding:18px; min-height:136px; }
+    .eyebrow { color:#22C55E; font: 750 11px/1 "Geist Mono", "IBM Plex Mono", monospace; letter-spacing:.1em; text-transform:uppercase; margin-bottom:12px; }
+    .card p { margin:0; color:#91A3B8; line-height:1.45; font-size:14px; }
+    .footer { display:flex; justify-content:space-between; gap:16px; color:#91A3B8; border-top:1px solid #243449; margin-top:28px; padding-top:16px; font-size:13px; }
+    @media (max-width: 760px) {
+      .page { padding: 18px; }
+      .hero { grid-template-columns: 1fr; padding-top: 34px; }
+      .grid { grid-template-columns: 1fr; }
+      .footer { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="shell">
+      <header class="nav"><span>Security Review</span><span>sample output</span></header>
+      <section class="hero">
+        <div>
+          <div class="eyebrow">security · compliance · trust center</div>
+          <h1>Security Review in motion.</h1>
+          <p class="lead">A security-review style for trust centers, compliance portals, vendor risk reviews, access audits, and vulnerability programs.</p>
+          <div class="actions">
+            <span class="btn">Primary action</span>
+            <span class="btn secondary">View details</span>
+          </div>
+        </div>
+        <aside class="artifact">
+          <div class="artifact-head"><span>Live surface</span><span>securityreview</span></div>
+          <div class="metric"><b>98%</b><span style="color:#F59E0B;font-weight:800">active</span></div>
+          <div class="bar"><i></i></div>
+          <div class="metric"><span>Controls, evidence, owners, and review dates are first-class content</span><span>01</span></div>
+          <div class="metric"><span>Risk severity uses restrained labels and clear remediation paths</span><span>02</span></div>
+        </aside>
+      </section>
+      <section class="grid">
+        
+          <article class="card">
+            <div class="eyebrow">Principle 1</div>
+            <p>A buyer can inspect controls, evidence, owners, and scope</p>
+          </article>
+        
+          <article class="card">
+            <div class="eyebrow">Principle 2</div>
+            <p>Risk and compliance status are readable without being loud</p>
+          </article>
+        
+          <article class="card">
+            <div class="eyebrow">Principle 3</div>
+            <p>The UI feels like a real trust center, not badge marketing</p>
+          </article>
+        
+      </section>
+      <footer class="footer">
+        <span>Generated sample preview from the style preset tokens and rules.</span>
+        <span>Vanta trust centers, Drata compliance portals, GitHub security advisories, Cloudflare trust center, Linear security pages, Okta admin logs</span>
+      </footer>
+    </div>
+  </main>
+</body>
+</html>

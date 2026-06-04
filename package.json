@@ -16,6 +16,7 @@
     "preview": "vite preview",
     "lint": "eslint src --max-warnings 0",
     "icons": "node scripts/build-icons.mjs",
+    "samples": "node scripts/build-style-samples.mjs",
     "prebuild": "node scripts/build-icons.mjs",
     "test": "node scripts/smoke-test.mjs"
   },

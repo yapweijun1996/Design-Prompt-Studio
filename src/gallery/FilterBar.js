@@ -42,11 +42,10 @@ export function renderFilterBar({ initial = {}, onChange, locales = [], markets 
     searchInput,
   );
 
-  // Style chips filtered by selected category. Renders the FULL list when
-  // no category is picked, so power-users keep their flat browse.
+  // Style chips filtered by selected category. The unfiltered Gallery excludes
+  // experimental/retro styles; those surface via the Experimental category.
   function stylesForCategory(catId) {
     const all = Object.values(STYLE_PRESETS);
-    // No category → all EXCEPT experimental/retro (those surface only via that category).
     const filtered = catId
       ? all.filter((s) => STYLE_CATEGORY_MAP[s.id] === catId)
       : all.filter((s) => STYLE_CATEGORY_MAP[s.id] !== DEFAULT_HIDDEN_CATEGORY);
@@ -65,7 +64,7 @@ export function renderFilterBar({ initial = {}, onChange, locales = [], markets 
   const marketGroup = el("div"); // Market/Region axis — only painted if markets exist
   const tierGroup = el("div");
 
-  // U2: the flat style list is ~100 chips. By default (no category, no style
+  // U2: the flat style list is very large. By default (no category, no style
   // picked) show a handful with a "+N more" expander so the filter doesn't wall
   // off the prompt tiles — especially on mobile. Picking a Category collapses
   // the list naturally, so we only cap the unfiltered view.

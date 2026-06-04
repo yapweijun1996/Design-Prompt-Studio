@@ -3,7 +3,7 @@
 //
 // Not part of the build — useful for verifying P1 / future data-layer changes.
 
-import { ALL_PROMPTS, CURATED_PROMPTS, promptStats, pickFeaturedPrompt, searchPrompts, getAvailableMarkets } from "../src/data/prompts/index.js";
+import { ALL_PROMPTS, CURATED_PROMPTS, promptStats, pickFeaturedPrompt, searchPrompts, sortForBrowse, collapseToStyles, getAvailableMarkets } from "../src/data/prompts/index.js";
 import { STYLE_PRESETS, STYLE_IDS } from "../src/data/styles/index.js";
 import { PAGE_TYPES, PURPOSE_BUCKETS, PAGE_TYPES_BY_PURPOSE, pageTypeCount } from "../src/data/taxonomy.js";
 import { assemblePrompt, assembleFromCard, promptStats as charStats } from "../src/lib/assemblePrompt.js";
@@ -15,6 +15,8 @@ import { MOOD_PRESETS } from "../src/data/moods.js";
 import { LOCALE_PRESETS, getLocale, localeCount } from "../src/data/locales.js";
 import { MARKET_PRESETS, getMarket, marketCount } from "../src/data/markets.js";
 import { LIBRARIES, LIBRARY_CATEGORIES, libraryCount, getLibrary } from "../src/data/libraries.js";
+import { STATIC_STYLE_SAMPLE_IDS, buildStyleSampleHTML } from "../src/gallery/SamplePreview.js";
+import { existsSync, readFileSync } from "node:fs";
 
 const checks = [];
 function check(label, fn) {
@@ -28,6 +30,23 @@ function check(label, fn) {
 
 // ─── Counts ────────────────────────────────────────────────────────────────
 check("style count ≥ 20", () => STYLE_IDS.length >= 20);
+check("style registry contains no generated placeholder styles", () => !STYLE_IDS.some((id) => id.startsWith("gen-")));
+check("latest 5 hand-authored styles lead the registry", () => {
+  return STYLE_IDS.slice(0, 5).join(",") === "securityreview,fielddispatch,boardmemo,archiveindex,kitchendisplay";
+});
+check("latest 5 styles lead Gallery catalog", () => {
+  const cards = collapseToStyles(sortForBrowse(searchPrompts({}))).filter((p) => p.tier !== "curated");
+  return cards.slice(0, 5).map((p) => p.style).join(",") === "securityreview,fielddispatch,boardmemo,archiveindex,kitchendisplay";
+});
+check("static sample HTML ids are registry-leading and have files", () => {
+  if (STATIC_STYLE_SAMPLE_IDS.join(",") !== STYLE_IDS.slice(0, STATIC_STYLE_SAMPLE_IDS.length).join(",")) return false;
+  return STATIC_STYLE_SAMPLE_IDS.every((id) => {
+    const path = `public/style-samples/${id}.html`;
+    return existsSync(path) &&
+      readFileSync(path, "utf8").includes("<!doctype html>") &&
+      buildStyleSampleHTML(id).includes(`sample output`);
+  });
+});
 check("premium modern styles present (vercel/stripe/apple/notion/aesop/bento)", () => {
   return ["vercel", "stripe", "apple", "notion", "aesop", "bento"].every((id) => STYLE_PRESETS[id]?.md?.length > 500);
 });

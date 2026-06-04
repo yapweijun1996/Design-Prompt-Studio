@@ -1,6 +1,6 @@
 // Mood presets — named combinations of density + drama + motion.
 // Each base style × each mood produces a distinct style-variant the user can pick.
-// 9 moods × 10 base styles = 90 visible style presets.
+// 9 moods × current base styles = visible style presets.
 
 export const MOOD_PRESETS = [
   {

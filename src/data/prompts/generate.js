@@ -10,6 +10,56 @@ const BUILD_DATE = "2026-05-26";
 // Defaults per style — short tone/references/avoid snippets used when standard prompts
 // don't have a hand-tuned brief.
 const STYLE_BRIEF_DEFAULTS = {
+  securityreview: {
+    tone: "controlled, evidence-led, trustworthy, precise, security-grade",
+    references: "Vanta trust centers, Drata compliance portals, GitHub security advisories, Cloudflare trust center, Okta admin logs",
+    avoid: "badge-only trust pages, green matrix hacker visuals, fear marketing, hidden risk exceptions",
+  },
+  fielddispatch: {
+    tone: "operational, map-led, direct, field-ready, practical",
+    references: "Samsara fleet dashboards, ServiceTitan dispatch board, ArcGIS field maps, Jobber, Fleetio",
+    avoid: "decorative maps, consumer delivery tracking tropes, vague overview cards, no offline state",
+  },
+  boardmemo: {
+    tone: "executive, concise, answer-first, measured, decision-led",
+    references: "Stripe annual letters, Amazon shareholder letters, Sequoia memos, Carta investor updates, McKinsey executive summaries",
+    avoid: "marketing heroes, dashboard overload, unlabeled metrics, buried decision asks, decorative charts",
+  },
+  archiveindex: {
+    tone: "archival, precise, quiet, provenance-led, browsable",
+    references: "Library of Congress collections, Internet Archive item pages, Wellcome Collection, MoMA archive, British Library digital collections",
+    avoid: "fake distressed vintage texture, image galleries without metadata, hidden rights, generic modern cards",
+  },
+  kitchendisplay: {
+    tone: "urgent, readable, operational, high-contrast, service-focused",
+    references: "Toast kitchen display, Square for Restaurants, Lightspeed Restaurant, Olo order manager, restaurant expo screens",
+    avoid: "food photography heroes, delicate controls, tiny timers, dining-room marketing style, low-contrast text",
+  },
+  citationlab: {
+    tone: "evidence-led, calm, precise, analytical, transparent",
+    references: "Perplexity answer pages, Google NotebookLM, Elicit, Consensus, Readwise Reader",
+    avoid: "fake citations, chat-only layouts, vague AI marketing, hidden uncertainty, decorative source cards",
+  },
+  treasurydesk: {
+    tone: "sober, exact, operational, finance-grade, audit-ready",
+    references: "Modern Treasury, Brex, Ramp, Mercury, Stripe Treasury, Wise Business",
+    avoid: "playful fintech gradients, vague KPI cards, consumer bank hero copy, hidden approvals",
+  },
+  civicservice: {
+    tone: "plain-language, accessible, official, task-first, calm",
+    references: "GOV.UK, Service NSW, Singapore government digital services, USWDS, 18F",
+    avoid: "campaign hero images, slogans, tiny form controls, PDF-like instruction dumps, hidden requirements",
+  },
+  auctioncatalog: {
+    tone: "refined, collector-grade, restrained, provenance-led, precise",
+    references: "Sotheby's, Christie's, Phillips, Bonhams, Artsy auction pages, 1stDibs",
+    avoid: "discount urgency, gold-gradient luxury cliches, ordinary product grids, missing condition reports",
+  },
+  climateatlas: {
+    tone: "analytical, grounded, urgent-but-calm, geographic, evidence-led",
+    references: "Climate Central, CarbonPlan, NASA Earthdata, ArcGIS dashboards, Bloomberg Green data graphics",
+    avoid: "greenwashing leaf icons, pretty maps without legends, alarmist red everywhere, buried scenario controls",
+  },
   monochrome: {
     tone: "austere, considered, restrained, scholarly",
     references: "Vogue Italia editorial, Phaidon monographs, Maison Margiela tags-as-design",

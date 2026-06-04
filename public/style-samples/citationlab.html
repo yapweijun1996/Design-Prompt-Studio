@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(620px 280px at 78% 0%, color-mix(in srgb, #315CFF 24%, transparent), transparent 72%),
+        #F8F6F0;
+      color: #1E2329;
+      font-family: "Inter", system-ui, sans-serif;
+    }
+    .page { min-height: 100vh; padding: 28px; }
+    .shell { max-width: 1120px; margin: 0 auto; }
+    .nav {
+      display: flex; justify-content: space-between; align-items: center;
+      border-bottom: 1px solid #DDD8CC; padding-bottom: 18px;
+      font: 700 12px/1 "IBM Plex Mono", "Geist Mono", monospace; letter-spacing: .1em; text-transform: uppercase;
+    }
+    .nav span:last-child { color: #68707A; }
+    .hero {
+      display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(280px, .85fr);
+      gap: 28px; align-items: stretch; padding: 54px 0 34px;
+    }
+    h1 {
+      font-family: "Source Serif 4", Georgia, serif; font-size: clamp(48px, 8vw, 94px);
+      line-height: .92; letter-spacing: -.045em; margin: 0 0 18px;
+    }
+    .lead { max-width: 62ch; color: #68707A; font-size: 18px; line-height: 1.6; margin: 0 0 24px; }
+    .actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn {
+      border: 1px solid #315CFF; background: #315CFF; color: #F8F6F0;
+      min-height: 46px; padding: 0 18px; border-radius: 12px;
+      font-weight: 750; display: inline-flex; align-items: center;
+    }
+    .btn.secondary { background: transparent; color: #1E2329; border-color: #DDD8CC; }
+    .artifact {
+      background: color-mix(in srgb, #FFFFFF 88%, transparent);
+      border: 1px solid #DDD8CC; border-radius: 18px; padding: 18px;
+      min-height: 340px; box-shadow: 0 30px 80px rgba(0,0,0,.13);
+      display: grid; gap: 12px;
+    }
+    .artifact-head { display:flex; justify-content:space-between; color:#68707A; font: 650 11px/1 "IBM Plex Mono", "Geist Mono", monospace; letter-spacing:.08em; text-transform:uppercase; }
+    .metric { display:grid; grid-template-columns: 1fr auto; gap:12px; align-items:center; border:1px solid #DDD8CC; border-radius:14px; padding:14px; background:#FFFFFF; }
+    .metric b { font-family:"Source Serif 4", Georgia, serif; font-size: 28px; line-height:1; letter-spacing:-.03em; }
+    .bar { height: 9px; border-radius: 999px; background: color-mix(in srgb, #315CFF 22%, #DDD8CC); overflow:hidden; }
+    .bar i { display:block; height:100%; width:72%; border-radius:inherit; background:#315CFF; }
+    .grid { display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; padding-top: 8px; }
+    .card { border:1px solid #DDD8CC; background:#FFFFFF; border-radius:16px; padding:18px; min-height:136px; }
+    .eyebrow { color:#315CFF; font: 750 11px/1 "IBM Plex Mono", "Geist Mono", monospace; letter-spacing:.1em; text-transform:uppercase; margin-bottom:12px; }
+    .card p { margin:0; color:#68707A; line-height:1.45; font-size:14px; }
+    .footer { display:flex; justify-content:space-between; gap:16px; color:#68707A; border-top:1px solid #DDD8CC; margin-top:28px; padding-top:16px; font-size:13px; }
+    @media (max-width: 760px) {
+      .page { padding: 18px; }
+      .hero { grid-template-columns: 1fr; padding-top: 34px; }
+      .grid { grid-template-columns: 1fr; }
+      .footer { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="shell">
+      <header class="nav"><span>Citation Lab</span><span>sample output</span></header>
+      <section class="hero">
+        <div>
+          <div class="eyebrow">research · citations · answer engine</div>
+          <h1>Citation Lab in motion.</h1>
+          <p class="lead">A research-answer style for evidence-led pages, source cards, claim trails, notebooks, and AI-assisted investigation.</p>
+          <div class="actions">
+            <span class="btn">Primary action</span>
+            <span class="btn secondary">View details</span>
+          </div>
+        </div>
+        <aside class="artifact">
+          <div class="artifact-head"><span>Live surface</span><span>citationlab</span></div>
+          <div class="metric"><b>Ready</b><span style="color:#315CFF;font-weight:800">active</span></div>
+          <div class="bar"><i></i></div>
+          <div class="metric"><span>Every important claim has a source marker or evidence card</span><span>01</span></div>
+          <div class="metric"><span>The answer summary and source trail are visible together</span><span>02</span></div>
+        </aside>
+      </section>
+      <section class="grid">
+        
+          <article class="card">
+            <div class="eyebrow">Principle 1</div>
+            <p>Readers can trace the answer back to sources without leaving the page</p>
+          </article>
+        
+          <article class="card">
+            <div class="eyebrow">Principle 2</div>
+            <p>Source quality, date, and confidence are visible</p>
+          </article>
+        
+          <article class="card">
+            <div class="eyebrow">Principle 3</div>
+            <p>The surface feels like research software, not a generic AI chat app</p>
+          </article>
+        
+      </section>
+      <footer class="footer">
+        <span>Generated sample preview from the style preset tokens and rules.</span>
+        <span>Perplexity answer pages, Google NotebookLM, Elicit, Consensus, Readwise Reader, LexisNexis research surfaces</span>
+      </footer>
+    </div>
+  </main>
+</body>
+</html>

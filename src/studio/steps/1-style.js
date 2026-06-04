@@ -16,8 +16,8 @@ export function renderStep1({ state, onStateChange }) {
   const root = el("section", { class: "step step--style" });
 
   // ─── State for the filter UI (local — not persisted) ─────────────────────
-  // Page the variant grid: with ~900 variants, rendering them all eagerly creates
-  // 10k+ DOM nodes on a single step. Show a page at a time with a "Show more" CTA.
+  // Page the variant grid: with thousands of variants, rendering them all eagerly
+  // creates too many DOM nodes on a single step. Show a page at a time.
   const PAGE_SIZE = 36;
   const ui = {
     query: "",
@@ -77,11 +77,12 @@ export function renderStep1({ state, onStateChange }) {
   // Helper: build base-style chips filtered by current category.
   // Returns array of chip elements (with leading "All bases" chip).
   function basesForCategory(catId, selected) {
-    // No category picked → show every base EXCEPT the experimental/retro ones.
-    const stylesInCat = STYLE_LIST.filter((s) =>
-      catId ? STYLE_CATEGORY_MAP[s.id] === catId : STYLE_CATEGORY_MAP[s.id] !== DEFAULT_HIDDEN_CATEGORY);
+    const allChip = chip("All bases", null, () => { ui.baseFilter = null; rebuildAll(); }, selected === null);
+    if (!catId) return [allChip];
+
+    const stylesInCat = STYLE_LIST.filter((s) => STYLE_CATEGORY_MAP[s.id] === catId);
     return [
-      chip("All bases", null, () => { ui.baseFilter = null; rebuildAll(); }, selected === null),
+      allChip,
       ...stylesInCat.map((s) =>
         chip(s.name, s.id, () => { ui.baseFilter = s.id; rebuildAll(); }, selected === s.id),
       ),

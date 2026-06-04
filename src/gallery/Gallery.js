@@ -16,6 +16,7 @@ import { PAGE_TYPES } from "../data/taxonomy.js";
 import { renderHeroStrip } from "./HeroStrip.js";
 import { renderFilterBar } from "./FilterBar.js";
 import { renderPromptTile } from "./PromptTile.js";
+import { renderStyleSampleModal } from "./SamplePreview.js";
 
 const STORAGE_KEY_LAST = "last-prompt";
 const STORAGE_KEY_COPIES = "copies";
@@ -54,8 +55,9 @@ export function renderGallery({ initialPromptId = null, onTune }) {
   const gridSlot = el("div", { class: "gallery__grid", role: "list", "aria-label": "Prompt gallery" });
   const moreSlot = el("div", { class: "gallery__more-slot" });
   const emptySlot = el("div", { class: "gallery__empty-slot" });
+  const sampleSlot = el("div", { class: "gallery__sample-slot" });
 
-  root.append(introSlot, heroSlot, filterSlot, gridSlot, moreSlot, emptySlot);
+  root.append(introSlot, heroSlot, filterSlot, gridSlot, moreSlot, emptySlot, sampleSlot);
 
   // ─── First-visit intro (U3) ────────────────────────────────────────────────
   // Slim one-liner explaining what this is, since the default route drops users
@@ -119,6 +121,21 @@ export function renderGallery({ initialPromptId = null, onTune }) {
     window.requestAnimationFrame(() => {
       gridSlot.scrollIntoView({ behavior: "smooth", block: "start" });
     });
+  }
+
+  function openSamplePreview(card) {
+    if (!card?.style) return;
+    document.body.classList.add("has-sample-modal");
+    mount(
+      sampleSlot,
+      renderStyleSampleModal({
+        card,
+        onClose: () => {
+          sampleSlot.replaceChildren();
+          document.body.classList.remove("has-sample-modal");
+        },
+      }),
+    );
   }
 
   function pickRandom() {
@@ -213,6 +230,7 @@ export function renderGallery({ initialPromptId = null, onTune }) {
         // one-click drill-in to its full set of page-type layouts.
         layoutCount: collapsed && card.tier !== "curated" ? LAYOUTS_PER_STYLE : null,
         onDrillIn: drillIntoStyle,
+        onPreviewSample: openSamplePreview,
       });
       gridSlot.appendChild(tile);
     }
@@ -240,7 +258,9 @@ export function renderGallery({ initialPromptId = null, onTune }) {
       countLabel = el("p", { class: "gallery__count", "aria-live": "polite" });
       filterSlot.appendChild(countLabel);
     }
-    countLabel.textContent = `${ordered.length} prompt${ordered.length === 1 ? "" : "s"}`;
+    countLabel.textContent = collapsed
+      ? `${ordered.length} style card${ordered.length === 1 ? "" : "s"}`
+      : `${ordered.length} prompt${ordered.length === 1 ? "" : "s"}`;
   }
 
   // ─── Initial paint ────────────────────────────────────────────────────────

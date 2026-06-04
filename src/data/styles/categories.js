@@ -1,16 +1,5 @@
 // Style categories — groupings for filter UX.
-// With 100 base styles, a flat chip list is unusable; categories cascade into
-// the secondary base-style chip group (or hide that group entirely).
-//
-// Category buckets:
-//   creative      — polished aesthetic-driven (editorial / era / modern)      33
-//   business      — B2B SaaS, corporate, professional services, verticals    24
-//   commerce      — shopping, retail, marketplaces, consumer transaction     12
-//   content       — media, publishing, personal, library, entertainment      15
-//   institutional — civic, healthcare, education, nonprofit, hospitality     16
-//   regional      — culture-specific visual languages                         4
-//   experimental  — loud / niche / retro — hidden from default browse        12
-//   Total:                                                                  116
+// Counts are derived from STYLE_CATEGORY_MAP so the Studio filters stay in sync.
 
 export const STYLE_CATEGORIES = {
   creative: {
@@ -58,6 +47,14 @@ export const DEFAULT_HIDDEN_CATEGORY = "experimental";
 export const CATEGORY_IDS = Object.keys(STYLE_CATEGORIES);
 
 export const STYLE_CATEGORY_MAP = {
+  // latest real additions (15)
+  securityreview: "business", fielddispatch: "business", boardmemo: "business",
+  archiveindex: "content", kitchendisplay: "business",
+  citationlab: "content", treasurydesk: "business", civicservice: "institutional",
+  auctioncatalog: "commerce", climateatlas: "institutional",
+  aiopscommand: "business", agenticworkflow: "business", sovereigncloud: "business",
+  spatialcommerce: "commerce", ambientwellness: "institutional",
+
   // creative (33) — polished / aesthetic-driven (the loud-retro ones moved to experimental)
   monochrome: "creative", brutalist: "creative", editorial: "creative", glass: "creative",
   linear: "creative", swiss: "creative", cyberpunk: "creative", newspaper: "creative",

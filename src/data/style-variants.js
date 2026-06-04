@@ -1,5 +1,5 @@
 // Style variants — derived registry of (base_style × mood) presets.
-// 10 base styles × 9 moods = 90 visible style preset cards.
+// STYLE_IDS × MOOD_PRESETS = visible style preset cards.
 
 import { STYLE_PRESETS, STYLE_IDS } from "./styles/index.js";
 import { MOOD_PRESETS } from "./moods.js";

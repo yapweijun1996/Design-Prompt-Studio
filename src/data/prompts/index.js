@@ -104,8 +104,8 @@ export function searchPrompts({ query = "", purpose = null, category = null, sty
     if (purpose && p.purpose !== purpose) return false;
     if (category && STYLE_CATEGORY_MAP[p.style] !== category) return false;
     if (style && p.style !== style) return false;
-    // Default browse hides experimental/retro styles (only shown when the user
-    // explicitly picks that category or a specific experimental style).
+    // Default browse hides experimental/retro styles. They surface when the user
+    // explicitly picks that category or a specific experimental style.
     if (!category && !style && STYLE_CATEGORY_MAP[p.style] === DEFAULT_HIDDEN_CATEGORY) return false;
     if (pageType && p.pageType !== pageType) return false;
     if (industry && !(p.industryTags || []).includes(industry)) return false;
@@ -143,6 +143,7 @@ export function searchPrompts({ query = "", purpose = null, category = null, sty
 const BROWSE_LEAD_PAGETYPES = ["landing", "pricing", "product", "feature-page", "case-study", "blog-post"];
 const PAGETYPE_RANK = new Map(BROWSE_LEAD_PAGETYPES.map((id, i) => [id, i]));
 const pageTypeRank = (id) => (PAGETYPE_RANK.has(id) ? PAGETYPE_RANK.get(id) : BROWSE_LEAD_PAGETYPES.length);
+const LATEST_STYLE_IDS = new Set(STYLE_IDS.slice(0, 5));
 const styleRank = (id) => {
   const i = STYLE_IDS.indexOf(id);
   return i === -1 ? STYLE_IDS.length : i;
@@ -160,7 +161,10 @@ export function sortForBrowse(cards) {
     // total order for the tail (non-lead page types share a rank): stable by pageType
     return a.pageType < b.pageType ? -1 : a.pageType > b.pageType ? 1 : 0;
   });
-  return [...curated, ...standard];
+  const latest = [];
+  const rest = [];
+  for (const c of standard) (LATEST_STYLE_IDS.has(c.style) ? latest : rest).push(c);
+  return [...latest, ...curated, ...rest];
 }
 
 // Collapse a browse result to ONE representative card per base style, turning the

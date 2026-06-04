@@ -6,10 +6,12 @@ import { copyText } from "../lib/clipboard.js";
 import { STYLE_PRESETS } from "../data/styles/index.js";
 import { PAGE_TYPES } from "../data/taxonomy.js";
 import { assembleFromCard } from "../lib/assemblePrompt.js";
+import { getStyleSampleURL } from "./SamplePreview.js";
 
-export function renderPromptTile({ card, isActive = false, onSelect, onQuickCopy, layoutCount = null, onDrillIn = null }) {
+export function renderPromptTile({ card, isActive = false, onSelect, onQuickCopy, layoutCount = null, onDrillIn = null, onPreviewSample = null }) {
   const style = STYLE_PRESETS[card.style];
   const pageType = PAGE_TYPES[card.pageType];
+  const isStyleCatalogCard = layoutCount && card.tier !== "curated";
 
   const tile = el("article", {
     class: "tile" + (isActive ? " is-active" : "") + (card.tier === "curated" ? " is-curated" : ""),
@@ -17,7 +19,9 @@ export function renderPromptTile({ card, isActive = false, onSelect, onQuickCopy
     tabindex: "0",
     role: "button",
     "aria-pressed": isActive ? "true" : "false",
-    "aria-label": `${card.name} — ${style?.name || card.style} ${pageType?.name || card.pageType}`,
+    "aria-label": isStyleCatalogCard
+      ? `${style?.name || card.style} — style preset`
+      : `${card.name} — ${style?.name || card.style} ${pageType?.name || card.pageType}`,
   });
 
   // Live preview region — a card may carry its OWN preview (curated culture cards do,
@@ -59,15 +63,15 @@ export function renderPromptTile({ card, isActive = false, onSelect, onQuickCopy
   const info = el(
     "div",
     { class: "tile__info" },
-    el("div", { class: "tile__name" }, card.name),
+    el("div", { class: "tile__name" }, isStyleCatalogCard ? style?.name || card.style : card.name),
     el(
       "div",
       { class: "tile__meta" },
-      style?.tag || style?.name || card.style,
+      isStyleCatalogCard ? "Style preset" : style?.tag || style?.name || card.style,
       el("span", { class: "tile__dot" }, "·"),
-      pageType?.name || card.pageType,
+      isStyleCatalogCard ? style?.tag || card.style : pageType?.name || card.pageType,
     ),
-    el("div", { class: "tile__tagline" }, card.tagline || ""),
+    el("div", { class: "tile__tagline" }, isStyleCatalogCard ? style?.desc || card.tagline || "" : card.tagline || ""),
   );
 
   // Curated badge
@@ -78,6 +82,34 @@ export function renderPromptTile({ card, isActive = false, onSelect, onQuickCopy
   // Collapsed catalog view: advertise the drill-in — this style is available in
   // `layoutCount` page-type layouts; the pill expands to all of them.
   if (layoutCount && onDrillIn) {
+    const sampleBtn = el(
+      "button",
+      {
+        class: "tile__sample",
+        type: "button",
+        title: `Preview a generated sample output for ${style?.name || card.style}`,
+        "aria-label": `Preview sample output for the ${style?.name || card.style} style`,
+        onClick: (e) => { e.stopPropagation(); onPreviewSample?.(card); },
+      },
+      "Preview sample",
+    );
+    const openSampleLink = el(
+      "a",
+      {
+        class: "tile__sample tile__sample--open",
+        href: getStyleSampleURL(card.style),
+        target: "_blank",
+        rel: "noopener",
+        title: `Open generated HTML sample for ${style?.name || card.style} in a new tab`,
+        "aria-label": `Open generated HTML sample for the ${style?.name || card.style} style in a new tab`,
+        onClick: (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          window.open(getStyleSampleURL(card.style), "_blank", "noopener");
+        },
+      },
+      "Open HTML",
+    );
     const layoutsBtn = el(
       "button",
       {
@@ -87,11 +119,13 @@ export function renderPromptTile({ card, isActive = false, onSelect, onQuickCopy
         "aria-label": `See all ${layoutCount} layouts in the ${style?.name || card.style} style`,
         onClick: (e) => { e.stopPropagation(); onDrillIn(card.style); },
       },
-      `⊞ ${layoutCount} layouts`,
+      `Explore ${layoutCount} layouts`,
     );
     // Keep keyboard activation on the pill from also selecting the tile.
+    sampleBtn.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") e.stopPropagation(); });
+    openSampleLink.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") e.stopPropagation(); });
     layoutsBtn.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") e.stopPropagation(); });
-    info.appendChild(layoutsBtn);
+    info.append(sampleBtn, openSampleLink, layoutsBtn);
   }
 
   tile.append(preview, info);

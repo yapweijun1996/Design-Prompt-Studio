@@ -155,6 +155,61 @@ body {
   background: var(--accent-soft);
 }
 
+@media (max-width: 760px) {
+  :root { --header-height: 104px; }
+
+  .appbar {
+    height: auto;
+    min-height: var(--header-height);
+    align-content: center;
+    align-items: center;
+    gap: 8px var(--space-3);
+    padding: 10px var(--space-4);
+  }
+
+  .appbar__logo {
+    flex: 0 1 auto;
+    min-width: 0;
+  }
+
+  .appbar__nav {
+    order: 2;
+    flex: 1 0 100%;
+    width: 100%;
+    gap: 6px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .appbar__nav::-webkit-scrollbar { display: none; }
+
+  .appbar__link,
+  .appbar__theme {
+    flex: 0 0 auto;
+    min-height: 38px;
+    padding: 8px 11px;
+    font-size: 13.5px;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 420px) {
+  .appbar__nav { gap: 5px; }
+
+  .appbar__link {
+    padding-inline: 9px;
+    font-size: 13px;
+  }
+
+  .appbar__theme {
+    width: 38px;
+    justify-content: center;
+    padding-inline: 0;
+  }
+
+  .appbar__theme-label { display: none; }
+}
+
 /* Placeholder route content */
 .placeholder {
   flex: 1;

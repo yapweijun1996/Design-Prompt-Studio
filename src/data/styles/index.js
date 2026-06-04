@@ -1,5 +1,23 @@
 // Style registry — single import surface for all style presets.
 
+// Tier 10 — latest hand-authored additions. Keep these first so the newest real
+// styles lead Gallery/Studio standard browsing.
+import { securityreview } from "./securityreview.js";
+import { fielddispatch } from "./fielddispatch.js";
+import { boardmemo } from "./boardmemo.js";
+import { archiveindex } from "./archiveindex.js";
+import { kitchendisplay } from "./kitchendisplay.js";
+import { citationlab } from "./citationlab.js";
+import { treasurydesk } from "./treasurydesk.js";
+import { civicservice } from "./civicservice.js";
+import { auctioncatalog } from "./auctioncatalog.js";
+import { climateatlas } from "./climateatlas.js";
+import { aiopscommand } from "./aiopscommand.js";
+import { agenticworkflow } from "./agenticworkflow.js";
+import { spatialcommerce } from "./spatialcommerce.js";
+import { sovereigncloud } from "./sovereigncloud.js";
+import { ambientwellness } from "./ambientwellness.js";
+
 // Tier 0 — premium modern (v0.5) — surfaced first so the default browse leads
 // with polished, broadly-usable looks (answers "good options too few / too ugly").
 import { vercel } from "./vercel.js";
@@ -148,6 +166,22 @@ import { gallery } from "./gallery.js";
 import { bookstore } from "./bookstore.js";
 
 export const STYLE_PRESETS = {
+  // Tier 10 — latest real styles (lead the catalog)
+  securityreview,
+  fielddispatch,
+  boardmemo,
+  archiveindex,
+  kitchendisplay,
+  citationlab,
+  treasurydesk,
+  civicservice,
+  auctioncatalog,
+  climateatlas,
+  aiopscommand,
+  agenticworkflow,
+  spatialcommerce,
+  sovereigncloud,
+  ambientwellness,
   // Tier 0 — premium modern (v0.5) — lead the default browse
   vercel,
   stripe,
