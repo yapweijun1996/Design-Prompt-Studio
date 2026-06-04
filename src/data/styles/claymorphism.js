@@ -5,6 +5,7 @@ export const claymorphism = asFullPreset({
   name: "Soft Clay",
   tag: "Soft 3D · puffy · playful-premium",
   desc: "Soft claymorphic UI. Puffy rounded shapes with inner + outer soft shadows, gentle pastel palette, friendly depth. Tactile and playful without being childish.",
+  sampleTemplate: "spatial",
   feel: "A modern playful product (Clay UI, soft 3D app marketing) — chunky rounded cards that look pressable, pastel tints, soft double shadows. Friendly, tactile, premium-cute.",
   references: "claymorphism UI trend, Spline soft-3D, Headspace, Duolingo (restrained), modern playful SaaS",
   boldFactor: [

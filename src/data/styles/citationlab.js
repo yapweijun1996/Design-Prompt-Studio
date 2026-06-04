@@ -5,6 +5,7 @@ export const citationlab = asFullPreset({
   name: "Citation Lab",
   tag: "research · citations · answer engine",
   desc: "A research-answer style for evidence-led pages, source cards, claim trails, notebooks, and AI-assisted investigation.",
+  sampleTemplate: "dashboard",
 
   feel: "A serious research workspace: calm reading surface, visible sources, claim-by-claim provenance, and a compact answer area that never hides evidence.",
 

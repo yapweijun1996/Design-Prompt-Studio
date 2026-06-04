@@ -5,6 +5,7 @@ export const agenticworkflow = asFullPreset({
   name: "Agentic Workflow",
   tag: "agents · workflow builder · human-in-loop",
   desc: "A visual workflow style for agent builders: nodes, approvals, memory, tools, evaluations, and human handoff.",
+  sampleTemplate: "dashboard",
 
   feel: "Like a product team designing reliable agent workflows: visual, systematic, reviewable, and transparent about where automation stops.",
 

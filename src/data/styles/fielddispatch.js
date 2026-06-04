@@ -5,6 +5,7 @@ export const fielddispatch = asFullPreset({
   name: "Field Dispatch",
   tag: "field ops · map · work orders",
   desc: "A field-operations style for dispatch boards, work orders, technician routes, asset service, inspections, and fleet tasks.",
+  sampleTemplate: "dashboard",
 
   feel: "A live operations board for work happening outside the office: maps, crews, ETAs, job status, parts, photos, and exception handling.",
 

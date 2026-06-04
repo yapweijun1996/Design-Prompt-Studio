@@ -5,6 +5,7 @@ export const apple = asFullPreset({
   name: "Apple / Hero Product",
   tag: "Premium minimal · giant product · cinematic",
   desc: "Cinematic premium product marketing. Enormous centered product imagery, vast whitespace, huge tight headlines, near-monochrome. Let the product be the hero.",
+  sampleTemplate: "product",
   feel: "An Apple product page — full-bleed product photography, a few perfect words, deep black sections that make the product glow. Calm, premium, inevitable.",
   references: "apple.com, Nothing, Teenage Engineering, Sonos, Leica, Aesop (restraint)",
   boldFactor: [

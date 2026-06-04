@@ -5,6 +5,7 @@ export const playful = asFullPreset({
   name: "Playful Pop",
   tag: "Rounded · friendly · bright",
   desc: "Friendly, rounded, optimistic — bright tasteful color, chunky rounded type, soft colored shadows, big pill buttons. Approachable and human without being childish. For consumer apps, education, wellness, D2C.",
+  sampleTemplate: "brutal",
   feel: "Duolingo / Headspace / Slack's brand site / Mailchimp — cheerful and confident, a brand that smiles. Professional play, not clip-art.",
   references: "Duolingo, Headspace, Slack brand, Mailchimp, Webflow brand, Notion brand, Oatly",
   boldFactor: [

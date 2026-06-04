@@ -5,6 +5,7 @@ export const kitchendisplay = asFullPreset({
   name: "Kitchen Display",
   tag: "restaurant ops · orders · station timing",
   desc: "A restaurant-operations style for kitchen display systems, order queues, expo screens, pickup status, station timing, and menu throughput.",
+  sampleTemplate: "dashboard",
 
   feel: "A high-pressure service screen made readable: tickets, station lanes, timers, modifiers, allergens, pickup windows, and handoff state.",
 

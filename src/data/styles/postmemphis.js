@@ -79,6 +79,6 @@ export const postmemphis = asFullPreset({
     <div class="shape a"></div>
     <div class="shape b"></div>
     <svg class="sq" viewBox="0 0 100 30"><path d="M0,15 Q12,3 25,15 T50,15 T75,15 T100,15" fill="none" stroke="#E63946" stroke-width="4" stroke-linecap="round"/></svg>
-    <div class="word">SS 26</div>
+    <div class="word">SS 26 studio launch notes</div>
   `,
 });

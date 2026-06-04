@@ -5,6 +5,7 @@ export const devdark = asFullPreset({
   name: "Dev Product Dark",
   tag: "Dark · terminal · emerald accent",
   desc: "Dark developer-product marketing. Near-black canvas, mono for code/labels, one vivid emerald accent, a real terminal or code block as the hero. Built-by-engineers energy.",
+  sampleTemplate: "dashboard",
   feel: "A Supabase / Railway / Fly.io landing — confident dark page, a live-looking code block or CLI as the hero, glowing emerald accent, fast and technical. Not a generic dark SaaS template.",
   references: "supabase.com, railway.app, fly.io, neon.tech, planetscale.com, upstash.com",
   boldFactor: [

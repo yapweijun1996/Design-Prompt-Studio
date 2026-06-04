@@ -5,6 +5,37 @@ export const editorial = {
   name: "Editorial Magazine",
   tag: "Layout-driven · cultured",
   desc: "Asymmetric grid. Mixed serif + sans. Warm cream. Drop caps. Kinfolk-meets-NYT.",
+  sampleTemplate: "editorial",
+  references: "Kinfolk, T Magazine, Wallpaper*, Aesop product essays, Monocle travel pages",
+  tokens: {
+    bg: { value: "#F4F1EA", usage: "Warm paper canvas" },
+    panel: { value: "#FBF8F1", usage: "Article and pull-quote surface" },
+    fg: { value: "#2B2926", usage: "Warm black editorial ink" },
+    muted: { value: "#756F66", usage: "Captions and bylines" },
+    accent: { value: "#9A4F2E", usage: "Rust accent under 10% of UI" },
+    border: { value: "#2B2926", usage: "Hairline dividers and captions" },
+    warning: { value: "#9A4F2E", usage: "Editorial callout color" },
+  },
+  typography: {
+    display: "\"Fraunces\", \"Cormorant Garamond\", Georgia, serif",
+    body: "\"Source Serif 4\", \"EB Garamond\", Georgia, serif",
+    mono: "\"JetBrains Mono\", ui-monospace, monospace",
+    scale: "readerly scale driven by grid, not extreme jumps",
+    weight: "display 500-700, body 400, labels 600",
+    tracking: "small caps wide, body normal",
+  },
+  successLooksLike: [
+    "A Kinfolk magazine spread on slow living",
+    "An Aesop product detail page",
+    "A New York Times Style Magazine cover story",
+    "A Wallpaper travel guide",
+  ],
+  failureLooksLike: [
+    "A WordPress magazine theme with widgets",
+    "A SaaS blog with a slightly fancier font",
+    "Anything center-stacked",
+    "Pure white background for cleanliness",
+  ],
 
   feel: "Reading a Kinfolk spread on a Sunday morning — not browsing a content marketing blog.",
 

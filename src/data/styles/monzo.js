@@ -5,6 +5,7 @@ export const monzo = asFullPreset({
   name: "Neobank Bold",
   tag: "Color-blocked · friendly fintech · confident",
   desc: "Bold consumer-fintech marketing. Big color-blocked sections, oversized friendly sans, one hot brand color, playful but trustworthy. Money made approachable.",
+  sampleTemplate: "commerce",
   feel: "A Monzo / Revolut / Cash App page — confident hot-coral blocks, huge rounded type, a phone mockup, cheerful and direct. Bold, not corporate-grey.",
   references: "monzo.com, Revolut, Cash App, N26, Wise, Starling Bank",
   boldFactor: [
@@ -49,7 +50,7 @@ export const monzo = asFullPreset({
 .btn { background:#11131A; color:#fff; border:none; border-radius:999px; padding:16px 28px; font-weight:600; font-size:17px; }
 .btn--on-coral { background:#fff; color:#FF3B5C; }`,
   ],
-  successLooksLike: ["monzo.com", "Revolut home", "Cash App marketing"],
+  successLooksLike: ["monzo.com color-blocked consumer finance", "Revolut home with oversized friendly money copy", "Cash App marketing"],
   failureLooksLike: ["muted corporate bank-blue", "tiny timid headlines", "sharp grey enterprise cards"],
   overrideGlobalRules: [
     "Large saturated color fields ARE the design here — overrides 'no aggressive color backgrounds'; used as deliberate brand blocks, not slop.",

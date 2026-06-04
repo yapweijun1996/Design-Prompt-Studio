@@ -5,6 +5,7 @@ export const bento = asFullPreset({
   name: "Bento Grid",
   tag: "Modular · rounded cards · feature-rich",
   desc: "The modern bento-box product layout. A grid of rounded cards in mixed sizes, each showing one feature with a mini visual. Organized, scannable, premium-playful.",
+  sampleTemplate: "product",
   feel: "An Apple-keynote 'bento' feature wall or a Linear/Raycast feature grid — modular rounded tiles of varying spans, each a self-contained feature moment. Tidy yet rich.",
   references: "Apple keynote bento slides, Raycast, Linear features, Vercel, bentogrids.com, Cron",
   boldFactor: [

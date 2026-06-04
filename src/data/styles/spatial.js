@@ -5,6 +5,7 @@ export const spatial = asFullPreset({
   name: "Spatial",
   tag: "visionOS glass · frosted · depth",
   desc: "visionOS / Apple-Vision spatial glass — frosted translucent panels floating over a soft vibrant gradient, real layered depth, generous rounding, light refraction. Calm, premium, futuristic-but-warm.",
+  sampleTemplate: "spatial",
   feel: "Apple Vision Pro / visionOS / macOS Big Sur — frosted glass cards hovering in soft light, content blurred through them. Tactile light, not flat UI.",
   references: "Apple visionOS, Apple Music, macOS Big Sur, Arc browser, Family app, Apple Fitness+",
   boldFactor: [

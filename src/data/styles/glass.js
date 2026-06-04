@@ -5,6 +5,38 @@ export const glass = {
   name: "Soft Glassmorphism",
   tag: "Ethereal · weightless",
   desc: "Frosted glass panels. Pastel atmospheric gradient. visionOS-meets-Linear.",
+  sampleTemplate: "spatial",
+  references: "visionOS app surfaces, macOS Sonoma Control Center, Linear atmospheric pages, meditation onboarding",
+  tokens: {
+    bg: { value: "#FAFAFE", usage: "Atmospheric pastel canvas" },
+    panel: { value: "rgba(255,255,255,0.55)", usage: "Frosted glass panel fill" },
+    fg: { value: "#1E1B2E", usage: "Soft dark foreground" },
+    muted: { value: "#6E6884", usage: "Secondary copy through glass" },
+    accent: { value: "#CBA6F7", usage: "Lavender focus and glow" },
+    border: { value: "rgba(255,255,255,0.55)", usage: "Semi-transparent glass edge" },
+    warning: { value: "#89B4FA", usage: "Sky pastel secondary signal" },
+    gradient: { value: "radial-gradient(at 20% 10%, #CBA6F7 0%, transparent 50%), radial-gradient(at 80% 30%, #89B4FA 0%, transparent 50%), radial-gradient(at 50% 90%, #F5C2E7 0%, transparent 50%), #FAFAFE", usage: "Required atmospheric foundation" },
+  },
+  typography: {
+    display: "\"Inter Tight\", \"Geist\", \"General Sans\", system-ui, sans-serif",
+    body: "\"Inter Tight\", \"Geist\", \"General Sans\", system-ui, sans-serif",
+    mono: "\"JetBrains Mono\", ui-monospace, monospace",
+    scale: "14/16/18/20/24/32/44/56/72/96",
+    weight: "display 600-700, body 400, labels 500",
+    tracking: "display slightly tight, labels lightly spaced",
+  },
+  successLooksLike: [
+    "A visionOS app demo",
+    "macOS Sonoma's control center",
+    "A meditation app's onboarding flow",
+    "Linear's marketing site with atmosphere dialed up",
+  ],
+  failureLooksLike: [
+    "A SaaS dashboard with one frosted nav bar bolted on",
+    "Apple-style without the gradient atmosphere",
+    "A 2017 dark-mode card with opacity reduced",
+    "Sharp corners anywhere",
+  ],
 
   feel: "A visionOS app or macOS Sonoma's Control Center — not a SaaS dashboard with one frosted nav bar bolted on.",
 

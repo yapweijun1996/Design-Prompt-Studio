@@ -263,12 +263,6 @@
   border-color: var(--accent-ring);
   background: var(--accent-soft);
 }
-.tile__sample--open {
-  color: var(--accent-fg);
-  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
-  border-color: transparent;
-  text-decoration: none;
-}
 .tile__sample:hover,
 .tile__sample:focus-visible,
 .tile__layouts:hover, .tile__layouts:focus-visible {
@@ -399,6 +393,8 @@
   .filter-bar { padding: var(--space-3) var(--space-4); gap: var(--space-3); }
   .filter-bar__chips { gap: var(--space-3); }
   .gallery__grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: var(--space-4); padding: var(--space-4); }
+  .tile__sample,
+  .tile__layouts { font-size: 11.5px; padding-inline: 9px; }
   .sample-modal { padding: var(--space-3); }
   .sample-modal__panel { height: calc(100dvh - 24px); }
   .sample-modal__header { align-items: flex-start; padding: var(--space-3); }

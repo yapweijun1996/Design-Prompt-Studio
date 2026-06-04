@@ -106,6 +106,6 @@ export const bauhaus = asFullPreset({
     <div class="circle"></div>
     <div class="square"></div>
     <div class="tri"></div>
-    <div class="word">bauhaus</div>
+    <div class="word">bauhaus system school</div>
   `,
 });

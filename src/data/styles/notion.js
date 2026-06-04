@@ -5,6 +5,7 @@ export const notion = asFullPreset({
   name: "Notion / Warm Docs",
   tag: "Friendly · warm-neutral · approachable",
   desc: "Warm, friendly productivity-product look. Soft off-white, rounded cards, gentle illustration accents, approachable type. Clean but human — never cold.",
+  sampleTemplate: "product",
   feel: "A Notion or Linear-docs page — calm warm background, rounded blocks, a little playful, very legible. Software that feels welcoming, not enterprise-grey.",
   references: "notion.so, Linear docs, Height, Cron/Notion Calendar, Loom, Tella",
   boldFactor: [
@@ -47,7 +48,7 @@ export const notion = asFullPreset({
     `/* Friendly callout with emoji */
 .callout { display:flex; gap:12px; background:#F1F5FB; border-radius:10px; padding:14px 16px; color:#37352F; }`,
   ],
-  successLooksLike: ["notion.so home", "Linear docs", "Cron/Notion Calendar marketing"],
+  successLooksLike: ["notion.so home with warm document blocks", "Linear docs with calm readable hierarchy", "Cron/Notion Calendar marketing"],
   failureLooksLike: ["cold enterprise grey", "sharp shadowless boxes", "stark clinical white"],
   overrideGlobalRules: [
     "Warm off-white canvas + tasteful emoji accents are on-brand here — overrides the global 'no emoji' and 'pure neutral' leanings.",

@@ -5,6 +5,7 @@ export const archiveindex = asFullPreset({
   name: "Archive Index",
   tag: "archive · index · cultural collection",
   desc: "An archival-index style for historical collections, oral histories, scanned documents, cultural repositories, and searchable catalogs.",
+  sampleTemplate: "product",
 
   feel: "A digital reading room: accession numbers, facsimiles, dates, subjects, provenance, and quiet browsing tools for deep discovery.",
 

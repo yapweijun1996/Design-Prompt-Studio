@@ -108,7 +108,7 @@ body {
   tile: "tile-cottagecore",
   tileHTML: `
     <div class="dingbat">❀</div>
-    <div class="word">Slow.<br/><em>Soft.</em></div>
+    <div class="word">Slow.<br/><em>Soft garden journal</em></div>
     <div class="rule"></div>
   `,
 });

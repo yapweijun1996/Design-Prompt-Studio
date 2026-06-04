@@ -5,6 +5,7 @@ export const spatialcommerce = asFullPreset({
   name: "Spatial Commerce",
   tag: "3D product · configurator · premium retail",
   desc: "A spatial product-shopping style with a large inspectable object, lightweight controls, material swatches, and purchase context.",
+  sampleTemplate: "commerce",
 
   feel: "Premium retail meets product configurator: the object is large, tactile, inspectable, and supported by restrained buying controls.",
 

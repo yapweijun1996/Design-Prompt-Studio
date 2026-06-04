@@ -111,7 +111,7 @@ export const memphis = asFullPreset({
     <div class="dot dot-red"></div>
     <div class="dot dot-blue"></div>
     <div class="squiggle">~</div>
-    <div class="word">Pop!</div>
+    <div class="word">Pop! Pattern Studio</div>
     <div class="tri"></div>
   `,
 });

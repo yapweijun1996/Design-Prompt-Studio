@@ -5,6 +5,7 @@ export const treasurydesk = asFullPreset({
   name: "Treasury Desk",
   tag: "finance ops · cash · approvals",
   desc: "A finance-operations style for cash positions, payment approvals, treasury workflows, FX exposure, and audit-ready ledgers.",
+  sampleTemplate: "dashboard",
 
   feel: "A CFO control room: sober, exact, table-led, and built around cash movement, exceptions, approvals, and audit trails.",
 

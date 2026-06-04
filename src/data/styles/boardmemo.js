@@ -5,6 +5,7 @@ export const boardmemo = asFullPreset({
   name: "Board Memo",
   tag: "executive memo · metrics · decisions",
   desc: "An executive-report style for board updates, investor memos, quarterly reviews, strategy pages, and decision briefs.",
+  sampleTemplate: "dashboard",
 
   feel: "A crisp board packet distilled for the web: answer-first narrative, financial metrics, decision asks, risks, and appendices with restraint.",
 

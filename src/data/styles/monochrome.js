@@ -6,6 +6,36 @@ export const monochrome = {
   name: "Minimalist Monochrome",
   tag: "Editorial luxury",
   desc: "Pure black & white. Oversized serif. Sharp corners. Vogue-meets-Bauhaus.",
+  sampleTemplate: "editorial",
+  references: "Vogue Italia, MoMA exhibition graphics, Phaidon monographs, Bauhaus print systems",
+  tokens: {
+    bg: { value: "#FFFFFF", usage: "Pure white canvas" },
+    panel: { value: "#FFFFFF", usage: "Flat print surface" },
+    fg: { value: "#000000", usage: "Only foreground color" },
+    muted: { value: "#525252", usage: "Editorial secondary copy" },
+    accent: { value: "#000000", usage: "Black is the only accent" },
+    border: { value: "#000000", usage: "Hairlines, rules, boxed modules" },
+    warning: { value: "#000000", usage: "Inverted emphasis" },
+  },
+  typography: {
+    display: "\"Playfair Display\", \"Fraunces\", Georgia, serif",
+    body: "\"Source Serif 4\", \"EB Garamond\", Georgia, serif",
+    mono: "\"JetBrains Mono\", Menlo, monospace",
+    scale: "oversized editorial scale, 128px+ hero word on desktop",
+    weight: "display 700-900, body 400",
+    tracking: "large display tight, mono labels wide uppercase",
+  },
+  successLooksLike: [
+    "Opening a Vogue Italia issue from the Sozzani era",
+    "Walking through a MoMA retrospective",
+    "Reading an architectural monograph from Phaidon",
+  ],
+  failureLooksLike: [
+    "A generic SaaS landing page with colors muted",
+    "Tech startup template that needs more whitespace",
+    "Anything using Inter for headlines",
+    "Any element with border-radius greater than 0",
+  ],
 
   // P1 — "X Feel" heuristic line
   feel: "Opening a Vogue Italia issue from the Sozzani era — not browsing a website.",

@@ -5,6 +5,7 @@ export const securityreview = asFullPreset({
   name: "Security Review",
   tag: "security · compliance · trust center",
   desc: "A security-review style for trust centers, compliance portals, vendor risk reviews, access audits, and vulnerability programs.",
+  sampleTemplate: "dashboard",
 
   feel: "A serious trust surface: evidence, controls, scopes, owners, exceptions, and security posture are visible without turning into fear marketing.",
 

@@ -6,7 +6,6 @@ import { copyText } from "../lib/clipboard.js";
 import { STYLE_PRESETS } from "../data/styles/index.js";
 import { PAGE_TYPES } from "../data/taxonomy.js";
 import { assembleFromCard } from "../lib/assemblePrompt.js";
-import { getStyleSampleURL } from "./SamplePreview.js";
 
 export function renderPromptTile({ card, isActive = false, onSelect, onQuickCopy, layoutCount = null, onDrillIn = null, onPreviewSample = null }) {
   const style = STYLE_PRESETS[card.style];
@@ -91,24 +90,7 @@ export function renderPromptTile({ card, isActive = false, onSelect, onQuickCopy
         "aria-label": `Preview sample output for the ${style?.name || card.style} style`,
         onClick: (e) => { e.stopPropagation(); onPreviewSample?.(card); },
       },
-      "Preview sample",
-    );
-    const openSampleLink = el(
-      "a",
-      {
-        class: "tile__sample tile__sample--open",
-        href: getStyleSampleURL(card.style),
-        target: "_blank",
-        rel: "noopener",
-        title: `Open generated HTML sample for ${style?.name || card.style} in a new tab`,
-        "aria-label": `Open generated HTML sample for the ${style?.name || card.style} style in a new tab`,
-        onClick: (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          window.open(getStyleSampleURL(card.style), "_blank", "noopener");
-        },
-      },
-      "Open HTML",
+      "Preview",
     );
     const layoutsBtn = el(
       "button",
@@ -123,9 +105,8 @@ export function renderPromptTile({ card, isActive = false, onSelect, onQuickCopy
     );
     // Keep keyboard activation on the pill from also selecting the tile.
     sampleBtn.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") e.stopPropagation(); });
-    openSampleLink.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") e.stopPropagation(); });
     layoutsBtn.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") e.stopPropagation(); });
-    info.append(sampleBtn, openSampleLink, layoutsBtn);
+    info.append(sampleBtn, layoutsBtn);
   }
 
   tile.append(preview, info);

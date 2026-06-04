@@ -5,6 +5,7 @@ export const climateatlas = asFullPreset({
   name: "Climate Atlas",
   tag: "climate data · maps · scenarios",
   desc: "A climate-intelligence style for maps, risk scenarios, environmental dashboards, resilience plans, and sustainability reporting.",
+  sampleTemplate: "dashboard",
 
   feel: "A data atlas for climate decisions: map-led, scenario-aware, calm but urgent, with evidence, geography, and time horizons kept visible.",
 

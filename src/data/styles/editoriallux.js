@@ -5,6 +5,7 @@ export const editoriallux = asFullPreset({
   name: "Editorial Luxe",
   tag: "High-fashion · dramatic serif · gallery",
   desc: "High-fashion editorial luxury. Enormous dramatic serif, vast negative space, black/white with a single restrained color, image-led like a magazine. Expensive and assured.",
+  sampleTemplate: "editorial",
   feel: "An SSENSE / The Row / Vogue runway feature — colossal display serif over full-bleed imagery, severe whitespace, a single accent. Quiet luxury, never busy.",
   references: "ssense.com, The Row, Vogue Runway, Phaidon, Acne Studios, Saint Laurent",
   boldFactor: [

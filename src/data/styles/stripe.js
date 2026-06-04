@@ -5,6 +5,7 @@ export const stripe = asFullPreset({
   name: "Stripe / Gradient",
   tag: "Refined gradient · fintech-marketing · polished",
   desc: "Polished marketing for serious products. Angled gradient mesh, immaculate type, layered depth, crisp product UI. Premium without being loud.",
+  sampleTemplate: "commerce",
   feel: "A Stripe or Linear marketing page — a confident gradient wash behind razor-sharp content, every section composed. Premium, trustworthy, modern.",
   references: "stripe.com, Linear, Mercury, Ramp, Arc browser, Framer",
   boldFactor: [

@@ -5,6 +5,7 @@ export const ambientwellness = asFullPreset({
   name: "Ambient Wellness",
   tag: "wellness · calm app · soft sensory",
   desc: "A calm wellness style for meditation, sleep, therapy, recovery, breathwork, and reflective self-care products.",
+  sampleTemplate: "spatial",
 
   feel: "Quiet, spacious, sensory, and non-clinical: a product that lowers cognitive load without becoming vague pastel mush.",
 

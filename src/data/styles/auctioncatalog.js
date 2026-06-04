@@ -5,6 +5,7 @@ export const auctioncatalog = asFullPreset({
   name: "Auction Catalog",
   tag: "auction · provenance · collector commerce",
   desc: "A collector-commerce style for auction houses, rare objects, art lots, watches, furniture, wine, and provenance-heavy sales.",
+  sampleTemplate: "commerce",
 
   feel: "An auction catalog brought online: object-first, quiet luxury, lot numbers, estimates, condition notes, provenance, and bidding context.",
 

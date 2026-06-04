@@ -5,6 +5,38 @@ export const y2k = {
   name: "Y2K Maximalist",
   tag: "Chrome · iridescent · joyful",
   desc: "Iridescent gradients. Chunky display. Sparkles. Pills. Frutiger Aero energy.",
+  sampleTemplate: "brutal",
+  references: "Frutiger Aero, early iPod ads, Charli XCX campaign pages, K-pop album microsites",
+  tokens: {
+    bg: { value: "#FFF7FF", usage: "Light candy canvas" },
+    panel: { value: "#FFFFFF", usage: "Glossy card surface" },
+    fg: { value: "#1A0B2E", usage: "Warm purple-black text" },
+    muted: { value: "#654A78", usage: "Secondary copy" },
+    accent: { value: "#FF00C8", usage: "Magenta iridescent lead" },
+    border: { value: "#FFFFFF", usage: "Gloss edge and chrome highlight" },
+    warning: { value: "#00D9FF", usage: "Cyan secondary glow" },
+    gradient: { value: "linear-gradient(135deg,#FF00C8,#9B5DE5,#00F0FF,#C9FF00)", usage: "Iridescent signature surface" },
+  },
+  typography: {
+    display: "\"Bagel Fat One\", \"Arial Rounded MT Bold\", system-ui, sans-serif",
+    body: "\"Space Grotesk\", \"Arial Rounded MT Bold\", system-ui, sans-serif",
+    mono: "\"JetBrains Mono\", ui-monospace, monospace",
+    scale: "14/16/20/28/40/56/80/112/144",
+    weight: "display 700-900 always",
+    tracking: "display tight, sticker labels wide",
+  },
+  successLooksLike: [
+    "An early-2000s iPod ad",
+    "A Charli XCX album promo page",
+    "A Frutiger Aero desktop wallpaper come to life",
+    "A K-pop group's official album site",
+  ],
+  failureLooksLike: [
+    "A generic gradient SaaS landing page",
+    "Modern playful startup site with one gradient button",
+    "Anything using Inter or Geist",
+    "Sharp corners on buttons",
+  ],
 
   feel: "An early-2000s iPod ad come to life — not a 2024 SaaS site with one gradient bolted on.",
 

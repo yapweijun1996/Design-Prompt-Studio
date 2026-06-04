@@ -110,7 +110,7 @@ export const industrial = asFullPreset({
   tile: "tile-industrial",
   tileHTML: `
     <div class="label">LOT 04-A.7</div>
-    <div class="word">RAW.</div>
+    <div class="word">RAW MATERIAL INDEX</div>
     <div class="stripe"></div>
   `,
 });

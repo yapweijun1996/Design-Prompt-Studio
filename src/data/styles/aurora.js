@@ -5,6 +5,7 @@ export const aurora = asFullPreset({
   name: "Aurora",
   tag: "Aurora gradient · dark · luminous",
   desc: "Dark canvas lit from within by a luminous aurora gradient. Modern AI / dev-product register — indigo→violet→cyan bloom, glassy edges, a tight grotesque. Premium, current, restrained.",
+  sampleTemplate: "product",
   feel: "Linear's aurora hero / a Vercel Ship keynote / Resend — a dark room lit by a slow-moving gradient. Looks built by people who ship, not by a template.",
   references: "Linear (aurora hero), Vercel Ship, Resend, Framer, Perplexity, Cursor, Midjourney",
   boldFactor: [

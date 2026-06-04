@@ -105,7 +105,7 @@ body {
   tile: "tile-vaporwave",
   tileHTML: `
     <div class="kata">ベイパー</div>
-    <div class="word">A E S</div>
+    <div class="word">A E S T H E T I C Plaza</div>
     <div class="grid"></div>
   `,
 });

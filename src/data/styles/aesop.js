@@ -5,6 +5,7 @@ export const aesop = asFullPreset({
   name: "Aesop / Apothecary",
   tag: "Muted · editorial retail · understated luxe",
   desc: "Understated apothecary-luxury retail. Muted warm neutrals, a refined serif, abundant whitespace, long literate copy. Quiet confidence, never flashy.",
+  sampleTemplate: "editorial",
   feel: "An Aesop or Le Labo store page — taupe and stone tones, a beautiful serif, products shot like still-life, copy that reads like an essay. Restrained, sensorial, expensive.",
   references: "aesop.com, Le Labo, Cereal magazine, Kinfolk, Officine Universelle Buly, Byredo",
   boldFactor: [

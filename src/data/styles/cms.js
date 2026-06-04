@@ -91,7 +91,7 @@ export const cms = asFullPreset({
     <div class="rail"></div>
     <div class="canvas">
       <div class="bar"></div>
-      <div class="blk hl"><span>HERO</span></div>
+      <div class="blk hl"><span>HERO CONTENT REVIEW QUEUE</span></div>
       <div class="blk"></div>
     </div>
     <div class="props"></div>

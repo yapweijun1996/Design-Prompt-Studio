@@ -5,6 +5,7 @@ export const sovereigncloud = asFullPreset({
   name: "Sovereign Cloud",
   tag: "regulated cloud · compliance · public-sector trust",
   desc: "A regulated-cloud style for government, banking, healthcare, and enterprise buyers who care about residency, audit, uptime, and policy.",
+  sampleTemplate: "dashboard",
 
   feel: "Enterprise trust without generic navy SaaS: civic-grade, precise, evidence-heavy, and calm enough for high-stakes procurement.",
 

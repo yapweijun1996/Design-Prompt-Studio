@@ -17,6 +17,7 @@
     "lint": "eslint src --max-warnings 0",
     "icons": "node scripts/build-icons.mjs",
     "samples": "node scripts/build-style-samples.mjs",
+    "styles:validate": "node scripts/validate-style-registry.mjs",
     "prebuild": "node scripts/build-icons.mjs",
     "test": "node scripts/smoke-test.mjs"
   },

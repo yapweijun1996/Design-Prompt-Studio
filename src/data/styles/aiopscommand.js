@@ -5,6 +5,7 @@ export const aiopscommand = asFullPreset({
   name: "AI Ops Command",
   tag: "AI operations · command center · trace-led",
   desc: "A serious AI operations command center for monitoring agents, model runs, evals, costs, traces, and incidents.",
+  sampleTemplate: "dashboard",
 
   feel: "A mission-control room for agentic software: fast, dark, precise, traceable, and built for operators who need to know what happened and why.",
 

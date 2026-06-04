@@ -5,6 +5,7 @@ export const vercel = asFullPreset({
   name: "Vercel / Geist",
   tag: "Mono-precise · dev-product · high-craft",
   desc: "Ultra-clean developer-product marketing. Geist type, black/white, surgical spacing, one restrained accent. The 'shipped by people with taste' look.",
+  sampleTemplate: "product",
   feel: "A Vercel or Geist-era developer platform page — confident, minimal, fast, every pixel deliberate. Not a generic SaaS template.",
   references: "vercel.com, Geist design system, Resend, Linear, Railway, turbo.build",
   boldFactor: [

@@ -5,6 +5,8 @@
 
 import { ALL_PROMPTS, CURATED_PROMPTS, promptStats, pickFeaturedPrompt, searchPrompts, sortForBrowse, collapseToStyles, getAvailableMarkets } from "../src/data/prompts/index.js";
 import { STYLE_PRESETS, STYLE_IDS } from "../src/data/styles/index.js";
+import { CATEGORY_IDS, STYLE_CATEGORY_MAP } from "../src/data/styles/categories.js";
+import { validateStyleRegistry } from "../src/data/styles/schema.js";
 import { PAGE_TYPES, PURPOSE_BUCKETS, PAGE_TYPES_BY_PURPOSE, pageTypeCount } from "../src/data/taxonomy.js";
 import { assemblePrompt, assembleFromCard, promptStats as charStats } from "../src/lib/assemblePrompt.js";
 import { scoreQuality } from "../src/lib/qualityScore.js";
@@ -46,6 +48,23 @@ check("static sample HTML ids are registry-leading and have files", () => {
       readFileSync(path, "utf8").includes("<!doctype html>") &&
       buildStyleSampleHTML(id).includes(`sample output`);
   });
+});
+check("style registry schema is standardized", () => {
+  const result = validateStyleRegistry({
+    stylePresets: STYLE_PRESETS,
+    styleIds: STYLE_IDS,
+    categoryMap: STYLE_CATEGORY_MAP,
+    categoryIds: CATEGORY_IDS,
+    staticSampleIds: STATIC_STYLE_SAMPLE_IDS,
+    fileExists: (styleId) => existsSync(`public/style-samples/${styleId}.html`),
+    readStaticSampleHTML: (styleId) => {
+      const path = `public/style-samples/${styleId}.html`;
+      return existsSync(path) ? readFileSync(path, "utf8") : null;
+    },
+    buildStaticSampleHTML: buildStyleSampleHTML,
+  });
+  if (!result.ok) throw new Error(result.errors.slice(0, 3).map((error) => `${error.code}:${error.styleId || "registry"}`).join(", "));
+  return `${result.summary.totalStyles} styles / ${result.summary.staticSamples} static samples`;
 });
 check("premium modern styles present (vercel/stripe/apple/notion/aesop/bento)", () => {
   return ["vercel", "stripe", "apple", "notion", "aesop", "bento"].every((id) => STYLE_PRESETS[id]?.md?.length > 500);

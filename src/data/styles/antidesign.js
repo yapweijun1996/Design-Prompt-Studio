@@ -92,7 +92,7 @@ input, select, textarea { /* unstyled default */ }`,
     "art.yale.edu wiki-edited department pages",
     "Cargo Collective portfolio sites",
     "Folder Studio's archive page",
-    "Hooning.com",
+    "Hooning.com deliberately awkward archive energy",
   ],
 
   failureLooksLike: [

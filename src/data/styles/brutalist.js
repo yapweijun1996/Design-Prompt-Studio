@@ -5,6 +5,37 @@ export const brutalist = {
   name: "Neo-Brutalist",
   tag: "Raw · honest · loud",
   desc: "Thick borders. Hard offset shadows. Primary colors. Helvetica. Deliberately ugly.",
+  sampleTemplate: "brutal",
+  references: "Gumroad creator pages, Are.na zines, Swiss protest posters, Cards Against Humanity",
+  tokens: {
+    bg: { value: "#FFFEEC", usage: "Cream-white brutalist canvas" },
+    panel: { value: "#FFFFFF", usage: "High-contrast bordered panels" },
+    fg: { value: "#000000", usage: "Pure black ink" },
+    muted: { value: "#3B3428", usage: "Secondary body copy" },
+    accent: { value: "#FFFE00", usage: "Primary saturated flood fill" },
+    border: { value: "#000000", usage: "3-4px structural borders" },
+    warning: { value: "#FF5C00", usage: "Secondary loud accent" },
+  },
+  typography: {
+    display: "\"Inter Tight\", \"Helvetica Neue\", Arial, system-ui, sans-serif",
+    body: "\"Inter Tight\", \"Helvetica Neue\", Arial, system-ui, sans-serif",
+    mono: "\"Courier New\", \"JetBrains Mono\", monospace",
+    scale: "14/16/18/24/32/48/72/96/128",
+    weight: "headlines 800-900, controls 700+",
+    tracking: "display tight, labels uppercase",
+  },
+  successLooksLike: [
+    "A Gumroad creator page",
+    "A college punk-zine",
+    "A 1960s Swiss poster made by someone who did not ask permission",
+    "Cards Against Humanity homepage",
+  ],
+  failureLooksLike: [
+    "Minimalism with a yellow button bolted on",
+    "Modern playful SaaS",
+    "Smooth rounded corners on cards",
+    "Gradients of any kind",
+  ],
 
   feel: "A college punk-zine made by someone who didn't ask permission — not a SaaS landing page wearing a costume.",
 

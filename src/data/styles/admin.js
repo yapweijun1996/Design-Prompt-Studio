@@ -85,6 +85,7 @@ export const admin = asFullPreset({
   tileHTML: `
     <div class="rail"></div>
     <div class="main">
+      <div class="label">Users · Admin Console</div>
       <div class="bar"></div>
       <div class="row"></div>
       <div class="row"></div>

@@ -5,6 +5,7 @@ export const luxe = asFullPreset({
   name: "Quiet Luxury",
   tag: "Black + gold · hushed · spacious",
   desc: "Hushed high-luxury for fashion houses, jewelry, fine hospitality. Deep charcoal/black, a single restrained gold, a fine serif, vast space, near-silence. Expensive through restraint.",
+  sampleTemplate: "editorial",
   feel: "A Loro Piana / The Row / Aman Resorts / Cartier page — almost empty, a fine serif whispering, gold used once, full-bleed imagery doing the talking. Stillness reads as money.",
   references: "The Row, Loro Piana, Aman, Cartier, Bottega Veneta, Officine Panerai, Hermès",
   boldFactor: [

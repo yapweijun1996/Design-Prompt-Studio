@@ -5,6 +5,7 @@ export const warmtech = asFullPreset({
   name: "Warm Minimal",
   tag: "Cream · humanist · calm-intelligent",
   desc: "Warm, intelligent minimalism for AI/tech and thoughtful products. Cream/sand canvas, a humanist serif or warm grotesque, calm confidence, generous space. Smart without being cold.",
+  sampleTemplate: "product",
   feel: "Anthropic.com / Linear's warmer moments / a Stripe Press book — warm off-white, considered type, unhurried and intelligent. Tech that feels human and trustworthy, not clinical SaaS-blue.",
   references: "anthropic.com, Stripe Press, Linear, Readwise, Things, Oak (Heptabase), Maven",
   boldFactor: [

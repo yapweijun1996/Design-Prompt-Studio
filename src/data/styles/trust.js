@@ -5,6 +5,7 @@ export const trust = asFullPreset({
   name: "Enterprise Trust",
   tag: "Navy · crisp · B2B-grade",
   desc: "Polished modern B2B / enterprise — deep navy + crisp white + ONE confident accent, a tight grid, real social proof, security-grade calm. Confident and credible, never cold or clip-arty.",
+  sampleTemplate: "dashboard",
   feel: "Linear / Ramp / Mercury / Vanta / WorkOS — a B2B product that looks expensive and trustworthy: tight grid, navy ink, a confident blue accent, logo walls, real numbers.",
   references: "Linear, Ramp, Mercury, Vanta, WorkOS, Stripe (corporate pages), Notion enterprise",
   boldFactor: [

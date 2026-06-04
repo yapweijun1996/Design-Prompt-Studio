@@ -85,6 +85,6 @@ export const lowpoly = asFullPreset({
       <polygon points="0,60 20,35 35,50 50,20 65,45 80,30 100,55 100,60" fill="#3D2E66"/>
       <polygon points="35,50 50,20 65,45 50,60" fill="#7BB6FF" opacity="0.6"/>
     </svg>
-    <div class="word">ALTO</div>
+    <div class="word">ALTO terrain explorer</div>
   `,
 });

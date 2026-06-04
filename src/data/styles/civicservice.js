@@ -5,6 +5,7 @@ export const civicservice = asFullPreset({
   name: "Civic Service",
   tag: "public service · forms · accessibility",
   desc: "A public-service style for government forms, permits, benefits, appointments, resident portals, and civic information.",
+  sampleTemplate: "dashboard",
 
   feel: "A service page that respects stressed users: plain language, large controls, clear eligibility, progress, proof, and next steps.",
 

@@ -101,7 +101,7 @@ export const constructivist = asFullPreset({
   tile: "tile-constructivist",
   tileHTML: `
     <div class="diag"></div>
-    <div class="word">RISE</div>
+    <div class="word">RISE WORKERS' BULLETIN</div>
     <div class="circle"></div>
   `,
 });
