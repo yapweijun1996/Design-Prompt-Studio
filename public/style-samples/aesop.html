@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(620px 280px at 78% 0%, color-mix(in srgb, #3D4A3A 24%, transparent), transparent 72%),
+        #F4F1EA;
+      color: #33312B;
+      font-family: "Newsreader", Georgia, serif;
+    }
+    .page { min-height: 100vh; padding: 28px; }
+    .shell { max-width: 1120px; margin: 0 auto; }
+    .nav {
+      display: flex; justify-content: space-between; align-items: center;
+      border-bottom: 1px solid #CFC9B9; padding-bottom: 18px;
+      font: 700 12px/1 "JetBrains Mono", ui-monospace, monospace; letter-spacing: .1em; text-transform: uppercase;
+    }
+    .nav span:last-child { color: #6B675C; }
+    .hero {
+      display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(280px, .85fr);
+      gap: 28px; align-items: stretch; padding: 54px 0 34px;
+    }
+    h1 {
+      font-family: "Newsreader", "Fraunces", "Suisse Works", Georgia, serif; font-size: clamp(48px, 8vw, 94px);
+      line-height: .92; letter-spacing: -.045em; margin: 0 0 18px;
+    }
+    .lead { max-width: 62ch; color: #6B675C; font-size: 18px; line-height: 1.6; margin: 0 0 24px; }
+    .actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn {
+      border: 1px solid #3D4A3A; background: #3D4A3A; color: #F4F1EA;
+      min-height: 46px; padding: 0 18px; border-radius: 12px;
+      font-weight: 750; display: inline-flex; align-items: center;
+    }
+    .btn.secondary { background: transparent; color: #33312B; border-color: #CFC9B9; }
+    .artifact {
+      background: color-mix(in srgb, #FFFFFF 88%, transparent);
+      border: 1px solid #CFC9B9; border-radius: 18px; padding: 18px;
+      min-height: 340px; box-shadow: 0 30px 80px rgba(0,0,0,.13);
+      display: grid; gap: 12px;
+    }
+    .artifact-head { display:flex; justify-content:space-between; color:#6B675C; font: 650 11px/1 "JetBrains Mono", ui-monospace, monospace; letter-spacing:.08em; text-transform:uppercase; }
+    .metric { display:grid; grid-template-columns: 1fr auto; gap:12px; align-items:center; border:1px solid #CFC9B9; border-radius:14px; padding:14px; background:#FFFFFF; }
+    .metric b { font-family:"Newsreader", "Fraunces", "Suisse Works", Georgia, serif; font-size: 28px; line-height:1; letter-spacing:-.03em; }
+    .bar { height: 9px; border-radius: 999px; background: color-mix(in srgb, #3D4A3A 22%, #CFC9B9); overflow:hidden; }
+    .bar i { display:block; height:100%; width:72%; border-radius:inherit; background:#3D4A3A; }
+    .grid { display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; padding-top: 8px; }
+    .card { border:1px solid #CFC9B9; background:#FFFFFF; border-radius:16px; padding:18px; min-height:136px; }
+    .eyebrow { color:#3D4A3A; font: 750 11px/1 "JetBrains Mono", ui-monospace, monospace; letter-spacing:.1em; text-transform:uppercase; margin-bottom:12px; }
+    .card p { margin:0; color:#6B675C; line-height:1.45; font-size:14px; }
+    .footer { display:flex; justify-content:space-between; gap:16px; color:#6B675C; border-top:1px solid #CFC9B9; margin-top:28px; padding-top:16px; font-size:13px; }
+    @media (max-width: 760px) {
+      .page { padding: 18px; }
+      .hero { grid-template-columns: 1fr; padding-top: 34px; }
+      .grid { grid-template-columns: 1fr; }
+      .footer { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="shell">
+      <header class="nav"><span>Aesop / Apothecary</span><span>sample output</span></header>
+      <section class="hero">
+        <div>
+          <div class="eyebrow">Muted · editorial retail · understated luxe</div>
+          <h1>Aesop / Apothecary in motion.</h1>
+          <p class="lead">Understated apothecary-luxury retail. Muted warm neutrals, a refined serif, abundant whitespace, long literate copy. Quiet confidence, never flashy.</p>
+          <div class="actions">
+            <span class="btn">Primary action</span>
+            <span class="btn secondary">View details</span>
+          </div>
+        </div>
+        <aside class="artifact">
+          <div class="artifact-head"><span>Live surface</span><span>aesop</span></div>
+          <div class="metric"><b>Ready</b><span style="color:#3D4A3A;font-weight:800">active</span></div>
+          <div class="bar"><i></i></div>
+          <div class="metric"><span>Muted warm neutral palette — stone, taupe, olive, ink — no bright color</span><span>01</span></div>
+          <div class="metric"><span>A refined serif (Suisse Works / Newsreader / Fraunces) for display and editorial copy</span><span>02</span></div>
+        </aside>
+      </section>
+      <section class="grid">
+        
+          <article class="card">
+            <div class="eyebrow">Principle 1</div>
+            <p>aesop.com product page</p>
+          </article>
+        
+          <article class="card">
+            <div class="eyebrow">Principle 2</div>
+            <p>Le Labo store</p>
+          </article>
+        
+          <article class="card">
+            <div class="eyebrow">Principle 3</div>
+            <p>a Cereal magazine spread</p>
+          </article>
+        
+      </section>
+      <footer class="footer">
+        <span>Generated sample preview from the style preset tokens and rules.</span>
+        <span>aesop.com, Le Labo, Cereal magazine, Kinfolk, Officine Universelle Buly, Byredo</span>
+      </footer>
+    </div>
+  </main>
+</body>
+</html>
