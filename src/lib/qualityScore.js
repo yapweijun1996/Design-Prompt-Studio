@@ -28,8 +28,16 @@ function sectionCount(state) {
 /**
  * Score a Studio state. Each dimension earns 0..weight; weights sum to 100.
  * `critical` dimensions gate the prompt hard when missing.
+ *
+ * Format-aware: a DESIGN.md is a reusable design-system document, NOT tied to a
+ * one-shot brief — so grading it on brief richness (audience/tone/avoid) misfires
+ * and would wrongly block a perfectly complete system doc. When the state targets
+ * the "design-md" format we grade SYSTEM completeness instead (layout structure,
+ * component library, stack, localization). See docs/RESEARCH-REVIEW.md § 3a.
  */
 export function scoreQuality(state = {}) {
+  if (state.outputFormat === "design-md") return scoreDesignDoc(state);
+
   const brief = state.brief || {};
   const nSections = sectionCount(state);
 
@@ -90,7 +98,62 @@ export function scoreQuality(state = {}) {
     .sort((a, b) => (Number(b.critical || 0) - Number(a.critical || 0)) || (b.weight - a.weight))
     .map((d) => d.hint);
 
-  return { score, gate, criticalMissing, dimensions, fixes };
+  return { kind: "prompt", score, gate, criticalMissing, dimensions, fixes };
+}
+
+// ─── DESIGN.md completeness scorer ───────────────────────────────────────────
+// Grades the reusable design-system document, not a one-shot brief. The visual
+// system (tokens, typography, color, do/don't) is GUARANTEED by the style-preset
+// schema, so it's awarded as a flat baseline; the user-controlled levers are the
+// layout structure, component library, target stack, and localization context.
+function scoreDesignDoc(state = {}) {
+  const nSections = sectionCount(state);
+  const localized = (state.locale && state.locale !== "default") || (state.market && state.market !== "none");
+
+  const dimensions = [
+    {
+      key: "layout", label: "Layout structure", weight: 35, critical: true,
+      earned: nSections >= 3 ? 35 : nSections === 2 ? 21 : nSections === 1 ? 10 : 0,
+      hint: "Pick at least 3 sections so §5 Layout Blueprints has real structure to govern.",
+    },
+    {
+      key: "visual", label: "Visual system (tokens, type, color)", weight: 15,
+      earned: 15, // guaranteed by the style-preset schema
+      hint: "",
+    },
+    {
+      key: "components", label: "Component library", weight: 20,
+      earned: state.includeComponents === false ? 0 : 20,
+      hint: "Keep components enabled so §6 ships a real primitive catalog with a11y rules.",
+    },
+    {
+      key: "technical", label: "Target stack", weight: 20,
+      earned: has(state.stack) ? 20 : 0,
+      hint: "Pick an output stack (HTML / React / Next) so §10 Implementation is concrete.",
+    },
+    {
+      key: "context", label: "Cultural / market context", weight: 10,
+      earned: localized ? 10 : 0,
+      hint: "Optional: add a culture or market layer for localized type, currency, and tone.",
+    },
+  ];
+
+  const score = dimensions.reduce((sum, d) => sum + d.earned, 0);
+  const criticalMissing = dimensions.filter((d) => d.critical && d.earned === 0).length;
+
+  // A registry-built design doc is complete by construction, so it rarely blocks:
+  // only a doc with no layout structure at all is held back.
+  let gate;
+  if (criticalMissing >= 1 || score < 50) gate = "block";
+  else if (score < 80) gate = "warn";
+  else gate = "ready";
+
+  const fixes = dimensions
+    .filter((d) => d.earned < d.weight && d.hint)
+    .sort((a, b) => (Number(b.critical || 0) - Number(a.critical || 0)) || (b.weight - a.weight))
+    .map((d) => d.hint);
+
+  return { kind: "design", score, gate, criticalMissing, dimensions, fixes };
 }
 
 export const GATE_LABEL = {

@@ -8,6 +8,7 @@ import { copyText } from "../lib/clipboard.js";
 import { buildOpenInLinks } from "../lib/providers.js";
 import { getPromptById } from "../data/prompts/index.js";
 import { assemblePrompt, promptStats } from "../lib/assemblePrompt.js";
+import { assembleDesignDoc } from "../lib/assembleDesignDoc.js";
 import { renderQualityPanel } from "./qualityPanel.js";
 import { renderStep1 } from "./steps/1-style.js";
 import { renderStep2 } from "./steps/2-page.js";
@@ -29,6 +30,9 @@ const DEFAULT_STATE = () => ({
   sections: new Set(["hero", "features", "cta", "footer"]),
   stack: "html",
   outputMode: "single-file",
+  // Output FORMAT (distinct from outputMode): "prompt" = one-shot build-this-page
+  // prompt; "design-md" = reusable DESIGN.md design-system document.
+  outputFormat: "prompt",
   promptMode: "one-shot",
   libraries: new Set(),
   brief: { name: "", industry: "", audience: "", tone: "", references: "", context: "", avoid: "" },
@@ -156,8 +160,9 @@ export function renderExpress({ onExit }) {
       ...state,
       sections: state.sections instanceof Set ? Array.from(state.sections) : (state.sections || []),
     };
+    const isDesignDoc = state.outputFormat === "design-md";
     let prompt;
-    try { prompt = assemblePrompt(carrier); }
+    try { prompt = isDesignDoc ? assembleDesignDoc(carrier) : assemblePrompt(carrier); }
     catch (e) { prompt = "[assemble failed: " + (e?.message || e) + "]"; }
     const stats = promptStats(prompt);
 
@@ -171,10 +176,11 @@ export function renderExpress({ onExit }) {
         el("span", null, "05 Review"),
         el("span", { class: "express__preview-stats" }, `${stats.chars.toLocaleString()} chars · ~${stats.tokens.toLocaleString()} tokens`),
       ),
+      buildFormatToggle(),
       qualityNode,
       el(
         "pre",
-        { class: "express__preview-prompt", tabindex: "0", "aria-label": "Assembled prompt" },
+        { class: "express__preview-prompt", tabindex: "0", "aria-label": isDesignDoc ? "DESIGN.md document" : "Assembled prompt" },
         prompt,
       ),
       el(
@@ -188,7 +194,7 @@ export function renderExpress({ onExit }) {
             class: "step__action-btn",
             onClick: () => downloadPrompt(state, prompt),
           },
-          "Download .md",
+          isDesignDoc ? "Download DESIGN.md" : "Download .md",
         ),
         buildOpenInLinks(prompt, { btnClass: "step__action-btn" }),
       ),
@@ -200,6 +206,42 @@ export function renderExpress({ onExit }) {
         ". Smaller or older models may produce a more generic page.",
       ),
     );
+  }
+
+  function buildFormatToggle() {
+    const opts = [
+      { id: "prompt", label: "Screen prompt", hint: "One-shot: build this page now" },
+      { id: "design-md", label: "DESIGN.md", hint: "Reusable design-system document" },
+    ];
+    const current = state.outputFormat === "design-md" ? "design-md" : "prompt";
+    const group = el("div", {
+      class: "express__format-toggle",
+      role: "radiogroup",
+      "aria-label": "Output format",
+    });
+    for (const o of opts) {
+      const active = o.id === current;
+      group.appendChild(
+        el(
+          "button",
+          {
+            type: "button",
+            class: "express__format-btn" + (active ? " is-active" : ""),
+            role: "radio",
+            "aria-checked": active ? "true" : "false",
+            title: o.hint,
+            onClick: () => {
+              if (state.outputFormat === o.id) return;
+              state.outputFormat = o.id;
+              persist(state);
+              updatePreview();
+            },
+          },
+          o.label,
+        ),
+      );
+    }
+    return group;
   }
 
   function buildCopyBtn(prompt, blocked = false) {
@@ -230,7 +272,9 @@ export function renderExpress({ onExit }) {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `dps-${s.style}-${s.pageType}-${Date.now()}.md`;
+    a.download = s.outputFormat === "design-md"
+      ? "DESIGN.md"
+      : `dps-${s.style}-${s.pageType}-${Date.now()}.md`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);

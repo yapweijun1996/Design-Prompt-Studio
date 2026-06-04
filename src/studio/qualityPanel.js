@@ -30,7 +30,7 @@ export function renderQualityPanel(state) {
         "span",
         { class: "step__quality-meta" },
         el("span", { class: "step__quality-label" }, GATE_LABEL[quality.gate]),
-        el("span", { class: "step__quality-sub" }, `Prompt quality · ${quality.score}/100`),
+        el("span", { class: "step__quality-sub" }, `${quality.kind === "design" ? "Design system" : "Prompt quality"} · ${quality.score}/100`),
       ),
     ),
   );

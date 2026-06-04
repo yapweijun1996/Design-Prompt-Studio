@@ -32,6 +32,9 @@ const DEFAULT_STATE = () => ({
   sections: new Set(["hero", "features", "cta", "footer"]),
   stack: "html",
   outputMode: "single-file",
+  // Output FORMAT: "prompt" = one-shot build-this-page prompt; "design-md" =
+  // reusable DESIGN.md design-system document. Toggled in the Review step.
+  outputFormat: "prompt",
   promptMode: "one-shot",
   libraries: new Set(),
   includeComponents: true,

@@ -96,6 +96,67 @@
   color: var(--fg-subtle);
 }
 .express__preview-stats { font-size: 10px; }
+.express__format-toggle {
+  display: inline-flex;
+  gap: 2px;
+  padding: 2px;
+  background: var(--bg-elevated);
+  border: var(--border-thin) solid var(--border);
+  border-radius: var(--radius-md);
+  align-self: flex-start;
+}
+.express__format-btn {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border: none;
+  border-radius: calc(var(--radius-md) - 2px);
+  background: transparent;
+  color: var(--fg-subtle);
+  cursor: pointer;
+  transition: color 120ms, background 120ms;
+}
+.express__format-btn:hover { color: var(--fg); }
+.express__format-btn.is-active {
+  background: var(--accent);
+  color: var(--accent-fg, #fff);
+}
+
+/* Review-step output-format toggle — same affordance as Express, wizard sizing. */
+.step__output-region {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+.step__format-toggle {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  background: var(--bg-elevated);
+  border: var(--border-thin) solid var(--border);
+  border-radius: var(--radius-md);
+  align-self: flex-start;
+}
+.step__format-btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 7px 14px;
+  border: none;
+  border-radius: calc(var(--radius-md) - 2px);
+  background: transparent;
+  color: var(--fg-subtle);
+  cursor: pointer;
+  transition: color 120ms, background 120ms;
+}
+.step__format-btn:hover { color: var(--fg); }
+.step__format-btn.is-active {
+  background: var(--accent);
+  color: var(--accent-fg, #fff);
+}
 .express__preview-prompt {
   font-family: var(--font-mono);
   font-size: 11px;

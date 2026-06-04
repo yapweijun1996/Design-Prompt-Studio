@@ -18,6 +18,19 @@ export const GLOBAL_RULES = {
     ],
   },
 
+  responsivePwa: {
+    id: "responsivePwa",
+    title: "RESPONSIVE & PWA (mandatory for every web page / app)",
+    bullets: [
+      "Mobile-first and fully responsive: design from 360px up and reflow — don't shrink — at each breakpoint (sm 640 · md 768 · lg 1024 · xl 1280). Nothing may overflow, clip, or cause horizontal scroll at 360px.",
+      "Always include `<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, viewport-fit=cover\">` and honour safe-area insets via `env(safe-area-inset-*)`.",
+      "Fluid by construction: CSS grid/flex for layout, `clamp()` for type, `min()/max()/%` for widths — never fixed pixel widths that break on small screens.",
+      "Ship as an installable PWA: a web app manifest (name, short_name, theme_color, background_color, `display: standalone`, start_url, and 192 + 512 + maskable icons), a registered service worker that precaches the app shell and serves an offline fallback, plus a `<meta name=\"theme-color\">`.",
+      "For a single self-contained .html deliverable, keep it PWA-ready: reference a manifest via `<link rel=\"manifest\">` (a `data:` URI is acceptable) and register a minimal inline service worker where the runtime allows; note anything that needs separate files in Design Decisions.",
+      "Respect `prefers-reduced-motion` and `prefers-color-scheme`; keep tap targets ≥ 44×44px.",
+    ],
+  },
+
   contentDiscipline: {
     id: "contentDiscipline",
     title: "CONTENT DISCIPLINE",

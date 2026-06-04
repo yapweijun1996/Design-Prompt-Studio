@@ -25,21 +25,26 @@ import {
 const MAX_COMPONENTS_PER_PROMPT = 18;
 
 // ─── Stack defaults ─────────────────────────────────────────────────────────
-const STACKS = {
+// Exported so assembleDesignDoc.js (and any future output format) shares one
+// source of truth for stack names/descriptions.
+export const STACKS = {
   html: {
     id: "html",
     name: "Vanilla HTML",
     desc: "Single self-contained .html file with inline CSS and JS, Google Fonts via <link>, SVG icons inlined. No build step, no framework dependencies. Final file should open directly in a browser.",
+    pwa: "Set a viewport meta and `<meta name=\"theme-color\">`. Reference a manifest with `<link rel=\"manifest\">` using a `data:application/manifest+json,...` URI (name, short_name, theme_color, background_color, display: standalone, start_url, plus 192 + 512 + maskable icons as data-URI PNG or inline SVG). Register a tiny inline service worker built from a Blob URL that precaches the shell and returns an offline fallback. If the single-file constraint genuinely blocks a service worker, ship PWA-ready markup and note the one extra `sw.js` file in Design Decisions.",
   },
   react: {
     id: "react",
     name: "React + Tailwind",
     desc: "React functional components using Tailwind utility classes. lucide-react for icons. Default export. Single .jsx file unless multiple files are clearly warranted. Pin dependencies (React 18.3.1) with integrity hashes if delivering inline.",
+    pwa: "Use `vite-plugin-pwa` with `registerType: 'autoUpdate'` (Workbox). Declare the manifest (name, short_name, theme_color, background_color, display: standalone, 192 + 512 + maskable icons) in the plugin options, add an offline fallback, put the viewport + theme-color meta in index.html, and call the generated `registerSW()`.",
   },
   next: {
     id: "next",
     name: "Next.js App Router",
     desc: "Next.js 14+ app router conventions. Server components by default with 'use client' only where needed. Tailwind for styling, shadcn/ui-compatible component patterns, lucide-react icons.",
+    pwa: "Use `@ducanh2912/next-pwa` (App Router-compatible) with Workbox runtime caching. Add `public/manifest.json` (name, short_name, theme_color, background_color, display: standalone, 192 + 512 + maskable icons) and wire `manifest`, `themeColor`, and `viewport` through the root-layout `metadata` / `viewport` exports.",
   },
 };
 
@@ -97,7 +102,7 @@ DESIGN SYSTEM IS LAW. Every Bold Factor item is mandatory, not optional. Layered
   return `<operating-rules>
 1. **No questions.** Make confident decisions. If an assumption is non-obvious, state it in one line inside the Design Decisions section at the end — never ask the user to confirm before delivering code.
 
-2. **Tech stack**: ${stackInfo.name}. ${stackInfo.desc}
+2. **Tech stack**: ${stackInfo.name}. ${stackInfo.desc}${stackInfo.pwa ? `\n   - **PWA**: ${stackInfo.pwa}` : ""}
 
 3. **Scope**: Deliver a complete responsive ${pageTypeName.toLowerCase()}. Include ONLY the sections listed below; do not pad with sections that don't belong.
 
@@ -121,6 +126,7 @@ ${sectionList}
    - A real type scale + consistent spacing + generous whitespace; nothing crowded or single-size.
    - Doesn't look like a default framework template — it reads as the named references.
    - Accessibility minimums met (focus states, contrast, touch targets, skip link).
+   - Responsive from 360px with no horizontal scroll, AND PWA-ready (viewport meta, manifest, service worker + offline fallback, theme-color) — see the GLOBAL RULES block.
 </operating-rules>`;
 }
 
