@@ -723,15 +723,174 @@ These are not changes to the prompt template; they're lessons for the Studio pro
 
 ---
 
+## Sample #3 — External best-practice corpus (Lovable / OpenAI GPT-5.4 / academic)
+
+> Researched 2026-06-04. Unlike Samples #1–2 (single leaked prompts), this sample
+> triangulates three *independent* authorities to test whether our template
+> generalizes: Lovable's official prompting docs (12-step framework), OpenAI's
+> "Designing delightful frontends with GPT-5.4" guide, and the arXiv systematic
+> review of LLMs in UI/UX (2507.04469). The headline result is **confirmation**:
+> our existing 5-block structure already embodies what all three independently
+> recommend. A few genuinely-new, actionable patterns are below.
+
+### The one finding everything agrees on
+
+**Specificity is the single biggest lever between "template" and "designed."**
+This is already hard-coded in `assemblePrompt.js → buildRequest()` ("an empty/sparse
+brief is the #1 cause of generic output") and in the global `CONTENT DISCIPLINE` rule.
+All three external sources reach it independently: real content + tight constraints =
+professional; placeholders + vague wording = AI slop.
+
+### Patterns worth stealing (new)
+
+#### P29. Constraint ceilings, not just constraint floors
+OpenAI: *"one H1, ≤6 sections, ≤2 typefaces, one accent color, one primary CTA above
+the fold."* Our prompt sets **floors** (minimum type scale, minimum contrast) but few
+**ceilings**. Ceilings are what prevent "generic, overbuilt layouts" — the named OpenAI
+failure mode. Candidate: add optional ceiling lines to `<operating-rules>` (e.g. a
+`maxSections` derived from the page type, "≤2 typefaces unless the style names more").
+
+#### P30. Reasoning level is a tunable, and lower is often better
+OpenAI (counterintuitive): for simpler sites, **low/medium reasoning beats high** —
+high reasoning over-designs. Not a prompt-text change but a *usage* note worth surfacing
+in the Studio UI: "for a straightforward page, don't crank thinking to max."
+
+#### P31. Visual references infer rhythm, not just mood
+OpenAI: a reference *screenshot/mood-board* lets the model infer "layout rhythm,
+typography scale, spacing systems, imagery treatment." We pass references as **text**
+(brand names). Image references are a higher-bandwidth channel — a future Studio feature
+(attach an image to the brief), not a text-prompt change.
+
+#### P32. Plan-before-prompt = four explicit slots
+Lovable #1: define **product / audience / motivation / primary action** *before* writing
+the prompt. This maps almost 1:1 onto our `<request>` brief fields
+(name / audience / … ) — confirms the brief shape. Gap: we don't capture **primary
+action / user motivation** explicitly. Candidate brief field: `primaryAction`.
+
+#### P33. Atomic component vocabulary
+Lovable #6: name UI elements atomically ("a card with a badge", "a modal", "a tooltip")
+rather than describing them. This is exactly what our `<components>` block does — it
+hands the model a named primitive vocabulary. Confirmation of the components-block design.
+
+### Confirmation map (external practice → pattern we already ship)
+
+| External best practice | Source | Already covered by |
+|---|---|---|
+| Real content, no placeholders | all 3 | `buildRequest()` invent-line + `CONTENT DISCIPLINE` |
+| Design direction / "the feel" first | Lovable #3, OpenAI | `P1` feel line + `<design-system>` block |
+| Design tokens (bg/surface/text/accent) + type roles | OpenAI #6 | `P4` token tables + style preset `tokens`/`typography` |
+| Narrative page structure (hero→proof→detail→CTA) | OpenAI #3 | page-type `sections` ordering |
+| Anticipate dynamic states (loading/empty/error/auth) | Lovable #11 | curated brief convention (5 mandatory states) |
+| Reject card-as-default / competing visual ideas | OpenAI | `aiSlopTropes` + `craftFloor` global rules |
+| Pre-output self-check | — | `<operating-rules>` step 8 self-check list |
+| Iterate small, preserve what works | Lovable #10/#12 | conversational mode "layer edits" |
+| Hallucination / prompt-instability risk | arXiv | mitigated by strict output format + self-check |
+
+### Distilled cheat-sheet — "How to write a good design prompt"
+
+The portable, tool-agnostic version of everything above. (The Studio automates this; this
+is the manual recipe for when you write a one-off prompt by hand.)
+
+1. **Plan first** — product, a *specific* audience + their job-to-be-done, the one primary action.
+2. **Name the feel** in one word (calm / bold / premium / playful) and commit to it everywhere.
+3. **Set ceilings** — ≤6 sections, ≤2 typefaces, 1 accent, 1 primary CTA above the fold.
+4. **Give references** as inspiration (2–3 real brands), never to copy.
+5. **Real content only** — real names, copy, prices, stats. No `[Product Name]`, no lorem ipsum.
+6. **Speak atomically** — name the primitives: card, badge, modal, table, drawer, tooltip.
+7. **Define tokens** — bg / surface / text / 1 accent (OKLCH harmony) + type roles (display/heading/body/caption).
+8. **Demand the states** — loading skeleton / empty / no-results / error+retry / no-permission.
+9. **Forbid explicitly** — placeholders, gradient-as-aesthetic, card-stacking, emoji status, numbers that don't reconcile.
+10. **Force a self-check** — list pass/fail criteria the model must verify before output.
+11. **Fix output format** — code first, then a short "Design Decisions" rationale, then only caveats.
+12. **Iterate small** — one meaningful change per turn; don't rewrite the whole page.
+
+Counter-intuitive: for a *simple* page, prefer **low/medium reasoning** — high reasoning over-designs (OpenAI P30).
+
+### Copy-paste skeleton (manual)
+
+```markdown
+ROLE: Expert frontend designer+engineer. Deliver a complete, production-ready <PAGE> in one response. No questions.
+CONTEXT: Product <real name> · Audience <one role + their job> · Primary action <the one thing> · Feel <one word>
+REFERENCES (inspire, never copy): <2–3 real brands>
+DESIGN SYSTEM: tokens bg/surface/text/1 accent (OKLCH) · type display/heading/body/caption · named fonts (no Inter/Roboto default)
+CEILINGS: ≤6 sections · ≤2 typefaces · 1 primary CTA above fold
+MUST INCLUDE: <list real sections — no padding>
+STATES: loading skeleton / empty / no-results / error+retry / no-permission
+MUST AVOID: placeholders, lorem ipsum, gradient-as-aesthetic, card-stacking, emoji status, mismatched numbers
+OUTPUT: code first → "Design Decisions" (4–7 bullets) → caveats only
+SELF-CHECK before output (fix each): real content? feel in every section? real type scale + whitespace? not a default template? a11y (focus/contrast/44px/skip-link)? responsive 360px no h-scroll? PWA-ready?
+```
+
+### Verdict
+
+Sample #3 is the **plateau** the growth curve predicted: ~5 new actionable patterns,
+the rest confirmation. Per the doc's own rule — *"when new samples mostly confirm rather
+than add, stop studying and start building"* — the template is validated. Remaining
+deltas worth shipping later: `primaryAction` brief field (P32), optional section ceilings
+(P29), image-reference attachments (P31), a "reasoning level" hint in the UI (P30).
+
+---
+
+## Admin-panel prompt module (validated in the Aria ERP demo, 2026-06-04)
+
+A reusable add-on block for any prompt whose `pageType` is an admin/back-office tool
+(ERP, dashboard, console). These four requirements separate a *professional admin panel*
+from a pretty table screenshot. Each was implemented and browser-verified in
+`public/erp-demo/aria-inventory.html`.
+
+#### P34. Collapsible sidebar — collapse to an icon rail, never hide
+Admin users are daily power users; the nav must yield space to the data on demand.
+Desktop: toggle the sidebar between full (labels) and a ~64px **icon rail** (icons only,
+labels hidden, hover/focus shows the label tooltip). Persist the state (`localStorage`),
+bind a shortcut (`⌘\`). On phone the same control maps to the bottom tab bar — a different
+mechanism for the same intent. Distinguish *collapse-to-icon* (desktop) from *hide-behind-drawer*
+(phone); they are not the same gesture.
+
+#### P35. Instant, anchored tooltips (NOT cursor-following) for control surfaces
+Default to tooltips that appear **instantly** (no 500ms delay — power users shouldn't wait)
+and are **anchored to the element** (stationary), appended to `<body>` so they're never
+clipped by an overflow container. Cursor-following tooltips are a charts/maps/canvas idiom;
+in a dense data table they jitter and fight scan-reading, and they break the macOS/HIG
+convention. Reserve cursor-following for chart/dense-cell hover only. (Studio default:
+anchored-instant; offer cursor-follow as an opt-in for data-viz components.)
+
+#### P36. Full CRUD with the write-path safety net
+A read-only master-detail is half an admin. Ship Create/Edit in a right **drawer** (desktop)
+/ full-screen **sheet** (mobile) with: field grouping, inline validation, uniqueness checks,
+and **Save disabled until valid AND dirty**. Delete needs a **confirm step** + an **undo**
+(soft-delete/restore) toast. Mutations are **optimistic** (update UI immediately) and must
+**preserve reconciliation** — e.g. editing an inventory quantity appends an adjustment
+movement and rebalances locations so the detail still sums to the header. The hard part of
+CRUD isn't the form; it's validation + irreversible-action safety + keeping derived numbers
+consistent after the write. This is the 5-mandatory-states law extended to writes.
+
+#### P37. iPad is a first-class breakpoint, not a big phone
+The most common admin responsive bug: collapsing the tablet (768–1024px) to a single column
+like a phone. iPad is wide enough to keep **both the sidebar AND the master-detail two-column**
+layout — give it its own `@media (min-width:761px) and (max-width:1024px)` rules (narrower rail,
+tighter detail min-width, no bottom tab bar). Plus the standing PWA/iOS baseline: `viewport-fit=cover`
++ `env(safe-area-inset-*)`, `apple-mobile-web-app-capable`, 16px inputs (no auto-zoom), installable manifest.
+
+#### Drop-in admin add-on (append after the base prompt's design system)
+```markdown
+ADMIN-PANEL REQUIREMENTS (this is a back-office tool, not a marketing page):
+- Collapsible sidebar: desktop toggle full↔64px icon rail (labels hidden, hover shows tooltip), persist state, ⌘\ shortcut. Phone → bottom tab bar.
+- Tooltips: instant (no delay) + anchored to the element (stationary), body-appended so never clipped. Cursor-following ONLY for charts/dense cells.
+- Full CRUD: Create/Edit in a right drawer (desktop) / full-screen sheet (mobile) — grouped fields, inline validation, unique-key check, Save disabled until valid AND dirty. Delete → confirm step + undo toast. Optimistic updates that keep derived totals reconciling.
+- Breakpoints: phone (≤760 bottom tab bar, full-screen detail sheet), iPad (761–1024 KEEP sidebar + master-detail two-column — do NOT collapse to one column), desktop (>1024 full rail). PWA: viewport-fit=cover + safe-area insets, 16px inputs, installable manifest.
+```
+
+---
+
 ## Pattern library — overall growth curve
 
 | Sample | New patterns | Cumulative | Adopt rate |
 |---|---|---|---|
 | #1 Linear/Modern (design system) | 10 + 3 reject | 13 | 77% |
 | #2 Agent (operating prompt) | 18 + 5 reject | 36 | 75% |
-| #3 (next…) | — | — | — |
+| #3 External corpus (Lovable/OpenAI/academic) | 5 + 0 reject · mostly confirmation | 41 | confirm |
 
-Diminishing-returns prediction: by Sample #5–7 we should plateau around 60-80 patterns, after which new samples mostly **confirm** rather than add. That's the right time to stop studying and start building.
+Diminishing-returns prediction: by Sample #5–7 we should plateau around 60-80 patterns, after which new samples mostly **confirm** rather than add. That's the right time to stop studying and start building. **Sample #3 confirms the plateau arrived early — the template generalizes.**
 
 ---
 
