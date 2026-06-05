@@ -4,6 +4,8 @@
 
 🔗 **Live:** https://yapweijun1996.github.io/Design-Prompt-Studio/
 
+🖥️ **Sample output:** [ERP approval console](https://yapweijun1996.github.io/Design-Prompt-Studio/erp-demo/helm-approvals.html) — the single-file HTML produced by the **HELM — APPROVALS** curated prompt (role-based, master-detail, reconciling totals, 5 states, keyboard-first). Append `?state=loading|empty|noresults|error|noperm` to inspect each state.
+
 No accounts, no API keys, no build step for the user. Everything runs in the browser; your prompts and preferences live in `localStorage`.
 
 ---

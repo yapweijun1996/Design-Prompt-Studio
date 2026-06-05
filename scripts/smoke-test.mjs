@@ -9,6 +9,7 @@ import { CATEGORY_IDS, STYLE_CATEGORY_MAP } from "../src/data/styles/categories.
 import { validateStyleRegistry } from "../src/data/styles/schema.js";
 import { PAGE_TYPES, PURPOSE_BUCKETS, PAGE_TYPES_BY_PURPOSE, pageTypeCount } from "../src/data/taxonomy.js";
 import { assemblePrompt, assembleFromCard, promptStats as charStats } from "../src/lib/assemblePrompt.js";
+import { assembleDesignDoc } from "../src/lib/assembleDesignDoc.js";
 import { scoreQuality } from "../src/lib/qualityScore.js";
 import { suggestIndustries, industryLabel } from "../src/data/industries.js";
 import { getComponentsForContext } from "../src/data/components.js";
@@ -430,6 +431,47 @@ check("placeholder brief values do not count as filled", () => {
   const q = scoreQuality({ stack: "html", sections: new Set(["hero"]), brief: { name: "[YOUR PRODUCT]", audience: "  ", tone: "TBD" } });
   // name/audience/tone all effectively empty → all 3 criticals missing → block
   return q.criticalMissing >= 2 && q.gate === "block";
+});
+
+// Quality scorer is FORMAT-AWARE: a DESIGN.md is graded on system completeness, not
+// brief richness, so an empty brief must NOT block it the way it blocks a prompt.
+check("DESIGN.md scored on system completeness, not brief", () => {
+  const base = { style: "admin", pageType: "admin", stack: "html", sections: new Set(["topbar", "sidebar-nav", "user-table"]), includeComponents: true, brief: {} };
+  const asPrompt = scoreQuality({ ...base });
+  const asDesign = scoreQuality({ ...base, outputFormat: "design-md" });
+  return asPrompt.kind === "prompt" && asPrompt.gate === "block"
+    && asDesign.kind === "design" && asDesign.gate === "ready" && asDesign.score >= 80;
+});
+check("DESIGN.md with no layout sections is blocked", () => {
+  const q = scoreQuality({ style: "admin", pageType: "admin", stack: "html", sections: new Set(), includeComponents: true, outputFormat: "design-md" });
+  return q.kind === "design" && q.gate === "block";
+});
+
+// ─── DESIGN.md document assembler ──────────────────────────────────────────
+check("DESIGN.md emits machine-usable token layers (:root + semantic + dark)", () => {
+  const doc = assembleDesignDoc({ style: "admin", pageType: "admin", stack: "html", sections: ["topbar", "sidebar-nav", "user-table"], includeComponents: true });
+  return /### 2\.1 Primitive tokens/.test(doc)
+    && /:root \{[\s\S]*--bg:/.test(doc)
+    && /### 2\.2 Semantic tokens/.test(doc) && /--color-text: var\(--fg\);/.test(doc)
+    && /### 2\.3 Dark theme/.test(doc) && /@media \(prefers-color-scheme: dark\)/.test(doc);
+});
+check("DESIGN.md §5 is cross-screen (primary + sibling screens)", () => {
+  const doc = assembleDesignDoc({ style: "admin", pageType: "admin", stack: "html", sections: ["topbar", "user-table"], includeComponents: true });
+  return /### 5\.1 Primary screen/.test(doc) && /### 5\.2 Other screens in this product/.test(doc);
+});
+check("DESIGN.md ships a Compliance Checklist (Definition of Done)", () => {
+  const doc = assembleDesignDoc({ style: "monochrome", pageType: "landing", stack: "html", includeComponents: true });
+  return /## 11\. Compliance Checklist/.test(doc) && (doc.match(/- \[ \]/g) || []).length >= 8;
+});
+check("DESIGN.md header carries version + how-to-update", () => {
+  const doc = assembleDesignDoc({ style: "monochrome", pageType: "landing", stack: "html" });
+  return /format v\d/.test(doc) && /How to update/.test(doc);
+});
+check("every style assembles a DESIGN.md with a semantic token layer", () => {
+  return STYLE_IDS.every((id) => {
+    const doc = assembleDesignDoc({ style: id, pageType: "landing", stack: "html", includeComponents: true });
+    return /--color-\w+: var\(/.test(doc) && doc.length > 2000;
+  });
 });
 
 // ─── Experience bucket (immersive/interactive page types) ───────────────────

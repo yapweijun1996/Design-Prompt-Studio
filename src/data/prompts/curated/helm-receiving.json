@@ -1,0 +1,38 @@
+{
+  "id": "helm-receiving",
+  "tier": "curated",
+  "name": "HELM — RECEIVING",
+  "tagline": "Warehouse goods-receipt & putaway station",
+  "style": "admin",
+  "purpose": "app",
+  "pageType": "admin",
+  "density": "balanced",
+  "drama": "default",
+  "motion": "minimal",
+  "promptMode": "one-shot",
+  "sections": [
+    "dark left rail — only 'Inventory → Receiving' is active (do NOT build other modules)",
+    "top bar — a large always-focused SCAN field (barcode/PO), warehouse + dock-door switcher, shift badge, user menu",
+    "inbound queue — expected deliveries / open POs to receive today, with carrier, ETA, line count, and a status chip",
+    "receiving detail — PO header + a count grid: each line shows expected qty vs a large received-qty stepper input, UOM, and a discrepancy state",
+    "discrepancy handling — over / short / damaged with a reason and an optional photo-placeholder",
+    "putaway — suggested bin per line with an override, and a 'print labels' action",
+    "post goods-receipt action bar — Post Receipt (creates GRN) with a confirm summary",
+    "5 mandatory states — loading skeleton / empty (no inbound today) / no-results (scan/filter no match) / error+retry / blocked (PO already received or on hold)",
+    "scan-first + keyboard flow with large touch targets"
+  ],
+  "stack": "html",
+  "outputMode": "single-file",
+  "industryTags": ["erp", "admin", "enterprise", "warehouse", "inventory", "logistics", "manufacturing", "receiving", "role-based"],
+  "brief": {
+    "name": "Northwind Manufacturing ERP — console 'Helm'",
+    "industry": "Mid-market discrete manufacturing & distribution back-office. This is ONE internal screen — the warehouse goods-receipt station — not a whole ERP.",
+    "audience": "A single role — Diego Alvarez, Warehouse Receiver. He works at a wall-mounted touch terminal with a handheld barcode scanner on the receiving dock, often gloved and standing. He receives inbound deliveries against purchase orders, counts quantities, flags discrepancies, assigns putaway bins, and posts the goods receipt.",
+    "tone": "rugged, legible-at-arm's-length, fast, forgiving of mis-taps — feels like a purpose-built terminal, not an office web app",
+    "references": "SAP Fiori warehouse apps, Zebra/Honeywell scanner UIs, Odoo Inventory, NetSuite WMS, industrial kiosk UIs. Inspiration only — never copy.",
+    "context": "ROLE-BASED CONTRAST: same Helm ERP and same Admin Dense design system as the Controller's approval console, but the ROLE is different — so the screen must look and behave differently. The receiver stands at a touch terminal with gloves and a scanner, so this screen is LESS dense than an office table: larger tap targets (≥56px primary controls), bigger numerals, fewer columns, the scan field always focused and ready, and the primary action (Post Receipt) huge and reachable. Density is the Controller's need, NOT the receiver's — prove that role drives the layout.\n\nONE SCREEN ONLY: build the Receiving station and nothing else; the left rail shows other modules inactive for context.\n\nJOB-TO-BE-DONE: scan a PO or carton barcode → the matching inbound PO opens → count each line (expected vs received) → flag any over/short/damaged → confirm putaway bins → Post Receipt. Optimize the whole screen for that loop.\n\nINBOUND QUEUE: 5–8 expected deliveries for today — PO number, vendor, carrier, ETA, line count, status chip (Scheduled / Arrived / Receiving / Discrepancy). Scanning or selecting one opens its detail.\n\nDETAIL: e.g. PO-2026-04420 from 'Pacific Components Co.', 5–6 lines. Each line: item code (e.g. 'ACT-SRV-200 · Servo actuator'), expected qty, a LARGE received-qty stepper (+/- and direct entry), UOM, and a live per-line status: green when received = expected, amber when short, red when over or damaged. Show a running 'X of Y lines counted' progress. Numbers must be internally consistent.\n\nDISCREPANCY: when received ≠ expected, require a reason (Short-shipped / Over-shipped / Damaged / Wrong item) and offer a photo-placeholder; surface a clear summary before posting.\n\nPUTAWAY: each line gets a suggested bin (e.g. 'A-12-03') with an override field and a 'Print labels' action.\n\nPOST: a big Post Receipt button shows a confirm summary (lines, total units, discrepancies) and on confirm flips the PO status to 'Received' (or 'Received with discrepancies') and logs it.\n\nFIVE MANDATORY STATES — wire a JS switch (buttons or ?state=) so a reviewer can SEE each: (1) Loading = skeleton; (2) Empty = 'No inbound deliveries scheduled today'; (3) No-results = scan/filter matched nothing, 'No PO matches that scan' + clear; (4) Error = 'Couldn't load inbound queue' + Retry + error code; (5) Blocked = a PO that's already fully received or on credit hold — receiving disabled with an explained reason.\n\nSCAN-FIRST + KEYBOARD: the scan field is auto-focused and re-focuses after every action (simulate a scan with Enter on typed input); large touch targets; keyboard: Enter submits scan, +/- adjust the active line qty, Tab moves between lines, a big primary key for Post.\n\nINTERACTIVITY: the single .html file must actually work — scan/select opens detail, qty steppers update per-line status + progress, discrepancy reasons capture, putaway override, Post Receipt confirm + status flip, and all 5 states reachable.",
+    "avoid": "Copying the Controller screen's tiny dense rows — the receiver needs big targets, this is the whole point. A marketing hero or KPI dashboard. Gradients as the aesthetic. A modal for every line edit. Emoji status. Numbers that don't add up. Building any module other than Receiving. Office-grade information density that fails a gloved user at arm's length."
+  },
+  "featured": false,
+  "createdAt": "2026-06-04"
+}

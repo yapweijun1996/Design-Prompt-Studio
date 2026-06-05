@@ -328,6 +328,31 @@ function buildComponentsSection(components) {
     if (c.pairsWithLibraries?.length) lines.push(`- **Pairs with** — ${c.pairsWithLibraries.join(", ")}`);
     lines.push("");
   }
+
+  // Canonical reference patterns — build every primitive to THIS fidelity: semantic
+  // tokens from §2.2, a real :focus-visible state, and the a11y contract above.
+  // These are style-agnostic (they consume --color-* / spacing), so they hold for
+  // any preset; mirror their structure rather than reinventing widget mechanics.
+  lines.push("### Reference patterns (mirror this fidelity for every primitive)");
+  lines.push("```css");
+  lines.push("/* Build against SEMANTIC tokens (§2.2), never raw hex. */");
+  lines.push(".btn{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid var(--color-border);");
+  lines.push("  background:var(--color-surface);color:var(--color-text);cursor:pointer;}");
+  lines.push(".btn--primary{background:var(--color-action);border-color:var(--color-action);color:#fff;}");
+  lines.push(".btn:focus-visible{outline:2px solid var(--color-action);outline-offset:2px;} /* never bare :focus */");
+  lines.push(".btn:disabled{opacity:.5;cursor:not-allowed;}");
+  lines.push("```");
+  lines.push("```html");
+  lines.push("<!-- Accessible dialog: labelled, focus-trapped, Esc-closable, returns focus to opener. -->");
+  lines.push('<div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dlg-title">');
+  lines.push('  <h2 id="dlg-title">Title</h2>');
+  lines.push("  <!-- content -->");
+  lines.push('  <button class="btn" aria-label="Close" data-close>✕</button>');
+  lines.push("</div>");
+  lines.push("```");
+  lines.push("Rules: icon-only controls need an `aria-label`; every interactive element needs a");
+  lines.push("visible `:focus-visible` state; honor each component's A11y line above as hard spec.");
+
   return lines.join("\n").trimEnd();
 }
 
@@ -413,9 +438,29 @@ function buildImplementation(style, stack, libraryIds) {
   return lines.join("\n");
 }
 
+function buildComplianceChecklist() {
+  return [
+    "## 11. Compliance Checklist — Definition of Done",
+    "A screen is NOT done until every box is checked. This is the gate, not a suggestion —",
+    "run it before you call any screen complete.",
+    "",
+    "- [ ] **Color** — only tokens from §2 used; UI built against the semantic `--color-*` names; dark theme (§2.3) works and every text/UI pair still meets AA contrast.",
+    "- [ ] **Type** — sizes come from the §3 scale; the named fonts actually load (no silent system fallback); body text meets the §8 minimum.",
+    "- [ ] **Spacing** — all padding / margin / gap values are on the §4 scale; rhythm is consistent, nothing off-scale.",
+    "- [ ] **Layout** — matches a §5 blueprint; nav shell, density, and interaction patterns are consistent with the other screens in §5.2; responsive from 360px up.",
+    "- [ ] **Components** — used the §6 primitives where they fit (no ad-hoc widgets); each one honors its A11y line.",
+    "- [ ] **States** — every data view ships loading, empty, and error states (plus no-results where filtering exists) — not just the happy path.",
+    "- [ ] **Motion** — purposeful only; respects `prefers-reduced-motion` (§7).",
+    "- [ ] **Accessibility (§8)** — visible `:focus-visible` on every control, AA contrast, ≥44px touch targets, a skip link, fully keyboard-operable, icon-only buttons labelled.",
+    "- [ ] **Content** — real, specific copy and data; no placeholders, lorem ipsum, or empty stats.",
+    "- [ ] **PWA / responsive** — manifest, service worker, offline fallback, and `theme-color` present (§8 / §10).",
+    "- [ ] **Conflicts** — any deliberate deviation from this file is recorded with its reason, not silently applied.",
+  ].join("\n");
+}
+
 function buildCultureMarket(locale, market) {
   if (!locale?.override && !market?.override) return null;
-  const lines = ["## 11. Cultural & Market Context"];
+  const lines = ["## 12. Cultural & Market Context"];
   if (locale?.override) {
     lines.push("**Cultural layer (applies on top of the visual system — fonts, palette, and motifs here are mandatory; the anti-stereotype rules override decorative defaults):**");
     lines.push("");
@@ -472,6 +517,7 @@ export function assembleDesignDoc(state) {
     buildAccessibility(style, locale),
     buildDoDont(style),
     buildImplementation(style, stack, libraryIds),
+    buildComplianceChecklist(),
     buildCultureMarket(locale, market),
   ].filter(Boolean).join("\n\n");
 }
