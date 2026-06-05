@@ -28,12 +28,19 @@ import seoulToss from "./curated/seoul-toss.json" with { type: "json" };
 import helmApprovals from "./curated/helm-approvals.json" with { type: "json" };
 import helmReceiving from "./curated/helm-receiving.json" with { type: "json" };
 
+// Apple-HIG ERP showcase — the "Aria" console. A professional admin panel proving
+// the four admin must-haves (collapsible sidebar, instant anchored tooltips, full
+// CRUD with a write-path safety net, iPad as a first-class breakpoint) on top of the
+// reconcile law. Live sample: public/erp-demo/aria-inventory.html.
+import ariaInventory from "./curated/aria-inventory.json" with { type: "json" };
+
 import { generateStandardPrompts } from "./generate.js";
 import { STYLE_CATEGORY_MAP, DEFAULT_HIDDEN_CATEGORY } from "../styles/categories.js";
 import { STYLE_IDS } from "../styles/index.js";
 
 // ─── Curated (tier 1) ───────────────────────────────────────────────────────
 export const CURATED_PROMPTS = [
+  ariaInventory,
   helmApprovals, helmReceiving,
   horloge, roughhouse, stilllife, nova, hush, lumina, meridian,
   peranakanBoutique, saigonCafe, merdekaPortal, pendelburyHotel, deepavaliBazaar, hdbHeartland,

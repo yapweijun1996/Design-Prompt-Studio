@@ -1,0 +1,40 @@
+{
+  "id": "aria-inventory",
+  "tier": "curated",
+  "name": "ARIA — INVENTORY",
+  "tagline": "Apple-HIG warehouse stock console",
+  "sampleHref": "erp-demo/aria-inventory.html",
+  "style": "apple",
+  "purpose": "app",
+  "pageType": "admin",
+  "density": "dense",
+  "drama": "default",
+  "motion": "minimal",
+  "promptMode": "one-shot",
+  "sections": [
+    "translucent left rail (frosted material) — only 'Stock Overview' active; collapsible to a 64px ICON rail (labels hidden, hover shows tooltip), state persisted, ⌘\\ shortcut",
+    "translucent topbar — sidebar toggle, global search / ⌘K, company + fiscal-period 'FY2026 · P06 — Jun', a quiet 'PRODUCTION' badge, light/dark toggle, user avatar",
+    "stock table — sortable, frozen SKU first column, bulk-select, per-row status capsule (In stock / Low / Out / Overstock), 'Needs attention' filter chip, Comfortable/Compact density segmented control",
+    "master-detail split — selecting a row opens a right detail pane (Overview / Movements / Locations tabs) and NEVER leaves the list",
+    "number reconciliation — list Stock value = qty × avg cost; detail Movements net = on hand; Locations total = on hand (each shown with a ✓)",
+    "full CRUD — '+ New item' and Edit open a right drawer (full-screen sheet on mobile) with grouped fields, inline validation, unique-SKU check, Save disabled until valid AND dirty; Delete shows a confirm step + an undo toast",
+    "instant anchored tooltips (stationary, body-appended, no delay) — NOT cursor-following",
+    "5 mandatory states — loading skeleton / empty (all caught up) / no-results (filter) / error+retry / no-permission (vendor-owned consignment row, Edit/Delete/Adjust disabled with a tooltip)",
+    "command palette (⌘K) + keyboard-first (j/k move, Enter open, N new, E edit, ⌫ delete, ⌘\\ sidebar)",
+    "responsive: phone ≤760 bottom tab bar + full-screen detail sheet; iPad 761–1024 KEEPS sidebar + master-detail two-column; PWA installable (manifest, safe-area, 16px inputs)"
+  ],
+  "stack": "html",
+  "outputMode": "single-file",
+  "industryTags": ["erp", "admin", "enterprise", "back-office", "inventory", "warehouse", "manufacturing", "apple", "pwa"],
+  "brief": {
+    "name": "Northwind Manufacturing ERP — console 'Aria'",
+    "industry": "Mid-market discrete manufacturing & distribution back-office (multi-currency, USD base). This is ONE internal screen — a warehouse stock console — not a whole ERP.",
+    "audience": "A single role — Dana Okafor, Warehouse Manager. She monitors stock health, drills into a SKU's movements and bin locations, creates and edits items, and adjusts counts. She is a daily power user who works keyboard-first on desktop, and also checks stock on an iPad on the floor and a phone in the aisles.",
+    "tone": "calm, precise, trustworthy, first-party Apple feel — content-first, deferential translucent chrome, depth through soft shadows and fluid motion. Feels like a native macOS/iPadOS app, not a website.",
+    "references": "Apple Human Interface Guidelines (Clarity / Deference / Depth), macOS Finder & Numbers (dense tables done elegantly), Linear (keyboard speed), SAP Fiori (role-based clarity). Inspiration only — never copy.",
+    "context": "APPLE DESIGN LANGUAGE: system font stack (-apple-system / SF Pro), numbers in tabular figures. Semantic OKLCH-friendly tokens with a peer dark mode (data-theme), translucent 'material' bars (backdrop-filter blur+saturate), one accent (#0071E3 / dark #0A84FF), rounded corners (8/12/18px), soft low-opacity shadows (hairlines + material, NOT heavy boxes), motion 150–300ms cubic-bezier(.32,.72,0,1), honour prefers-reduced-motion.\n\nROLE-BASED, ONE SCREEN ONLY: build Dana's Stock Overview and nothing else; other rail modules are inactive context.\n\nMASTER-DETAIL: left = stock table; right = the selected item's detail. Selecting a row must never navigate away or lose the list.\n\nTABLE: 10–14 SKUs — code (e.g. 'ACT-SRV-200 · Servo actuator, 200 W', frozen first column), category, on-hand qty + UOM, avg unit cost (USD), stock value, and a status capsule. Status derives from reorder point: Out (0), Low (≤ reorder), Overstock (> 4× reorder), else In stock. Sticky header, sortable, bulk-select, density toggle, a 'Needs attention' filter (Low + Out). Footer = total stock value.\n\nDETAIL: tabs Overview / Movements / Locations. Overview shows On hand, Stock value, Avg cost, Reorder point, a stock-vs-reorder meter, and a reconcile line 'qty × avg cost = stock value ✓'. Movements = period in/out rows with a running balance; the net MUST equal on-hand. Locations = bins whose quantities MUST sum to on-hand. THE LIST STOCK VALUE FOR A ROW MUST EQUAL ITS DETAIL (qty × cost), and movements net and locations sum MUST equal on-hand — show each with a ✓.\n\nADMIN-PANEL REQUIREMENTS (these separate a professional admin from a pretty table):\n1. COLLAPSIBLE SIDEBAR — desktop toggle full ↔ 64px icon rail (labels hidden, hover/focus shows a tooltip), persist in localStorage, bind ⌘\\. On phone the same intent becomes a bottom tab bar.\n2. INSTANT ANCHORED TOOLTIPS — appear immediately (no delay) and stay anchored to the element (stationary), appended to <body> so an overflow container never clips them. Do NOT make tooltips follow the cursor (that is a charts/canvas idiom and jitters in tables).\n3. FULL CRUD with a write-path safety net — Create/Edit in a right drawer (desktop) / full-screen sheet (mobile): grouped fields, inline validation, unique-SKU check, Save disabled until valid AND dirty. Delete needs a confirm step + an UNDO (soft-delete/restore) toast. Mutations are optimistic AND must preserve reconciliation — e.g. editing a quantity appends an adjustment movement and rebalances a location so the detail still sums to the header.\n4. iPad IS A FIRST-CLASS BREAKPOINT — at 761–1024px KEEP both the sidebar AND the master-detail two-column layout (do NOT collapse to one column like a phone); give it its own @media rules. Phone ≤760 = bottom tab bar + full-screen detail sheet; desktop > 1024 = full rail. PWA: data: manifest, viewport-fit=cover + env(safe-area-inset-*), apple-mobile-web-app-capable, inputs ≥16px (no iOS auto-zoom).\n\nSEGREGATION / NO-PERMISSION: include one consignment (vendor-owned) item whose Edit / Delete / Adjust are disabled with a tooltip explaining why — this doubles as the no-permission state.\n\nFIVE MANDATORY STATES via a small JS switch (a State select or ?state=): (1) Loading = skeleton rows + skeleton detail; (2) Empty = 'You're all caught up' + 'Show all items'; (3) No-results = distinct from empty, 'No items match' + 'Clear filters'; (4) Error = friendly message + Retry + a quiet error code; (5) No-permission = the consignment row above.\n\nKEYBOARD-FIRST (show a '?' hint): ↑/↓ or j/k move selection with a visible focus ring, Enter opens detail, N opens New item, E edits the selected item, ⌫/Delete deletes (with confirm), ⌘/Ctrl-K command palette, ⌘\\ toggles the sidebar, Esc closes drawer/detail/palette.\n\nINTERACTIVITY: the single .html file must actually work — row select loads detail, sort, density toggle, bulk-select with value sum, tab switch, create/edit/delete with validation + confirm + undo, ⌘K palette, light/dark toggle persisted, all 5 states reachable, sidebar collapse persisted.",
+    "avoid": "A marketing hero or vanity KPI cards (this is a stock console, not a home). Gradients as the aesthetic. Heavy borders / drop-shadow overuse (Apple uses hairlines + material, not boxes). A card grid for the item list (must be a sortable table). A modal for row actions (use the master-detail split / drawer). Cursor-following tooltips. Emoji status. Numbers that don't reconcile. Collapsing iPad to a single column like a phone. Building any module other than Stock Overview."
+  },
+  "featured": true,
+  "createdAt": "2026-06-05"
+}
